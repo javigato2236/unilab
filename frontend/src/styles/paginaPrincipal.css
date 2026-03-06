@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;         
+}
+
+.tituloPrincipal {
+  color:rgb(0, 110, 255);
+  text-align: center;
+  margin-right:50px;
+  font-size:50px;
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, auto); /*aqui definimos el numero de ventanas que se miraran por fila  en este cas0 5 por fila*/
+  gap: 20px;
+  justify-content: center;
+  margin-left:24px;
+  
+}

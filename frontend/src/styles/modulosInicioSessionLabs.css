@@ -1,0 +1,101 @@
+.App {
+  margin-left:10px;
+}
+.tituloIniciarSesion{
+  text-align: center;
+  color:rgb(0, 110, 255);
+  
+}
+
+/* estilos del modal  */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  width: 400px;
+  margin-right:35px;
+  bottom:40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  color:rgb(0, 110, 255);
+  padding: 10px 20px;
+  border-color:rgb(237, 222, 222);
+  /* border-color:rgb(235, 231, 231); */
+  
+  border-radius: 10px;
+  background-color:transparent;
+  cursor: pointer; 
+  
+}
+
+.usuario-titulo {
+  margin-right: 25px;
+}
+.contraseña-titulo {
+  margin-right: 4px;
+}
+
+.input-usuario-titulo{
+margin-bottom: 10px;
+}
+
+.olvidar-contraseña {
+  text-decoration: none;
+  color:rgb(0, 110, 255);
+}
+
+.contenedor-olvido-contraseña {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+ 
+}
+
+.clickable-div {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  margin: 2rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.clickable-div:hover {
+  transform: scale(1.05);
+}
+
+.clickable-div img { 
+  width: 120px;      
+  height: 150px;       
+  display: block;
+  margin: 0 auto 1rem; 
+  border-radius: 8px;  
+}
