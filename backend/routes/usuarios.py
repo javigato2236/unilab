@@ -42,6 +42,16 @@ def register(user: schemas.UsuarioCreate, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login(user: schemas.UsuarioLogin, db: Session = Depends(get_db)):
+
+
+    # 🔴 VALIDAR CAMPOS VACIOS
+    if not user.correo or not user.clave:
+        raise HTTPException(
+            status_code=400,
+            detail="Ningún campo debe estar vacío"
+        )
+
+
     db_user = db.query(models.RegistroUsuarios).filter(
         models.RegistroUsuarios.correo == user.correo
     ).first()

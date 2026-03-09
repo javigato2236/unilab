@@ -99,3 +99,42 @@ margin-bottom: 10px;
   margin: 0 auto 1rem; 
   border-radius: 8px;  
 }
+
+/*estilos cuando los campos de inicio de sesion estan vacios aparece el asterizco */
+.asterisco-usuario {
+  position:absolute;
+  left:335px;
+  top:40%;
+  transform:translateY(-50%);
+  color:rgb(0, 110, 255);
+  font-size:18px;
+  font-weight:bold;
+}
+
+.asterisco-contraseña {
+  position:absolute;
+  left:335px;
+  top:53%;
+  transform:translateY(-50%);
+  color:rgb(0, 110, 255);
+  font-size:18px;
+  font-weight:bold;
+}
+
+
+.icono-ojo{
+  width:22px;
+  cursor:pointer;
+  color: red;
+  position:relative;
+  top:7px;
+  left:1px;
+  
+  
+}
+
+/* .contenedor-password{
+  display:flex;
+  align-items:center;
+  gap:8px;
+} */
