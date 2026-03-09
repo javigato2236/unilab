@@ -13,7 +13,22 @@ function ModulosInicioSessionLabs() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+   // 🔹 cerrar modal y reiniciar formulario
+  const closeModal = () => {
+    setIsModalOpen(false);
+
+    // limpiar inputs
+    setCorreo('');
+    setClave('');
+
+    // quitar errores
+    setErrorCorreo(false);
+    setErrorClave(false);
+
+    // ocultar contraseña
+    setMostrar(false);
+  };
+  
 
   const [correo,setCorreo]= useState('');
   const [clave,setClave]= useState('');
@@ -61,7 +76,7 @@ function ModulosInicioSessionLabs() {
       setCorreo('');
       setClave('');
 
-      navigate('/labQuimica');
+      navigate('/labQuimica',{replace:true});
 
     } catch (err) {
       // 👇 mostramos el mensaje del backend en alerta

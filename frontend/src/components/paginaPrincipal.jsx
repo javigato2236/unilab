@@ -4,7 +4,7 @@ function PaginaPrincipal() {
     return (
         
         <div className='contenedorPrincipal'>
-            <h1 className='tituloPrincipal'>UNILAB</h1>
+            <h1 className='tituloPrincipal'>Unilab</h1>
             
             
 
