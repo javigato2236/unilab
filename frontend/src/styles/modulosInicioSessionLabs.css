@@ -82,9 +82,9 @@ margin-bottom: 10px;
   display: inline-block;
   text-align: center;
   margin: 2rem;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding: 1rem;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   transition: transform 0.2s;
 }
 
@@ -97,7 +97,7 @@ margin-bottom: 10px;
   height: 150px;       
   display: block;
   margin: 0 auto 1rem; 
-  border-radius: 8px;  
+  /* border-radius: 8px;   */
 }
 
 /*estilos cuando los campos de inicio de sesion estan vacios aparece el asterizco */

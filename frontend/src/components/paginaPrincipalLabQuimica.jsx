@@ -1,5 +1,8 @@
-import '../styles/paginaPrincipal.css'
+import '../styles/paginaPrincipal.css';
 import LabQuimica from './componenteQuimica';
+import inventarioReactivos from '../assets/inventarioReactivos.png';
+import registroEstudiantes from '../assets/registroEstudiantes.png';
+
 
 function PaginaPrincipalLabQuimica() {
     return (
@@ -10,8 +13,24 @@ function PaginaPrincipalLabQuimica() {
             
 
             <div className='grid-container'>
-                <LabQuimica/>
-                <LabQuimica/>       
+                <LabQuimica
+                imagenLogo = {inventarioReactivos}
+                titulo = {
+                <>
+                Inventario de <br/>
+                reactivos quimicos
+                </>
+                }
+                
+                />
+                <LabQuimica
+                imagenLogo = {registroEstudiantes}
+                titulo = {
+                <>
+                Registro de <br/>
+                estudiantes
+                </>}
+                />       
                 
                  
             </div>

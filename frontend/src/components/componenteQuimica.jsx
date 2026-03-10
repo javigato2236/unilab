@@ -1,27 +1,16 @@
 
 
-import LogoQuimica from '../assets/LogoQuimica.png';
 
 
-
-
-
-
-
-function LabQuimica () {
-
-
- 
-  
+function LabQuimica ({imagenLogo,titulo}) {
 
   return (
     
-
-    
     <div className='App'>
         <div className='clickable-div'>
-            <img src={LogoQuimica} alt='Imagen' />
-            <h3>Inventario de <br />reactivos quimicos</h3>
+            <img src={imagenLogo} alt='Imagen' />
+            {/* <h3>Inventario de <br />reactivos quimicos</h3> */}
+            <h3>{titulo}</h3>
         </div>
 
     
