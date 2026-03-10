@@ -76,7 +76,7 @@ function ModulosInicioSessionLabs() {
       setCorreo('');
       setClave('');
 
-      navigate('/labQuimica',{replace:true});
+      navigate('/paginaPrincipalLabQuimica',{replace:true});
 
     } catch (err) {
       // 👇 mostramos el mensaje del backend en alerta

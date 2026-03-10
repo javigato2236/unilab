@@ -1,0 +1,6 @@
+/* Muchos proyectos agregan un reset básico global: Esto evita problemas de espacios raros en toda la app. */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

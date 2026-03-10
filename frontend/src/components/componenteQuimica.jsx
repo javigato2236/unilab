@@ -1,23 +1,47 @@
-import { useNavigate } from "react-router-dom";
-import logout from "../hoosk/logoutReutilizable";
+
+
+import LogoQuimica from '../assets/LogoQuimica.png';
+
+
+
+
+
+
 
 function LabQuimica () {
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        logout(navigate)
-
-    }
-    return(
-        <div>
-            <h1>Laboratorio de quimica</h1>
-            <button onClick={handleLogout}>cerrar sesíon</button>
 
 
+ 
+  
+
+  return (
+    
+
+    
+    <div className='App'>
+        <div className='clickable-div'>
+            <img src={LogoQuimica} alt='Imagen' />
+            <h3>Inventario de <br />reactivos quimicos</h3>
         </div>
-    )
 
-
+    
+    </div>
+  );
 }
 
-
 export default LabQuimica;
+
+
+
+
+
+
+
+
+
+
+
+  // const navigate = useNavigate();
+    // const handleLogout = () => {
+    // logout(navigate)
+    // }
