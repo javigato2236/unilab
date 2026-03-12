@@ -4,6 +4,7 @@ import inventarioReactivos from '../assets/inventarioReactivos.png';
 import registroEstudiantes from '../assets/registroEstudiantes.png';
 import { useNavigate } from "react-router-dom";
 import logout from '../hoosk/logoutReutilizable';
+import cerrarSesion from '../assets/cerrarSesion.svg';
 
 
 function PaginaPrincipalLabQuimica() {
@@ -18,10 +19,10 @@ function PaginaPrincipalLabQuimica() {
         
         <div>
 
-            <div>
-                <button onClick={handleLogout}>
-                    <h2>cerrar sesion</h2>
-                </button>
+            <div className='contenedor-cierreSesion' onClick={handleLogout}>
+                <img src={cerrarSesion} alt="" />
+                <h3>Cerrar sesion</h3>
+                
             </div>
 
 
