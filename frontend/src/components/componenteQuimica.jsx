@@ -21,7 +21,7 @@ function LabQuimica ({imagenLogo,titulo, ruta}) {
       <div className='clickable-div'>
         
           <img src={imagenLogo} alt='Imagen' onClick={irInventario}/>
-          {console.log(ruta)}
+          
         
             <h3>{titulo}</h3>
             
