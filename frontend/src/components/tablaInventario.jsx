@@ -5,18 +5,25 @@ import { useState } from 'react';
 
 function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  
+  // 🔹 primer  modal
+  const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
+  const openFirstModal = () => setIsFirstModalOpen(true);
+  const closeFirstModal = () => setIsFirstModalOpen(false);
 
-  // 🔹 segundo modal
-  const openSecondModal = () => setIsSecondModalOpen(true);
-  const closeSecondModal = () => setIsSecondModalOpen(false);
+   // 🔹 segundo  modal
+  const [isSecondModalOpen, setIsSecondOpen] = useState(false);
+  const openSecondModal = () => setIsSecondOpen(true);
+  const closeSecondModal = () => setIsSecondOpen(false);
+
+   // 🔹 tercer modal
+  const [isThirdModalOpen, setIsThirdOpen] = useState(false);
+  const openThirdModal = () => setIsThirdOpen(true);
+  const closeThirdModal = () => setIsThirdOpen(false);
 
    
 
@@ -36,7 +43,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
           <div>
             <h1>Informacion basica</h1>
-            <button onClick={openSecondModal}>Agregar</button>
+            <button onClick={openFirstModal}>Agregar</button>
        
 
           </div>
@@ -51,16 +58,48 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           
           <div>
             <h1>Informacion especifica</h1>
-            <button onClick={openSecondModal}>Agregar</button>
+            <button onClick={openThirdModal}>Agregar</button>
             
           </div>
 
       </Modal>
 
-      <Modal isOpen={isSecondModalOpen} onClose={closeSecondModal}>
-        <h1>modal 1</h1>
+      <Modal isOpen={isFirstModalOpen} onClose={closeFirstModal}>
+        <form >
+
+          <label htmlFor="">Nombre</label>
+          <input type="text" />
+
+          <label htmlFor="">Sinonimo</label>
+          <input type="text" />
+
+          <label htmlFor="">Cas</label>
+          <input type="text" />
+
+          <label htmlFor="">Marca</label>
+          <input type="text" />
+
+          <label htmlFor="">Referencia</label>
+          <input type="text" />
+
+          <label htmlFor="">Estado</label>
+          <input type="text" />
+
+        </form>
         <button>Enviar</button>
       </Modal>
+
+      <Modal isOpen={isSecondModalOpen} onClose={closeSecondModal}>
+        <h1>modal 2</h1>
+        <button>Enviar</button>
+      </Modal>
+
+      <Modal isOpen={isThirdModalOpen} onClose={closeThirdModal}>
+        <h1>modal 3</h1>
+        <button>Enviar</button>
+      </Modal>
+
+     
 
      
 
