@@ -1,0 +1,35 @@
+.contenedor-pictogramas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.pictograma-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 5px;
+  transition: 0.3s;
+}
+
+/* 🔹 imagen pequeña */
+.pictograma-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* 🔹 ocultar checkbox feo */
+.pictograma-item input {
+  display: none;
+}
+
+/* 🔹 cuando está seleccionado */
+.pictograma-item.seleccionado {
+  border: 2px solid red;
+  background-color: #ffe5e5;
+}
