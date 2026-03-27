@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     
   
     if (e.target === e.currentTarget) {
-      onClose();
+      // onClose(); si lo descomento se cierran losvmodales al dar clic fuera del modal
     }
   };
 

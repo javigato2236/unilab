@@ -65,37 +65,36 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
         <h3>Nuevo registro</h3>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} >
+
           <div>
             <h1>Informacion basica</h1>
             <button onClick={openFirstModal}>Agregar</button>
-       
-
           </div>
 
-          
           <div>
             <h1>Informacion general</h1>
             <button onClick={openSecondModal}>Agregar</button>
             
           </div>
 
-          
           <div>
             <h1>Informacion especifica</h1>
             <button onClick={openThirdModal}>Agregar</button>
             
           </div>
 
+          <button type='button' onClick={closeModal}>Cancelar</button>
+
       </Modal>
 
-      <Modal isOpen={isFirstModalOpen} onClose={closeFirstModal}>
+      <Modal isOpen={isFirstModalOpen}>
         <form >
 
-          <label htmlFor="">Familia</label>
+          <label htmlFor="">Nombre de la sustancia</label>
           <input type="text" />
 
-          <label htmlFor="">Nombre</label>
+          <label htmlFor="">Familia</label>
           <input type="text" />
 
           <label htmlFor="">Sinonimo</label>
@@ -110,20 +109,26 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Referencia</label>
           <input type="text" />
 
+          <label htmlFor="">FDS Completa?</label>
+          <input type="text" />
+
           <label htmlFor="">Estado</label>
           <input type="text" />
 
           <button type="button" onClick={openPictogramasModal}>Pictogramas de seguridad</button>
 
+          <button type='button'>Guardar</button>
+          <button type='button' onClick={closeFirstModal}>Cancelar</button>
+
         </form>
         
 
-        <button>Enviar</button>
+        
       </Modal>
 
 
 
-      <Modal isOpen={isSecondModalOpen} onClose={closeSecondModal}>
+      <Modal isOpen={isSecondModalOpen}>
         <form>
 
           <label htmlFor="">Cantidad</label>
@@ -144,19 +149,23 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Cantidad real</label>
           <input type="text" />
 
-          <label htmlFor="">Hubicacion especifica</label>
+          <label htmlFor="">Ubicacion especifica</label>
           <input type="text" />
+
+          <button type='button'>Guardar</button>
+          <button type='button' onClick={closeSecondModal}>Cancelar</button>
       
         </form>
-        <button>Enviar</button>
+        
       </Modal>
 
-      <Modal isOpen={isThirdModalOpen} onClose={closeThirdModal}>
+      <Modal isOpen={isThirdModalOpen}>
         <h1>modal 3</h1>
-        <button>Enviar</button>
+        <button type='button'>Guardar</button>
+        <button type='button' onClick={closeThirdModal}>Cancelar</button>
       </Modal>
 
-      <Modal isOpen={isPictogramasdModalOpen} onClose={closePictogramasModal}>
+      <Modal isOpen={isPictogramasdModalOpen}>
         <div className="contenedor-pictogramas">
 
               {[
@@ -169,7 +178,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
                 { nombre: "medioAmbiente", img: medioAmbiente },
                 { nombre: "oxidante", img: oxidante },
                 { nombre: "toxico", img: toxico },
-              ].map((p) => (
+                ].map((p) => (
                 <label key={p.nombre} className={`pictograma-item 
                   ${pictogramasSeleccionados.includes(p.nombre) ? "seleccionado" : ""}`}>
 
@@ -185,33 +194,16 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
               ))}
 
             </div>
-        <button onClick={() => {
+        <button  onClick={() => {
     console.log(pictogramasSeleccionados);
     closePictogramasModal();
   }}>
     Guardar
   </button>
+  <button type='button' onClick={closePictogramasModal}>Cancelar</button>
       </Modal>
 
-     
-
-     
-
-      
-
-
-
-
-
-      
-
-
-
-        {/* <div className='modal-buttons'>
-            <button type='submit'>Enviar</button>
-            <button type='button' onClick={closeModal}>Cancelar</button>
-          </div> */}
-
+    
 
       <table className="tabla-reactivos">
         <thead>
