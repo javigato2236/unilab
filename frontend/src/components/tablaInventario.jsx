@@ -115,6 +115,37 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Estado</label>
           <input type="text" />
 
+          {/* <label for="fruta">Elige o escribe una fruta:</label>
+          <input list="frutas" id="fruta" name="fruta"/>
+
+          <datalist id="frutas">
+            <option value="Manzana"/>
+            <option value="Banana"/>
+            <option value="Naranja"/>
+          </datalist> */}
+
+          {/* <label>
+            <input type="radio" name="fruta" value="manzana" /> Manzana
+          </label>
+
+          <label>
+            <input type="radio" name="fruta" value="banana" /> Banana
+          </label>
+
+          <label>
+            <input type="radio" name="fruta" value="naranja" /> Naranja
+          </label> */}
+
+          <label for="frutas">Elige una fruta:</label>
+            <select id="frutas" name="frutas">
+              <option value="manzana">Manzana</option>
+              <option value="banana">Banana</option>
+              <option value="naranja">Naranja</option>
+            </select>
+
+        
+            
+
           <button type="button" onClick={openPictogramasModal}>Pictogramas de seguridad</button>
 
           <button type='button'>Guardar</button>
