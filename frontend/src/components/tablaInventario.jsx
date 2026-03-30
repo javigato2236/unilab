@@ -15,6 +15,7 @@ import toxico from '../assets/toxico.png';
 
 
 
+
 function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
@@ -37,7 +38,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const openThirdModal = () => setIsThirdOpen(true);
   const closeThirdModal = () => setIsThirdOpen(false);
 
-   const [isPictogramasdModalOpen, setIsPictogramasOpen] = useState(false);
+  const [isPictogramasdModalOpen, setIsPictogramasOpen] = useState(false);
   const openPictogramasModal = () => setIsPictogramasOpen(true);
   const closePictogramasModal = () => setIsPictogramasOpen(false);
 
@@ -46,9 +47,14 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
   setPictogramasSeleccionados((prev) =>
     prev.includes(nombre)
       ? prev.filter((p) => p !== nombre)
-      : [...prev, nombre]
-  );
-};
+      : [...prev, nombre]);};
+
+  const [fecha, setFecha] = useState('');
+
+
+  
+
+
 
    
 
@@ -110,38 +116,31 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <input type="text" />
 
           <label htmlFor="">FDS Completa?</label>
-          <input type="text" />
+          <select id="FDS" name="FDS">
+              <option value="SI">Si</option>
+              <option value="no">No</option>
+          </select>
+          
+          <label htmlFor="">Utima fecha actualizacion o creacion FDS</label>
+          <input
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+          />
+          
+          
+
+          
 
           <label htmlFor="">Estado</label>
-          <input type="text" />
+          <select id="Estado" name="Estado">
+              <option value="solido">Solido</option>
+              <option value="liquido">Liquido</option>
+          </select>
 
-          {/* <label for="fruta">Elige o escribe una fruta:</label>
-          <input list="frutas" id="fruta" name="fruta"/>
+          
 
-          <datalist id="frutas">
-            <option value="Manzana"/>
-            <option value="Banana"/>
-            <option value="Naranja"/>
-          </datalist> */}
-
-          {/* <label>
-            <input type="radio" name="fruta" value="manzana" /> Manzana
-          </label>
-
-          <label>
-            <input type="radio" name="fruta" value="banana" /> Banana
-          </label>
-
-          <label>
-            <input type="radio" name="fruta" value="naranja" /> Naranja
-          </label> */}
-
-          <label for="frutas">Elige una fruta:</label>
-            <select id="frutas" name="frutas">
-              <option value="manzana">Manzana</option>
-              <option value="banana">Banana</option>
-              <option value="naranja">Naranja</option>
-            </select>
+       
 
         
             
@@ -276,3 +275,41 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
 export default TablaReactivos;
 
+
+
+
+
+
+
+
+
+
+
+
+   {/* <label for="fruta">Elige o escribe una fruta:</label>
+          <input list="frutas" id="fruta" name="fruta"/>
+
+          <datalist id="frutas">
+            <option value="Manzana"/>
+            <option value="Banana"/>
+            <option value="Naranja"/>
+          </datalist> */}
+
+          {/* <label>
+            <input type="radio" name="fruta" value="manzana" /> Manzana
+          </label>
+
+          <label>
+            <input type="radio" name="fruta" value="banana" /> Banana
+          </label>
+
+          <label>
+            <input type="radio" name="fruta" value="naranja" /> Naranja
+          </label> */}
+
+          {/* <label for="frutas">Elige una fruta:</label>
+            <select id="frutas" name="frutas">
+              <option value="manzana">Manzana</option>
+              <option value="banana">Banana</option>
+              <option value="naranja">Naranja</option>
+            </select> */}
