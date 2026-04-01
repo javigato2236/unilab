@@ -49,7 +49,11 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       ? prev.filter((p) => p !== nombre)
       : [...prev, nombre]);};
 
-  const [fecha, setFecha] = useState('');
+  const [fechaActualizacionFDS, setFechaActualizacionFDS] = useState('');
+
+  const [fechaIngresoreactivo, setFechaIngresoReactivo] = useState('');
+
+  const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
 
 
   
@@ -124,33 +128,25 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Utima fecha actualizacion o creacion FDS</label>
           <input
             type="date"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
+            value={fechaActualizacionFDS}
+            onChange={(e) => setFechaActualizacionFDS(e.target.value)}
           />
           
-          
-
-          
-
-          <label htmlFor="">Estado</label>
+          <label htmlFor="">Estado fisico</label>
           <select id="Estado" name="Estado">
               <option value="solido">Solido</option>
               <option value="liquido">Liquido</option>
           </select>
 
           
-
-       
-
-        
-            
-
-          <button type="button" onClick={openPictogramasModal}>Pictogramas de seguridad</button>
+          <button type="button" onClick={openPictogramasModal}>Peligrosidad SGA</button>
 
           <button type='button'>Guardar</button>
           <button type='button' onClick={closeFirstModal}>Cancelar</button>
 
         </form>
+
+
         
 
         
@@ -160,27 +156,81 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
       <Modal isOpen={isSecondModalOpen}>
         <form>
+           <label htmlFor="">Codigo frase H</label>
+           <input type="text" />
 
-          <label htmlFor="">Cantidad</label>
-          <input type="text" />
+           <label htmlFor="">Sustancia cancerigena</label>
+           <select id="Suscancer" name="Suscancer">
+              <option value="si">Si</option>
+              <option value="no">No</option>
+           </select>
 
-          <label htmlFor="">Presentacion</label>
-          <input type="text" />
+           <h3>Ubicacion</h3>
+           <label htmlFor="">Sitio de almacenamiento </label>
+           <input type="text" />
 
-          <label htmlFor="">Unidad de medida</label>
-          <input type="text" />
+           <label htmlFor="">Ubicacion especifica</label>
+           <input type="text" />
 
-          <label htmlFor="">Numero de recipientes</label>
-          <input type="text" />
+           <label htmlFor="">Unidad de medida</label>
+           <input type="text" />
+
+           <label htmlFor="">Presentacion</label>
+           <input type="text" />
+
+           <label htmlFor="">Numero de recipientes</label>
+           <input type="text" />
 
            <label htmlFor="">Catidad total</label>
-          <input type="text" />
+           <input type="text" />
 
-          <label htmlFor="">Cantidad real</label>
-          <input type="text" />
+           <label htmlFor="">Cantidad real</label>
+           <input type="text" />
 
-          <label htmlFor="">Ubicacion especifica</label>
-          <input type="text" />
+           <h3>Sustancias controladas RES001:2025</h3>
+            <label htmlFor="">Es controlado</label>
+              <select id="Suscontrol" name="suscontrol">
+                  <option value="si">Si</option>
+                  <option value="no">No</option>
+              </select>
+
+           <label htmlFor="">Componente 1</label>
+           <input type="text" />
+
+           <label htmlFor="">Clacificacion almacenamiento</label>
+           <input type="text" />
+
+           <label htmlFor="">Separacion metodo SAF-T-DATA </label>
+             <select id="Separasatdata" name="Separasatdata">
+                  <option value="c">C</option>
+                  <option value="i">I</option>
+                  <option value="o">O</option>
+                  <option value="pma">PMA</option>
+                  <option value="rm">RM</option>
+                  <option value="t">T</option>
+             </select>
+
+           <label htmlFor="">Fecha de ingreso de la sustancia quimica al laboratorio</label>
+           <input
+            type="date"
+            value={fechaIngresoreactivo}
+            onChange={(e) => setFechaIngresoReactivo(e.target.value)}
+          />
+
+          <label htmlFor="">Fecha vencimiento proyectado</label>
+           <input
+            type="date"
+            value={fechaVencimientoProyec}
+            onChange={(e) => setFechaVencimientoProyec(e.target.value)}
+          />
+
+          
+          <label htmlFor="observaciones">Observaciones:</label>
+          <textarea id="Observaciones" name="Observaciones"></textarea>
+
+
+
+           
 
           <button type='button'>Guardar</button>
           <button type='button' onClick={closeSecondModal}>Cancelar</button>
@@ -313,3 +363,7 @@ export default TablaReactivos;
               <option value="banana">Banana</option>
               <option value="naranja">Naranja</option>
             </select> */}
+
+
+
+                 
