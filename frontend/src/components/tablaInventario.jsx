@@ -55,6 +55,36 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
   const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
 
+  const [nombre, setNombre] = useState('');
+  const [familia, setFamilia] = useState('');
+  const [sinonimo, setSinonimo] = useState('');
+  const [cas, setCas] = useState('');
+  const [marca, setMarca] = useState('');
+  const [referencia, setReferencia] = useState('');
+  const [fdsCompleta, setFdsCompleta] = useState('Si');
+  const [ultimaFechaActualiza, setUltimaFechaActualiza] = useState('');
+  const [estadoFisico, setEstadoFisico] = useState('Solido');
+  const [codigoFraseH, setCodigoFraseH] = useState('');
+  const [sustanciaCancerigena, setSustanciaCancerigena] = useState('Si');
+  const [sitioAlmacenamiento, setSitioAlmacenamiento] = useState('');
+  const [ubicacionEspecifica, setUbicacionEspecifica] = useState('');
+  const [unidadDeMedida, setUnidadDeMedida] = useState('');
+  const [presentacion, setPresentacion] = useState('');
+  const [numeroRecipientes, setNumeroRecipientes] = useState('');
+  const [cantidadTotal, setCantidadTotal] = useState('');
+  const [cantidadReal, setCantidadReal] = useState('');
+  const [esControlado, setEsControlado] = useState('Si');
+  const [componente1, setComponente1] = useState('');
+  const [clacificacionAlmacenamiento, setClacificacionAlmacenamiento] = useState('');
+  
+
+
+  const resetForm = () => {
+   
+
+    setPictogramasSeleccionados([]);
+  };
+
 
   
 
@@ -76,7 +106,6 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       </div>
 
       <Modal isOpen={isModalOpen} >
-
           <div>
             <h1>Informacion basica</h1>
             <button onClick={openFirstModal}>Agregar</button>
@@ -95,8 +124,9 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           </div>
 
           <button type='button' onClick={closeModal}>Cancelar</button>
-
       </Modal>
+
+
 
       <Modal isOpen={isFirstModalOpen}>
         <form >
@@ -145,11 +175,6 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <button type='button' onClick={closeFirstModal}>Cancelar</button>
 
         </form>
-
-
-        
-
-        
       </Modal>
 
 
@@ -221,29 +246,50 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
            <input
             type="date"
             value={fechaVencimientoProyec}
-            onChange={(e) => setFechaVencimientoProyec(e.target.value)}
-          />
+            onChange={(e) => setFechaVencimientoProyec(e.target.value)}/>
 
-          
-          <label htmlFor="observaciones">Observaciones:</label>
+          <label htmlFor="observaciones">Observaciones</label>
           <textarea id="Observaciones" name="Observaciones"></textarea>
-
-
-
-           
 
           <button type='button'>Guardar</button>
           <button type='button' onClick={closeSecondModal}>Cancelar</button>
       
         </form>
-        
       </Modal>
+      
 
       <Modal isOpen={isThirdModalOpen}>
-        <h1>modal 3</h1>
+       <form action="">
+
+        <label htmlFor="">Palabra de advertencia</label>
+        <input type="text" />
+
+        <h2>Consejos de prudencia (frases p)</h2>
+        <label htmlFor="preventiva">Preventiva codigo/detalle</label>
+        <textarea id="Preventiva" name="Preventiva"></textarea>
+
+        
+        <label htmlFor="respuestaIntervencion">Respuesta o intervencion codigo/detalle</label>
+        <textarea id="RespuestaIntervencion" name="RespuestaIntervencion"></textarea>
+
+        <h2>Informacion proveedor</h2>
+        <label htmlFor="infoproveedor">Razon social</label>
+        <input type="text" />
+
+        <label htmlFor="">direccion</label>
+        <input type="text" />
+
+        <label htmlFor="">Contacto</label>
+        <input type="text" />
+
+        
         <button type='button'>Guardar</button>
         <button type='button' onClick={closeThirdModal}>Cancelar</button>
+
+       </form>
       </Modal>
+
+
 
       <Modal isOpen={isPictogramasdModalOpen}>
         <div className="contenedor-pictogramas">
@@ -267,20 +313,18 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
                     checked={pictogramasSeleccionados.includes(p.nombre)}
                     onChange={() => togglePictograma(p.nombre)}
                   />
-
+                  
                   <img src={p.img} alt={p.nombre} />
 
-                </label>
-              ))}
-
+                </label>))}
             </div>
-        <button  onClick={() => {
-    console.log(pictogramasSeleccionados);
-    closePictogramasModal();
-  }}>
-    Guardar
-  </button>
-  <button type='button' onClick={closePictogramasModal}>Cancelar</button>
+                  <button  onClick={() => {
+                      console.log(pictogramasSeleccionados);
+                      closePictogramasModal();
+                    }}>
+                      Guardar
+                  </button>
+                  <button type='button' onClick={closePictogramasModal}>Cancelar</button>
       </Modal>
 
     
