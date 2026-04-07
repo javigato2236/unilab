@@ -62,8 +62,12 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [marca, setMarca] = useState('');
   const [referencia, setReferencia] = useState('');
   const [fdsCompleta, setFdsCompleta] = useState('Si');
-  const [ultimaFechaActualiza, setUltimaFechaActualiza] = useState('');
+  const [ultimaFechaActualiza, setUltimaFechaActualizacionFDS] = useState('');
   const [estadoFisico, setEstadoFisico] = useState('Solido');
+  
+
+
+
   const [codigoFraseH, setCodigoFraseH] = useState('');
   const [sustanciaCancerigena, setSustanciaCancerigena] = useState('Si');
   const [sitioAlmacenamiento, setSitioAlmacenamiento] = useState('');
@@ -80,9 +84,30 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
 
   const resetForm = () => {
-   
+   setNombre('');
+   setFamilia('');
+   setSinonimo('');
+   setCas('');
+   setMarca('');
+   setReferencia('');
+   setFdsCompleta('Si');
+   setUltimaFechaActualizacionFDS('');
+   setEstadoFisico('Solido');
+   setCodigoFraseH('');
+   setSustanciaCancerigena('');
+   setSitioAlmacenamiento('');
+   setUbicacionEspecifica('');
+   setUnidadDeMedida('');
+   setPresentacion('');
+   setNumeroRecipientes('');
+   setCantidadTotal('');
+   setCantidadReal('');
+   setEsControlado('');
+   setComponente1('');
+   setPictogramasSeleccionados([]);
+   setClacificacionAlmacenamiento('');
 
-    setPictogramasSeleccionados([]);
+
   };
 
 
