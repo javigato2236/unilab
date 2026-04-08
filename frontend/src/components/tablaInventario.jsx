@@ -18,30 +18,23 @@ import toxico from '../assets/toxico.png';
 
 function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+
   
   // 🔹 primer  modal
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
-  const openFirstModal = () => setIsFirstModalOpen(true);
-  const closeFirstModal = () => setIsFirstModalOpen(false);
+
 
    // 🔹 segundo  modal
   const [isSecondModalOpen, setIsSecondOpen] = useState(false);
-  const openSecondModal = () => setIsSecondOpen(true);
-  const closeSecondModal = () => setIsSecondOpen(false);
+  
 
    // 🔹 tercer modal
   const [isThirdModalOpen, setIsThirdOpen] = useState(false);
-  const openThirdModal = () => setIsThirdOpen(true);
-  const closeThirdModal = () => setIsThirdOpen(false);
 
+  // 🔹 modal  que abre el contenedor de las imagenes de los pictogramas
   const [isPictogramasdModalOpen, setIsPictogramasOpen] = useState(false);
-  const openPictogramasModal = () => setIsPictogramasOpen(true);
-  const closePictogramasModal = () => setIsPictogramasOpen(false);
-
+ 
+   // 🔹 modal  que contiene las imagenes de los pictogramas
   const [pictogramasSeleccionados, setPictogramasSeleccionados] = useState([]);
   const togglePictograma = (nombre) => {
   setPictogramasSeleccionados((prev) =>
@@ -50,11 +43,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       : [...prev, nombre]);};
 
   const [fechaActualizacionFDS, setFechaActualizacionFDS] = useState('');
-
   const [fechaIngresoreactivo, setFechaIngresoReactivo] = useState('');
-
-  const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
-
   const [nombre, setNombre] = useState('');
   const [familia, setFamilia] = useState('');
   const [sinonimo, setSinonimo] = useState('');
@@ -62,12 +51,8 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [marca, setMarca] = useState('');
   const [referencia, setReferencia] = useState('');
   const [fdsCompleta, setFdsCompleta] = useState('Si');
-  const [ultimaFechaActualiza, setUltimaFechaActualizacionFDS] = useState('');
+  const [ultimaFechaActualizacionFDS, setUltimaFechaActualizacionFDS] = useState('');
   const [estadoFisico, setEstadoFisico] = useState('Solido');
-  
-
-
-
   const [codigoFraseH, setCodigoFraseH] = useState('');
   const [sustanciaCancerigena, setSustanciaCancerigena] = useState('Si');
   const [sitioAlmacenamiento, setSitioAlmacenamiento] = useState('');
@@ -80,34 +65,83 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
   const [esControlado, setEsControlado] = useState('Si');
   const [componente1, setComponente1] = useState('');
   const [clacificacionAlmacenamiento, setClacificacionAlmacenamiento] = useState('');
-  
+  const [SeparacionMetodoSAFTDATA, setSeparacionMetodoSAFTDATA] = useState('C');
+  const [fechaDeIngresoDelaSustanciaQuimicaAlLaboratorio, SetFechaDeIngresoDelaSustanciaQuimicaAlLaboratorio] = useState('');
+  const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
+  const [Observaciones, setObservaciones] = useState('');
+  const [palabraDeAdvertencia, setPalabraDeAdvertencia] = useState('');
+  const [preventivaCodigoDetalle, setPreventivaCodigoDetalle] = useState('');
+  const [respuestaOIntervencionCodigoDetalle, setRespuestaOIntervencionCodigoDetalle] = useState('');
+  const [razonSocial, setRazonSocial] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [contacto, setContacto] = useState('');
 
+  // función para que las entradas se registren solo en mayúsculas
+  const toUpper = (setter) => (e) => {
+  setter(e.target.value.toUpperCase());};
 
-  const resetForm = () => {
-   setNombre('');
-   setFamilia('');
-   setSinonimo('');
-   setCas('');
-   setMarca('');
-   setReferencia('');
-   setFdsCompleta('Si');
-   setUltimaFechaActualizacionFDS('');
-   setEstadoFisico('Solido');
-   setCodigoFraseH('');
-   setSustanciaCancerigena('');
-   setSitioAlmacenamiento('');
-   setUbicacionEspecifica('');
-   setUnidadDeMedida('');
-   setPresentacion('');
-   setNumeroRecipientes('');
-   setCantidadTotal('');
-   setCantidadReal('');
-   setEsControlado('');
-   setComponente1('');
-   setPictogramasSeleccionados([]);
-   setClacificacionAlmacenamiento('');
+  //función para que al dar clic en cancelar se reinicien los inpus de los modales de los formularios
+  // const resetForm = () => {
 
+  //  setNombre('');
+  //  setFamilia('');
+  //  setSinonimo('');
+  //  setCas('');
+  //  setMarca('');
+  //  setReferencia('');
+  //  setFdsCompleta('Si');
+  //  setUltimaFechaActualizacionFDS('');
+  //  setEstadoFisico('Solido');
+  //  setCodigoFraseH('');
+  //  setSustanciaCancerigena('');
+  //  setSitioAlmacenamiento('');
+  //  setUbicacionEspecifica('');
+  //  setUnidadDeMedida('');
+  //  setPresentacion('');
+  //  setNumeroRecipientes('');
+  //  setCantidadTotal('');
+  //  setCantidadReal('');
+  //  setEsControlado('');
+  //  setComponente1('');
+  //  setPictogramasSeleccionados([]);
+  //  setClacificacionAlmacenamiento('');
+  //  setSeparacionMetodoSAFTDATA('');
+  //  SetFechaDeIngresoDelaSustanciaQuimicaAlLaboratorio('');
+  //  setFechaVencimientoProyec('');
+  //  setObservaciones('');
+  //  setPalabraDeAdvertencia('');
+  //  setPreventivaCodigoDetalle('');
+  //  setRespuestaOIntervencionCodigoDetalle('');
+  //  setRazonSocial('');
+  //  setDireccion('');
+  //  setContacto('');
 
+  // };
+
+  //funciones para aplicar el cierre y reset de los inputs de los formularios de los modales
+   const closeModal = () => {
+    // resetForm();
+    setIsModalOpen(false);
+  };
+
+  const closeFirstModal = () => {
+    
+    setIsFirstModalOpen(false);
+  };
+
+  const closeSecondModal = () => {
+    // resetForm();
+    setIsSecondOpen(false);
+  };
+
+  const closeThirdModal = () => {
+    // resetForm();
+    setIsThirdOpen(false);
+  };
+
+  const closePictogramasModal = () => {
+    setPictogramasSeleccionados([]);
+    setIsPictogramasOpen(false);
   };
 
 
@@ -125,7 +159,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
     <div>
 
-      <div className='contenedor-cierreSesion' onClick={openModal}>
+      <div className='contenedor-cierreSesion' onClick={() => setIsModalOpen (true)}>
         <img src={iconoAgregarRegistro} alt="" />
         <h3>Nuevo registro</h3>
       </div>
@@ -133,18 +167,18 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       <Modal isOpen={isModalOpen} >
           <div>
             <h1>Informacion basica</h1>
-            <button onClick={openFirstModal}>Agregar</button>
+            <button onClick={() => setIsFirstModalOpen (true)}>Agregar</button>
           </div>
 
           <div>
             <h1>Informacion general</h1>
-            <button onClick={openSecondModal}>Agregar</button>
+            <button onClick={() => setIsSecondOpen (true)}>Agregar</button>
             
           </div>
 
           <div>
             <h1>Informacion especifica</h1>
-            <button onClick={openThirdModal}>Agregar</button>
+            <button onClick={() => setIsThirdOpen (true)}>Agregar</button>
             
           </div>
 
@@ -183,7 +217,6 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Utima fecha actualizacion o creacion FDS</label>
           <input
             type="date"
-            value={fechaActualizacionFDS}
             onChange={(e) => setFechaActualizacionFDS(e.target.value)}
           />
           
@@ -194,7 +227,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           </select>
 
           
-          <button type="button" onClick={openPictogramasModal}>Peligrosidad SGA</button>
+          <button type="button" onClick={() => setIsPictogramasOpen(true)}>Peligrosidad SGA</button>
 
           <button type='button'>Guardar</button>
           <button type='button' onClick={closeFirstModal}>Cancelar</button>
@@ -263,14 +296,14 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
            <label htmlFor="">Fecha de ingreso de la sustancia quimica al laboratorio</label>
            <input
             type="date"
-            value={fechaIngresoreactivo}
+            
             onChange={(e) => setFechaIngresoReactivo(e.target.value)}
           />
 
           <label htmlFor="">Fecha vencimiento proyectado</label>
            <input
             type="date"
-            value={fechaVencimientoProyec}
+            
             onChange={(e) => setFechaVencimientoProyec(e.target.value)}/>
 
           <label htmlFor="observaciones">Observaciones</label>
