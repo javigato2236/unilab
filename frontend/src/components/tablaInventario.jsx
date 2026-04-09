@@ -42,39 +42,39 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
       ? prev.filter((p) => p !== nombre)
       : [...prev, nombre]);};
 
-  const [fechaActualizacionFDS, setFechaActualizacionFDS] = useState('');
-  const [fechaIngresoreactivo, setFechaIngresoReactivo] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [familia, setFamilia] = useState('');
-  const [sinonimo, setSinonimo] = useState('');
-  const [cas, setCas] = useState('');
-  const [marca, setMarca] = useState('');
-  const [referencia, setReferencia] = useState('');
-  const [fdsCompleta, setFdsCompleta] = useState('Si');
-  const [ultimaFechaActualizacionFDS, setUltimaFechaActualizacionFDS] = useState('');
-  const [estadoFisico, setEstadoFisico] = useState('Solido');
-  const [codigoFraseH, setCodigoFraseH] = useState('');
-  const [sustanciaCancerigena, setSustanciaCancerigena] = useState('Si');
-  const [sitioAlmacenamiento, setSitioAlmacenamiento] = useState('');
-  const [ubicacionEspecifica, setUbicacionEspecifica] = useState('');
-  const [unidadDeMedida, setUnidadDeMedida] = useState('');
-  const [presentacion, setPresentacion] = useState('');
-  const [numeroRecipientes, setNumeroRecipientes] = useState('');
-  const [cantidadTotal, setCantidadTotal] = useState('');
-  const [cantidadReal, setCantidadReal] = useState('');
-  const [esControlado, setEsControlado] = useState('Si');
-  const [componente1, setComponente1] = useState('');
-  const [clacificacionAlmacenamiento, setClacificacionAlmacenamiento] = useState('');
-  const [SeparacionMetodoSAFTDATA, setSeparacionMetodoSAFTDATA] = useState('C');
-  const [fechaDeIngresoDelaSustanciaQuimicaAlLaboratorio, SetFechaDeIngresoDelaSustanciaQuimicaAlLaboratorio] = useState('');
-  const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
-  const [Observaciones, setObservaciones] = useState('');
-  const [palabraDeAdvertencia, setPalabraDeAdvertencia] = useState('');
-  const [preventivaCodigoDetalle, setPreventivaCodigoDetalle] = useState('');
-  const [respuestaOIntervencionCodigoDetalle, setRespuestaOIntervencionCodigoDetalle] = useState('');
-  const [razonSocial, setRazonSocial] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [contacto, setContacto] = useState('');
+  // const [fechaActualizacionFDS, setFechaActualizacionFDS] = useState('');
+  // const [fechaIngresoreactivo, setFechaIngresoReactivo] = useState('');
+  // const [nombre, setNombre] = useState('');
+  // const [familia, setFamilia] = useState('');
+  // const [sinonimo, setSinonimo] = useState('');
+  // const [cas, setCas] = useState('');
+  // const [marca, setMarca] = useState('');
+  // const [referencia, setReferencia] = useState('');
+  // const [fdsCompleta, setFdsCompleta] = useState('Si');
+  // const [ultimaFechaActualizacionFDS, setUltimaFechaActualizacionFDS] = useState('');
+  // const [estadoFisico, setEstadoFisico] = useState('Solido');
+  // const [codigoFraseH, setCodigoFraseH] = useState('');
+  // const [sustanciaCancerigena, setSustanciaCancerigena] = useState('Si');
+  // const [sitioAlmacenamiento, setSitioAlmacenamiento] = useState('');
+  // const [ubicacionEspecifica, setUbicacionEspecifica] = useState('');
+  // const [unidadDeMedida, setUnidadDeMedida] = useState('');
+  // const [presentacion, setPresentacion] = useState('');
+  // const [numeroRecipientes, setNumeroRecipientes] = useState('');
+  // const [cantidadTotal, setCantidadTotal] = useState('');
+  // const [cantidadReal, setCantidadReal] = useState('');
+  // const [esControlado, setEsControlado] = useState('Si');
+  // const [componente1, setComponente1] = useState('');
+  // const [clacificacionAlmacenamiento, setClacificacionAlmacenamiento] = useState('');
+  // const [SeparacionMetodoSAFTDATA, setSeparacionMetodoSAFTDATA] = useState('C');
+  // const [fechaDeIngresoDelaSustanciaQuimicaAlLaboratorio, SetFechaDeIngresoDelaSustanciaQuimicaAlLaboratorio] = useState('');
+  // const [fechaVencimientoProyec, setFechaVencimientoProyec] = useState('');
+  // const [Observaciones, setObservaciones] = useState('');
+  // const [palabraDeAdvertencia, setPalabraDeAdvertencia] = useState('');
+  // const [preventivaCodigoDetalle, setPreventivaCodigoDetalle] = useState('');
+  // const [respuestaOIntervencionCodigoDetalle, setRespuestaOIntervencionCodigoDetalle] = useState('');
+  // const [razonSocial, setRazonSocial] = useState('');
+  // const [direccion, setDireccion] = useState('');
+  // const [contacto, setContacto] = useState('');
 
   // función para que las entradas se registren solo en mayúsculas
   const toUpper = (setter) => (e) => {
@@ -183,6 +183,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           </div>
 
           <button type='button' onClick={closeModal}>Cancelar</button>
+          <button type='button' onClick={''}>enviar</button>
       </Modal>
 
 
@@ -191,7 +192,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
         <form >
 
           <label htmlFor="">Nombre de la sustancia</label>
-          <input type="text" />
+          <input type="text"  />
 
           <label htmlFor="">Familia</label>
           <input type="text" />
