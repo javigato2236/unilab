@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import List
 
 class UsuarioCreate(BaseModel):
     correo: EmailStr
@@ -20,3 +21,25 @@ class ResetPassword(BaseModel):
 
 class ValidateToken(BaseModel):##########################
     token: str
+
+
+
+
+#################################################
+class Basica(BaseModel):
+    nombre: str
+    familia: str
+    sinonimo: str
+
+class General(BaseModel):
+    cantidad_total: int
+    cantidad_real: int
+
+class Especifica(BaseModel):
+    palabra_advertencia: str
+
+class SustanciaCreate(BaseModel):
+    basica: Basica
+    general: General
+    especifica: Especifica
+    pictogramas: List[int]

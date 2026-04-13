@@ -1,4 +1,4 @@
-.panel-reactivo{
+.panel-reactivo {
   position: fixed;
   right: 0;
   top: 0;
@@ -7,45 +7,45 @@
   height: 100%;
 
   background: white;
-  box-shadow: -5px 0 10px rgba(0,0,0,0.2);
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
 
   padding: 20px;
 
   animation: deslizar 0.3s ease;
 }
 
-@keyframes deslizar{
-  from{
+@keyframes deslizar {
+  from {
     transform: translateX(100%);
   }
 
-  to{
+  to {
     transform: translateX(0);
   }
 }
 
-.control-cantidad{
-  display:flex;
-  gap:15px;
-  align-items:center;
-  margin:20px 0;
+.control-cantidad {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
 }
 
-.control-cantidad button{
-  width:40px;
-  height:40px;
-  font-size:20px;
+.control-cantidad button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
 }
 
-.acciones{
-  display:flex;
-  gap:10px;
+.acciones {
+  display: flex;
+  gap: 10px;
 }
 
-.agregar{
-  background:#2ecc71;
+.agregar {
+  background: #2ecc71;
 }
 
-.quitar{
-  background:#e74c3c;
+.quitar {
+  background: #e74c3c;
 }

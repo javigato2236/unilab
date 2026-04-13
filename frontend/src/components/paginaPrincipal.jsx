@@ -1,26 +1,18 @@
-import '../styles/paginaPrincipal.css'
-import ModulosInicioSessionLabs from './modulosInicioSesionLabs';
+import "../styles/paginaPrincipal.css";
+import ModulosInicioSessionLabs from "./modulosInicioSesionLabs";
 function PaginaPrincipal() {
-    return (
-        
-        <div className='contenedorPrincipal'>
-            <h1 className='tituloPrincipal'>Unilab</h1>
-            
-            
+  return (
+    <div className="contenedorPrincipal">
+      <h1 className="tituloPrincipal">Unilab</h1>
 
-            <div className='grid-container'>
-                <ModulosInicioSessionLabs/>        
-                
-                 
-            </div>
-
-        </div>
-    );
+      <div className="grid-container">
+        <ModulosInicioSessionLabs />
+      </div>
+    </div>
+  );
 }
 
 export default PaginaPrincipal;
-
-
 
 // style={{
 //                 display: 'grid',

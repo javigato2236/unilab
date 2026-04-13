@@ -3,7 +3,6 @@ import TablaReactivos from "./tablaInventario";
 import PanelReactivo from "./PanelReactivo";
 
 function Inventario() {
-
   const [reactivoSeleccionado, setReactivoSeleccionado] = useState(null);
 
   const reactivos = [
@@ -14,7 +13,6 @@ function Inventario() {
 
   return (
     <div className="inventario-container">
-
       <TablaReactivos
         reactivos={reactivos}
         seleccionarReactivo={setReactivoSeleccionado}
@@ -26,7 +24,6 @@ function Inventario() {
           cerrar={() => setReactivoSeleccionado(null)}
         />
       )}
-
     </div>
   );
 }

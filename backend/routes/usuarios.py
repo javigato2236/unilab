@@ -181,3 +181,10 @@ def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
     db.commit()
 
     return {"msg": "Contraseña actualizada correctamente"}
+
+
+#####################################################3
+
+@router.get("/pictogramas")
+def obtener_pictogramas(db: Session = Depends(get_db)):
+    return db.query(models.CatalogoPictograma).all()

@@ -4,6 +4,10 @@ from database import engine
 import models
 from routes import usuarios
 
+
+#########################
+from fastapi.staticfiles import StaticFiles
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -15,5 +19,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+########### SERVIR IMÁGENES 
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+########### RUTAS
 
 app.include_router(usuarios.router, prefix="/api")

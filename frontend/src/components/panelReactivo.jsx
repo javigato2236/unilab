@@ -1,14 +1,12 @@
-import '../styles/tabla.css';
+import "../styles/tabla.css";
 
 import { useState } from "react";
 
 function PanelReactivo({ reactivo, cerrar }) {
-
   const [cantidad, setCantidad] = useState(0);
 
   return (
     <div className="panel-reactivo">
-
       <h2>{reactivo.nombre}</h2>
 
       <p>Cantidad actual: {reactivo.cantidad} ml</p>
@@ -32,7 +30,6 @@ function PanelReactivo({ reactivo, cerrar }) {
       <button className="cerrar" onClick={cerrar}>
         Cerrar
       </button>
-
     </div>
   );
 }

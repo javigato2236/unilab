@@ -4,16 +4,15 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
 api.interceptors.response.use(
-  response => response,
-  async error => {
-
+  (response) => response,
+  async (error) => {
     const originalRequest = error.config;
 
     console.log("Request URL:", originalRequest?.url);
@@ -34,15 +33,13 @@ api.interceptors.response.use(
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/refresh`,
-          { refresh_token: refresh }
+          { refresh_token: refresh },
         );
 
         localStorage.setItem("access_token", response.data.access_token);
-        originalRequest.headers.Authorization =
-          `Bearer ${response.data.access_token}`;
+        originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
 
         return axios(originalRequest);
-
       } catch (err) {
         localStorage.clear();
         window.location.href = "/";
@@ -51,6 +48,6 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export default api;

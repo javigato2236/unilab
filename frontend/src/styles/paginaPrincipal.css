@@ -1,57 +1,49 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  height: 100%;         
+  height: 100%;
 }
 
 .tituloPrincipal {
-  color:rgb(0, 110, 255);
+  color: rgb(0, 110, 255);
   text-align: center;
-  margin-right:50px;
-  font-size:50px;
+  margin-right: 50px;
+  font-size: 50px;
 }
-
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(5, auto); /*aqui definimos el numero de ventanas que se miraran por fila  en este cas0 5 por fila*/
+  grid-template-columns: repeat(
+    5,
+    auto
+  ); /*aqui definimos el numero de ventanas que se miraran por fila  en este cas0 5 por fila*/
   gap: 20px;
   justify-content: center;
-  margin-left:24px;
-  
+  margin-left: 24px;
 }
 
- .contenedor-cierreSesion {
-  left:1150px;
-  position:absolute;
+.contenedor-cierreSesion {
+  left: 1150px;
+  position: absolute;
   transition: transform 0.2s;
-  
- } 
+}
 
-  .contenedor-cierreSesion:hover {
-    transform: scale(1.05);
-  
- } 
+.contenedor-cierreSesion:hover {
+  transform: scale(1.05);
+}
 
- .contenedor-cierreSesion img { 
+.contenedor-cierreSesion img {
   cursor: pointer;
   width: 50px;
   height: 50px;
-  padding-bottom:-20px;
+  padding-bottom: -20px;
   color: rgb(0, 110, 255);
-  
-} 
+}
 
- .contenedor-cierreSesion h3 { 
+.contenedor-cierreSesion h3 {
   position: relative;
   bottom: 20px;
-  right:20px;
-  font-size:15px;
-
-} 
-
-
-
-
-
-
+  right: 20px;
+  font-size: 15px;
+}
