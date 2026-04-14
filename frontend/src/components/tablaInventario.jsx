@@ -181,6 +181,9 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Familia</label>
           <input type="text" />
 
+          <label htmlFor="">Familia</label>
+          <input type="text" />
+
           <label htmlFor="">Sinonimo</label>
           <input type="text" />
 
