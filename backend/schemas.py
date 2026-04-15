@@ -30,6 +30,7 @@ class ValidateToken(BaseModel):##########################
 class InfoBasicaSchema(BaseModel):
     nombre: str
     familia: str
+    grupo: str
     sinonimo: str
     cas: str
     marca: str

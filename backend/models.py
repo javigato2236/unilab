@@ -34,7 +34,7 @@ class CatalogoPictograma(Base):
 
 
 class SustanciaPictograma(Base):
-    __tablename__ = "sustancia_pictograma"
+    __tablename__ = "sustancia_pictogramas"
 
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))

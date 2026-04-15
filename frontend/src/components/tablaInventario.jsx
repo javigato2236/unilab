@@ -181,8 +181,15 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
           <label htmlFor="">Familia</label>
           <input type="text" />
 
-          <label htmlFor="">Familia</label>
-          <input type="text" />
+          <label htmlFor="">Grupo</label>
+          <select id="Grupo" name="Grupo">
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+            <option value="e">E</option>
+            <option value="f">F</option>
+          </select>
 
           <label htmlFor="">Sinonimo</label>
           <input type="text" />
@@ -198,7 +205,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
           <label htmlFor="">FDS Completa?</label>
           <select id="FDS" name="FDS">
-            <option value="SI">Si</option>
+            <option value="si">Si</option>
             <option value="no">No</option>
           </select>
 
@@ -366,7 +373,7 @@ function TablaReactivos({ reactivos, seleccionarReactivo }) {
 
         <button
           onClick={() => {
-            console.log(pictogramasSeleccionados);
+            // console.log(pictogramasSeleccionados);
             closePictogramasModal();
           }}
         >
