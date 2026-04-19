@@ -1,35 +1,55 @@
+/* .pictograma-item {
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 10px;
+  transition: 0.2s;
+} */
+
+/* .pictograma-item img {
+  width: 80px; 
+  height: 80px;
+  object-fit: contain;
+} */
+
+/* .pictograma-item:hover {
+  transform: scale(1.05);
+} */
+
+/* .pictograma-item.activo {
+  border: 2px solid #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+} */
+
 .contenedor-pictogramas {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 10px;
+  grid-template-columns: repeat(3, 100px); /* 3 columnas fijas */
+  justify-content: center; /* 🔥 centra horizontal */
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .pictograma-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 10px;
-  padding: 5px;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
 }
 
-/* 🔹 imagen pequeña */
 .pictograma-item img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
-/* 🔹 ocultar checkbox feo */
-.pictograma-item input {
-  display: none;
-}
-
-/* 🔹 cuando está seleccionado */
-.pictograma-item.seleccionado {
-  border: 2px solid red;
-  background-color: #ffe5e5;
+.pictograma-item.activo {
+  border: 2px solid #007bff;
+  background: rgba(0, 123, 255, 0.1);
 }
