@@ -26,3 +26,5 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 ########### RUTAS
 
 app.include_router(usuarios.router, prefix="/api")
+
+

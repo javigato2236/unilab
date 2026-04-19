@@ -188,3 +188,9 @@ def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
 @router.get("/pictogramas")
 def obtener_pictogramas(db: Session = Depends(get_db)):
     return db.query(models.CatalogoPictograma).all()
+
+
+############################
+@router.get("/sustancias")
+def get_sustancias():
+    return [{"id": 1, "nombre": "ACIDO"}]
