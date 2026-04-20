@@ -30,7 +30,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [isPictogramasModalOpen, setIsPictogramasModalOpen] = useState(false);
 
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
-  const [tempPictogramas, setTempPictogramas] = useState([]); //////////////7
+  const [tempPictogramas, setTempPictogramas] = useState([]);
   // 🔥 HANDLER UNIVERSAL
   const handleChange =
     (seccion, campo, isNumber = false, toUpper = false) =>
@@ -247,7 +247,9 @@ function TablaReactivos({ seleccionarReactivo }) {
         </div>
 
         <div className="contnedorBasica">
-          <label htmlFor="fecha">Selecciona una fecha:</label>
+          <label htmlFor="fecha">
+            Ultima fecha de actualizacion o creacion de FDS
+          </label>
           <input type="date" id="fecha" name="fecha" />
         </div>
 
@@ -266,7 +268,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             setIsPictogramasModalOpen(true);
           }}
         >
-          Pictogramas
+          Peligrosidad SGA
         </button>
 
         <div className="botonModalBasica">
