@@ -1,6 +1,10 @@
 .contnedorBasica {
-  display: flex;
+  /* display: flex;
   align-items: center;
+  margin-bottom: 10px; */
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
@@ -14,4 +18,46 @@
 .contnedorBasica textarea {
   flex: 1; /* ocupa el resto del espacio */
   padding: 6px;
+}
+
+.contenedorGenearl {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.modal-content {
+  top: 1px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra horizontalmente */
+  margin-bottom: 5px;
+}
+
+.botonModalPrincipal,
+.botonModalPictogramas_1,
+.botonModalPrincipalEnviarGuardar button,
+.botonModalBasica button,
+.botonModalPictogramas_2 button,
+.botonModalGeneral button,
+.botonModalEspecifica button {
+  color: rgb(0, 110, 255);
+  padding: 10px 20px;
+  margin: 10px 20px;
+  border-color: rgb(237, 222, 222);
+  border-color: rgb(235, 231, 231);
+
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
 }

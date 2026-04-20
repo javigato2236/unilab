@@ -165,23 +165,36 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       {/* MODAL PRINCIPAL */}
       <Modal isOpen={isModalOpen}>
-        <h2>Formulario principal</h2>
+        <h2>Ingreso de reactivos quimicos</h2>
 
-        <button onClick={() => setIsFirstModalOpen(true)}>
+        <button
+          className="botonModalPrincipal"
+          onClick={() => setIsFirstModalOpen(true)}
+        >
           Información básica
         </button>
-        <button onClick={() => setIsSecondModalOpen(true)}>
+
+        <button
+          className="botonModalPrincipal"
+          onClick={() => setIsSecondModalOpen(true)}
+        >
           Información general
         </button>
-        <button onClick={() => setIsThirdModalOpen(true)}>
+
+        <button
+          className="botonModalPrincipal"
+          onClick={() => setIsThirdModalOpen(true)}
+        >
           Información específica
         </button>
 
-        <button onClick={enviarTodo}>
-          {editandoId ? "Actualizar" : "Guardar"}
-        </button>
+        <div className="botonModalPrincipalEnviarGuardar">
+          <button onClick={enviarTodo}>
+            {editandoId ? "Actualizar" : "Guardar"}
+          </button>
 
-        <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
+          <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
+        </div>
       </Modal>
 
       {/* BASICA */}
@@ -247,6 +260,7 @@ function TablaReactivos({ seleccionarReactivo }) {
         </div>
 
         <button
+          className="botonModalPictogramas_1"
           onClick={() => {
             setTempPictogramas([]); // 🔥 SIEMPRE vacío
             setIsPictogramasModalOpen(true);
@@ -254,131 +268,194 @@ function TablaReactivos({ seleccionarReactivo }) {
         >
           Pictogramas
         </button>
-        <button
-          onClick={() => {
-            console.log(
-              "Datos guardados (basica):",
-              formData.basica,
-              formData.pictogramas,
-            );
-            setIsFirstModalOpen(false);
-          }}
-        >
-          Guardar
-        </button>
-        <button onClick={() => setIsFirstModalOpen(false)}>Cancelar</button>
+
+        <div className="botonModalBasica">
+          <button
+            onClick={() => {
+              console.log(
+                "Datos guardados (basica):",
+                formData.basica,
+                formData.pictogramas,
+              );
+              setIsFirstModalOpen(false);
+            }}
+          >
+            Guardar
+          </button>
+          <button
+            className="botonModalBasica"
+            onClick={() => setIsFirstModalOpen(false)}
+          >
+            Cancelar
+          </button>
+        </div>
       </Modal>
 
       {/* GENERAL */}
       <Modal isOpen={isSecondModalOpen}>
-        <label htmlFor="">Codigo frase H</label>
-        <textarea name="" id=""></textarea>
+        <div className="contenedorGenearl">
+          <label htmlFor="">Codigo frase H</label>
+          <textarea name="" id=""></textarea>
+        </div>
 
-        <label htmlFor="">Toxicidad aguda CAT 1 CAT 2</label>
-        <textarea name="" id=""></textarea>
+        <div className="contenedorGenearl">
+          <label htmlFor="">Toxicidad aguda CAT 1 CAT 2</label>
+          <textarea name="" id=""></textarea>
+        </div>
 
-        <label htmlFor="SusCancer">Sustancia cancerigena</label>
-        <select>
-          <option value="si">Si</option>
-          <option value="no">No</option>
-        </select>
+        <div className="contenedorGenearl">
+          <label htmlFor="SusCancer">Sustancia cancerigena</label>
+          <select>
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
 
         <h2>Ubicacion</h2>
-        <label htmlFor="">Sitio de almacenamiento</label>
-        <input />
-        <label htmlFor="">Ubicacion especifica</label>
-        <input />
+        <div className="contenedorGenearl">
+          <label htmlFor="">Sitio de almacenamiento</label>
+          <input />
+        </div>
 
-        <label htmlFor="UniMedida">Unidad de medida</label>
-        <select>
-          <option value="gl">gl</option>
-          <option value="g">g</option>
-          <option value="Kg">Kg</option>
-          <option value="L">L</option>
-          <option value="ml">ml</option>
-          <option value="mg">mg</option>
-          <option value="Oz">Oz</option>
-        </select>
+        <div className="contenedorGenearl">
+          <label htmlFor="">Ubicacion especifica</label>
+          <input />
+        </div>
 
-        <label htmlFor="">Presentacion</label>
-        <input />
+        <div className="contenedorGenearl">
+          <label htmlFor="UniMedida">Unidad de medida</label>
+          <select>
+            <option value="gl">gl</option>
+            <option value="g">g</option>
+            <option value="Kg">Kg</option>
+            <option value="L">L</option>
+            <option value="ml">ml</option>
+            <option value="mg">mg</option>
+            <option value="Oz">Oz</option>
+          </select>
+        </div>
 
-        <label htmlFor="">Numero de recipientes</label>
-        <input />
+        <div className="contenedorGenearl">
+          <label htmlFor="">Presentacion</label>
+          <input />
+        </div>
 
-        <label htmlFor="">Cantidad total</label>
-        <input
-          value={formData.general.cantidad_total}
-          onChange={handleChange("general", "cantidad_total", true)}
-        />
+        <div className="contenedorGenearl">
+          <label htmlFor="">Numero de recipientes</label>
+          <input />
+        </div>
 
-        <label htmlFor="">Cantidad real</label>
-        <input />
-        <button onClick={() => setIsSecondModalOpen(false)}>Cerrar</button>
+        <div className="contenedorGenearl">
+          <label htmlFor="">Cantidad total</label>
+          <input
+            value={formData.general.cantidad_total}
+            onChange={handleChange("general", "cantidad_total", true)}
+          />
+        </div>
+
+        <div className="contenedorGenearl">
+          <label htmlFor="">Cantidad real</label>
+          <input />
+        </div>
+
+        <div className="botonModalGeneral">
+          <button>Guardar</button>
+          <button onClick={() => setIsSecondModalOpen(false)}>Cancelar</button>
+        </div>
       </Modal>
 
       {/* ESPECIFICA */}
-      <Modal isOpen={isThirdModalOpen}>
+      <Modal isOpen={isThirdModalOpen} className="modal-content">
         <h2>Sustancias controladas RES001:2015</h2>
-        <label htmlFor="EsControlado">Es controlado</label>
-        <select>
-          <option value="si">Si</option>
-          <option value="no">No</option>
-        </select>
 
-        <label htmlFor="">Componente 1</label>
-        <input />
+        <div className="form-group">
+          <label htmlFor="EsControlado">Es controlado</label>
+          <select>
+            <option value="si">Si</option>
+            <option value="no">No</option>
+          </select>
+        </div>
 
-        <label htmlFor="EsControlado">Clasificacion almacenamiento</label>
-        <input type="text" />
+        <div className="form-group">
+          <label htmlFor="">Componente 1</label>
+          <input />
+        </div>
 
-        <label htmlFor="SAF-T-DATA">Separacion metodo SAF-T-DATA</label>
-        <select>
-          <option value="T">T</option>
-          <option value="C">C</option>
-          <option value="I">I</option>
-          <option value="O">O</option>
-          <option value="PMA">PMA</option>
-          <option value="RM">RM</option>
-        </select>
+        <div className="form-group">
+          <label htmlFor="">clasificacion almacenamiento</label>
+          <input />
+        </div>
 
-        <label htmlFor="fechaIngresoLab">
-          Fecha de ingreso de la sustancia al laboratorio de quimica
-        </label>
-        <input type="date" id="fecha" name="fecha" />
+        <div className="form-group">
+          <label htmlFor="SAF-T-DATA">Separacion metodo SAF-T-DATA</label>
+          <select>
+            <option value="T">T</option>
+            <option value="C">C</option>
+            <option value="I">I</option>
+            <option value="O">O</option>
+            <option value="PMA">PMA</option>
+            <option value="RM">RM</option>
+          </select>
+        </div>
 
-        <label htmlFor="fechaVencimientoProyec">
-          Fecha de vencimiento proyectada
-        </label>
-        <input type="date" id="fecha" name="fecha" />
+        <div className="form-group">
+          <label htmlFor="fechaIngresoLab">
+            Fecha de ingreso de la sustancia al laboratorio de quimica
+          </label>
+          <input type="date" id="" name="" />
+        </div>
 
-        <label htmlFor="">Observaciones</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="fechaVencimientoProyec">
+            Fecha de vencimiento proyectada
+          </label>
+          <input type="date" id="" name="" />
+        </div>
 
-        <input
-          placeholder="Palabra advertencia"
-          value={formData.especifica.palabra_advertencia}
-          onChange={handleChange("especifica", "palabra_advertencia")}
-        />
+        <div className="form-group">
+          <label htmlFor="">Observaciones</label>
+          <textarea name="" id=""></textarea>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="">Palabra advertencia</label>
+          <input
+            value={formData.especifica.palabra_advertencia}
+            onChange={handleChange("especifica", "palabra_advertencia")}
+          />
+        </div>
 
         <h2>Consejos de prudencia (Frases P)</h2>
-        <label htmlFor="">Preventiva codigo/detalle</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="">Preventiva codigo/detalle</label>
+          <textarea name="" id=""></textarea>
+        </div>
 
-        <label htmlFor="">respuesta o intervencion codigo/detalle</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="">respuesta o intervencion codigo/detalle</label>
+          <textarea name="" id=""></textarea>
+        </div>
 
         <h2>Informacion proveedor</h2>
-        <label htmlFor="">Razon social</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="">Razon social</label>
+          <input type="text" />
+        </div>
 
-        <label htmlFor="">Direccion</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="">Direccion</label>
+          <input type="text" />
+        </div>
 
-        <label htmlFor="">Contacto</label>
-        <textarea name="" id=""></textarea>
+        <div className="form-group">
+          <label htmlFor="">Contacto</label>
+          <input type="text" />
+        </div>
 
-        <button onClick={() => setIsThirdModalOpen(false)}>Cerrar</button>
+        <div className="botonModalEspecifica">
+          <button>Guardar</button>
+          <button onClick={() => setIsThirdModalOpen(false)}>Cancelar</button>
+        </div>
       </Modal>
 
       {/* PICTOGRAMAS */}
@@ -397,24 +474,26 @@ function TablaReactivos({ seleccionarReactivo }) {
           ))}
         </div>
 
-        <button
-          onClick={() => {
-            setFormData((prev) => ({
-              ...prev,
-              pictogramas: tempPictogramas,
-            }));
+        <div className="botonModalPictogramas_2">
+          <button
+            onClick={() => {
+              setFormData((prev) => ({
+                ...prev,
+                pictogramas: tempPictogramas,
+              }));
 
-            console.log("Seleccionados:", tempPictogramas); // 👈 verificar
+              console.log("Seleccionados:", tempPictogramas); // 👈 verificar
 
-            setTempPictogramas([]); //LIMPIAR SELECCIÓN
-            setIsPictogramasModalOpen(false);
-          }}
-        >
-          Guardar selección
-        </button>
-        <button onClick={() => setIsPictogramasModalOpen(false)}>
-          Cancelar
-        </button>
+              setTempPictogramas([]); //LIMPIAR SELECCIÓN
+              setIsPictogramasModalOpen(false);
+            }}
+          >
+            Guardar selección
+          </button>
+          <button onClick={() => setIsPictogramasModalOpen(false)}>
+            Cancelar
+          </button>
+        </div>
       </Modal>
 
       {/* TABLA */}
