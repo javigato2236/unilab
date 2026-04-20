@@ -2,6 +2,7 @@ import iconoAgregarRegistro from "../assets/iconoAgregarRegistro.png";
 import "../styles/paginaPrincipal.css";
 import "../styles/pictogramas.css";
 import "../styles/tabla.css";
+import "../styles/inputsModales.css";
 
 import Modal from "../hoosk/modalReutilizable";
 import PanelReactivo from "./PanelReactivo";
@@ -185,21 +186,65 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       {/* BASICA */}
       <Modal isOpen={isFirstModalOpen}>
-        <input
-          placeholder="Nombre"
-          value={formData.basica.nombre}
-          onChange={handleChange("basica", "nombre")}
-        />
-        <input
-          placeholder="Familia"
-          value={formData.basica.familia}
-          onChange={handleChange("basica", "familia")}
-        />
-        <input
-          placeholder="Sinonimo"
-          value={formData.basica.sinonimo}
-          onChange={handleChange("basica", "sinonimo")}
-        />
+        <div className="contnedorBasica">
+          <label htmlFor="">Reactivo</label>
+          <input
+            type="text"
+            value={formData.basica.nombre}
+            onChange={handleChange("basica", "nombre")}
+          />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Familia</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Grupo</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Sinonimo</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Cas</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Marca</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="">Referencia</label>
+          <input />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="FDSCompleta">¿FDS completa?</label>
+          <select>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="fecha">Selecciona una fecha:</label>
+          <input type="date" id="fecha" name="fecha" />
+        </div>
+
+        <div className="contnedorBasica">
+          <label htmlFor="EstadoFisico">Estado fisico</label>
+          <select>
+            <option value="solido">Solido</option>
+            <option value="liquido">Liquido</option>
+          </select>
+        </div>
 
         <button
           onClick={() => {
@@ -226,27 +271,112 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       {/* GENERAL */}
       <Modal isOpen={isSecondModalOpen}>
+        <label htmlFor="">Codigo frase H</label>
+        <textarea name="" id=""></textarea>
+
+        <label htmlFor="">Toxicidad aguda CAT 1 CAT 2</label>
+        <textarea name="" id=""></textarea>
+
+        <label htmlFor="SusCancer">Sustancia cancerigena</label>
+        <select>
+          <option value="si">Si</option>
+          <option value="no">No</option>
+        </select>
+
+        <h2>Ubicacion</h2>
+        <label htmlFor="">Sitio de almacenamiento</label>
+        <input />
+        <label htmlFor="">Ubicacion especifica</label>
+        <input />
+
+        <label htmlFor="UniMedida">Unidad de medida</label>
+        <select>
+          <option value="gl">gl</option>
+          <option value="g">g</option>
+          <option value="Kg">Kg</option>
+          <option value="L">L</option>
+          <option value="ml">ml</option>
+          <option value="mg">mg</option>
+          <option value="Oz">Oz</option>
+        </select>
+
+        <label htmlFor="">Presentacion</label>
+        <input />
+
+        <label htmlFor="">Numero de recipientes</label>
+        <input />
+
+        <label htmlFor="">Cantidad total</label>
         <input
-          placeholder="Cantidad total"
           value={formData.general.cantidad_total}
           onChange={handleChange("general", "cantidad_total", true)}
         />
-        <input
-          placeholder="Cantidad real"
-          value={formData.general.cantidad_real}
-          onChange={handleChange("general", "cantidad_real", true)}
-        />
 
+        <label htmlFor="">Cantidad real</label>
+        <input />
         <button onClick={() => setIsSecondModalOpen(false)}>Cerrar</button>
       </Modal>
 
       {/* ESPECIFICA */}
       <Modal isOpen={isThirdModalOpen}>
+        <h2>Sustancias controladas RES001:2015</h2>
+        <label htmlFor="EsControlado">Es controlado</label>
+        <select>
+          <option value="si">Si</option>
+          <option value="no">No</option>
+        </select>
+
+        <label htmlFor="">Componente 1</label>
+        <input />
+
+        <label htmlFor="EsControlado">Clasificacion almacenamiento</label>
+        <input type="text" />
+
+        <label htmlFor="SAF-T-DATA">Separacion metodo SAF-T-DATA</label>
+        <select>
+          <option value="T">T</option>
+          <option value="C">C</option>
+          <option value="I">I</option>
+          <option value="O">O</option>
+          <option value="PMA">PMA</option>
+          <option value="RM">RM</option>
+        </select>
+
+        <label htmlFor="fechaIngresoLab">
+          Fecha de ingreso de la sustancia al laboratorio de quimica
+        </label>
+        <input type="date" id="fecha" name="fecha" />
+
+        <label htmlFor="fechaVencimientoProyec">
+          Fecha de vencimiento proyectada
+        </label>
+        <input type="date" id="fecha" name="fecha" />
+
+        <label htmlFor="">Observaciones</label>
+        <textarea name="" id=""></textarea>
+
         <input
           placeholder="Palabra advertencia"
           value={formData.especifica.palabra_advertencia}
           onChange={handleChange("especifica", "palabra_advertencia")}
         />
+
+        <h2>Consejos de prudencia (Frases P)</h2>
+        <label htmlFor="">Preventiva codigo/detalle</label>
+        <textarea name="" id=""></textarea>
+
+        <label htmlFor="">respuesta o intervencion codigo/detalle</label>
+        <textarea name="" id=""></textarea>
+
+        <h2>Informacion proveedor</h2>
+        <label htmlFor="">Razon social</label>
+        <textarea name="" id=""></textarea>
+
+        <label htmlFor="">Direccion</label>
+        <textarea name="" id=""></textarea>
+
+        <label htmlFor="">Contacto</label>
+        <textarea name="" id=""></textarea>
 
         <button onClick={() => setIsThirdModalOpen(false)}>Cerrar</button>
       </Modal>

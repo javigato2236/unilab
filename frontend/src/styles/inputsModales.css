@@ -1,0 +1,17 @@
+.contnedorBasica {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contnedorBasica label {
+  width: 180px; /* ancho fijo para alinear todo */
+  font-weight: 500;
+}
+
+.contnedorBasica input,
+.contnedorBasicaselect,
+.contnedorBasica textarea {
+  flex: 1; /* ocupa el resto del espacio */
+  padding: 6px;
+}
