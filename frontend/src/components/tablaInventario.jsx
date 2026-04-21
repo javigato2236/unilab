@@ -16,7 +16,18 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   // 🔥 ESTADO ÚNICO
   const [formData, setFormData] = useState({
-    basica: { nombre: "", familia: "", sinonimo: "" },
+    basica: {
+      reactivo: "",
+      familia: "",
+      grupo: "",
+      sinonimo: "",
+      cas: "",
+      marca: "",
+      referencia: "",
+      fdsCompleta: "",
+      ultimaFechaActualizacion: "",
+      estadoFisico: "",
+    },
     general: { cantidad_total: "", cantidad_real: "" },
     especifica: { palabra_advertencia: "" },
     pictogramas: [],
@@ -33,17 +44,13 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [tempPictogramas, setTempPictogramas] = useState([]);
   // 🔥 HANDLER UNIVERSAL
   const handleChange =
-    (seccion, campo, isNumber = false, toUpper = false) =>
+    (seccion, campo, isNumber = false) =>
     (e) => {
       let value = e.target.value;
 
       if (isNumber) {
         value = value === "" ? "" : Number(value);
         if (isNaN(value)) value = "";
-      } else {
-        if (toUpper) {
-          value = value.normalize("NFC").toLocaleUpperCase("es-CO");
-        }
       }
 
       setFormData((prev) => ({
@@ -146,7 +153,18 @@ function TablaReactivos({ seleccionarReactivo }) {
 
           // limpiar formulario completo
           setFormData({
-            basica: { nombre: "", familia: "", sinonimo: "" },
+            basica: {
+              reactivo: "",
+              familia: "",
+              grupo: "",
+              sinonimo: "",
+              cas: "",
+              marca: "",
+              referencia: "",
+              fdsCompleta: "",
+              ultimaFechaActualizacion: "",
+              estadoFisico: "",
+            },
             general: { cantidad_total: "", cantidad_real: "" },
             especifica: { palabra_advertencia: "" },
             pictogramas: [],
@@ -203,59 +221,95 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Reactivo</label>
           <input
             type="text"
-            value={formData.basica.nombre}
-            onChange={handleChange("basica", "nombre")}
+            value={formData.basica.reactivo}
+            onChange={handleChange("basica", "reactivo")}
           />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Familia</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.familia}
+            onChange={handleChange("basica", "familia")}
+          />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Grupo</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.grupo}
+            onChange={handleChange("basica", "grupo")}
+          />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Sinonimo</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.sinonimo}
+            onChange={handleChange("basica", "sinonimo")}
+          />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Cas</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.cas}
+            onChange={handleChange("basica", "cas")}
+          />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Marca</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.marca}
+            onChange={handleChange("basica", "marca")}
+          />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Referencia</label>
-          <input />
+          <input
+            type="text"
+            value={formData.basica.referencia}
+            onChange={handleChange("basica", "referencia")}
+          />
         </div>
 
         <div className="contnedorBasica">
-          <label htmlFor="FDSCompleta">¿FDS completa?</label>
-          <select>
+          <label htmlFor="">¿FDS completa?</label>
+          <select
+            value={formData.basica.fdsCompleta}
+            onChange={handleChange("basica", "fdsCompleta")}
+          >
             <option value="si">Sí</option>
             <option value="no">No</option>
           </select>
         </div>
 
         <div className="contnedorBasica">
-          <label htmlFor="fecha">
+          <label htmlFor="">
             Ultima fecha de actualizacion o creacion de FDS
           </label>
-          <input type="date" id="fecha" name="fecha" />
+          <input
+            value={formData.basica.ultimaFechaActualizacion}
+            onChange={handleChange("basica", "ultimaFechaActualizacion")}
+            type="date"
+            id=""
+            name="fecha"
+          />
         </div>
 
         <div className="contnedorBasica">
-          <label htmlFor="EstadoFisico">Estado fisico</label>
-          <select>
+          <label htmlFor="">Estado fisico</label>
+          <select
+            value={formData.basica.estadoFisico}
+            onChange={handleChange("basica", "estadoFisico")}
+          >
             <option value="solido">Solido</option>
             <option value="liquido">Liquido</option>
           </select>
