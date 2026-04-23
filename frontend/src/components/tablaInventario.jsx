@@ -28,10 +28,38 @@ function TablaReactivos({ seleccionarReactivo }) {
       ultimaFechaActualizacion: "",
       estadoFisico: "",
     },
-    general: { cantidad_total: "", cantidad_real: "" },
-    especifica: { palabra_advertencia: "" },
+    general: {
+      codigoFraseH: "",
+      toxicidadCat1Cat2: "",
+      sustanciaCancerigena: "",
+      sitioAlmacenamiento: "",
+      ubicacionEspecifica: "",
+      unidadDeMedida: "",
+      presentacion: "",
+      numeroDeRecipientes: "",
+      cantidadTotal: "",
+      cantidadReal: "",
+    },
+    especifica: {
+      esControlado: "",
+      componente1: "",
+      clasificacionAlmacenamiento: "",
+      separacionMetodoSAFTDATA: "",
+      fechaIngresoLabQuimica: "",
+      fechaVencimientoProyectada: "",
+      observaciones: "",
+      palabraDvertencia: "",
+      preventivaCodigoDetalle: "",
+      respuestaOintervencionCodigoDetalle: "",
+      razonSocial: "",
+      direccion: "",
+      contacto: "",
+    },
     pictogramas: [],
   });
+
+  //ESTADOS TEMPORALES
+  const [tempBasica, setTempBasica] = useState(formData.basica);
 
   // 🔹 MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,9 +70,29 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
-  // 🔥 HANDLER UNIVERSAL
-  const handleChange =
-    (seccion, campo, isNumber = false) =>
+
+  //HANDLER UNIVERSAL GUARDA DATOS APENAS SE ESCRIBEN EN LOS INPUTS
+  // const handleChange =
+  //   (seccion, campo, isNumber = false) =>
+  //   (e) => {
+  //     let value = e.target.value;
+
+  //     if (isNumber) {
+  //       value = value === "" ? "" : Number(value);
+  //       if (isNaN(value)) value = "";
+  //     }
+
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       [seccion]: {
+  //         ...prev[seccion],
+  //         [campo]: value,
+  //       },
+  //     }));
+  //   };
+
+  const handleTempChange =
+    (setter, campo, isNumber = false) =>
     (e) => {
       let value = e.target.value;
 
@@ -53,12 +101,9 @@ function TablaReactivos({ seleccionarReactivo }) {
         if (isNaN(value)) value = "";
       }
 
-      setFormData((prev) => ({
+      setter((prev) => ({
         ...prev,
-        [seccion]: {
-          ...prev[seccion],
-          [campo]: value,
-        },
+        [campo]: value,
       }));
     };
 
@@ -187,7 +232,10 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <button
           className="botonModalPrincipal"
-          onClick={() => setIsFirstModalOpen(true)}
+          onClick={() => {
+            setTempBasica(formData.basica);
+            setIsFirstModalOpen(true);
+          }}
         >
           Información básica
         </button>
@@ -221,8 +269,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Reactivo</label>
           <input
             type="text"
-            value={formData.basica.reactivo}
-            onChange={handleChange("basica", "reactivo")}
+            value={tempBasica.reactivo}
+            onChange={handleTempChange(setTempBasica, "reactivo")}
           />
         </div>
 
@@ -230,26 +278,31 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Familia</label>
           <input
             type="text"
-            value={formData.basica.familia}
-            onChange={handleChange("basica", "familia")}
+            // value={formData.basica.familia}
+            // onChange={handleChange("basica", "familia")}
           />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Grupo</label>
-          <input
-            type="text"
-            value={formData.basica.grupo}
-            onChange={handleChange("basica", "grupo")}
-          />
+          <select
+          // value={formData.basica.grupo}
+          // onChange={handleChange("basica", "grupo")}
+          >
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+            <option value="e">E</option>
+          </select>
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">Sinonimo</label>
           <input
             type="text"
-            value={formData.basica.sinonimo}
-            onChange={handleChange("basica", "sinonimo")}
+            // value={formData.basica.sinonimo}
+            // onChange={handleChange("basica", "sinonimo")}
           />
         </div>
 
@@ -257,8 +310,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Cas</label>
           <input
             type="text"
-            value={formData.basica.cas}
-            onChange={handleChange("basica", "cas")}
+            // value={formData.basica.cas}
+            // onChange={handleChange("basica", "cas")}
           />
         </div>
 
@@ -266,8 +319,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Marca</label>
           <input
             type="text"
-            value={formData.basica.marca}
-            onChange={handleChange("basica", "marca")}
+            // value={formData.basica.marca}
+            // onChange={handleChange("basica", "marca")}
           />
         </div>
 
@@ -275,16 +328,16 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label htmlFor="">Referencia</label>
           <input
             type="text"
-            value={formData.basica.referencia}
-            onChange={handleChange("basica", "referencia")}
+            // value={formData.basica.referencia}
+            // onChange={handleChange("basica", "referencia")}
           />
         </div>
 
         <div className="contnedorBasica">
           <label htmlFor="">¿FDS completa?</label>
           <select
-            value={formData.basica.fdsCompleta}
-            onChange={handleChange("basica", "fdsCompleta")}
+          // value={formData.basica.fdsCompleta}
+          // onChange={handleChange("basica", "fdsCompleta")}
           >
             <option value="si">Sí</option>
             <option value="no">No</option>
@@ -296,8 +349,8 @@ function TablaReactivos({ seleccionarReactivo }) {
             Ultima fecha de actualizacion o creacion de FDS
           </label>
           <input
-            value={formData.basica.ultimaFechaActualizacion}
-            onChange={handleChange("basica", "ultimaFechaActualizacion")}
+            // value={formData.basica.ultimaFechaActualizacion}
+            // onChange={handleChange("basica", "ultimaFechaActualizacion")}
             type="date"
             id=""
             name="fecha"
@@ -307,8 +360,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contnedorBasica">
           <label htmlFor="">Estado fisico</label>
           <select
-            value={formData.basica.estadoFisico}
-            onChange={handleChange("basica", "estadoFisico")}
+          // value={formData.basica.estadoFisico}
+          // onChange={handleChange("basica", "estadoFisico")}
           >
             <option value="solido">Solido</option>
             <option value="liquido">Liquido</option>
@@ -328,6 +381,29 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="botonModalBasica">
           <button
             onClick={() => {
+              setFormData((prev) => ({
+                ...prev,
+                basica: tempBasica,
+              }));
+
+              console.log("Guardado basica:", tempBasica);
+
+              setIsFirstModalOpen(false);
+            }}
+          >
+            Guardar
+          </button>
+          <button
+            onClick={() => {
+              setTempBasica(formData.basica); //revertir cambios
+              setIsFirstModalOpen(false);
+            }}
+          >
+            Cancelar
+          </button>
+
+          {/* <button
+            onClick={() => {
               console.log(
                 "Datos guardados (basica):",
                 formData.basica,
@@ -343,7 +419,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             onClick={() => setIsFirstModalOpen(false)}
           >
             Cancelar
-          </button>
+          </button> */}
         </div>
       </Modal>
 
@@ -403,10 +479,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <div className="contenedorGenearl">
           <label htmlFor="">Cantidad total</label>
-          <input
-            value={formData.general.cantidad_total}
-            onChange={handleChange("general", "cantidad_total", true)}
-          />
+          <input />
         </div>
 
         <div className="contenedorGenearl">
@@ -415,7 +488,14 @@ function TablaReactivos({ seleccionarReactivo }) {
         </div>
 
         <div className="botonModalGeneral">
-          <button>Guardar</button>
+          <button
+            onClick={() => {
+              console.log("Datos guardados (general):", formData.general);
+              setIsFirstModalOpen(false);
+            }}
+          >
+            Guardar
+          </button>
           <button onClick={() => setIsSecondModalOpen(false)}>Cancelar</button>
         </div>
       </Modal>
@@ -475,10 +555,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <div className="form-group">
           <label htmlFor="">Palabra advertencia</label>
-          <input
-            value={formData.especifica.palabra_advertencia}
-            onChange={handleChange("especifica", "palabra_advertencia")}
-          />
+          <input />
         </div>
 
         <h2>Consejos de prudencia (Frases P)</h2>
