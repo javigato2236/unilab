@@ -263,123 +263,125 @@
 //         </div>
 //       </Modal>
 
-//       {/* BASICA */}
+//      {/* BASICA */}
 //       <Modal isOpen={isFirstModalOpen}>
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Reactivo</label>
-//           <input
-//             type="text"
-//             value={tempBasica.reactivo}
-//             onChange={handleTempChange(setTempBasica, "reactivo")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Reactivo</label>
+//   <input
+//     type="text"
+//     value={tempBasica.reactivo}
+//     onChange={handleTempChange(setTempBasica, "reactivo")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Familia</label>
-//           <input
-//             type="text"
-//             value={tempBasica.familia}
-//             onChange={handleTempChange(setTempBasica, "familia")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Familia</label>
+//   <input
+//     type="text"
+//     value={tempBasica.familia}
+//     onChange={handleTempChange(setTempBasica, "familia")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Grupo</label>
-//           <select
-//             value={tempBasica.grupo}
-//             onChange={handleTempChange(setTempBasica, "grupo")}
-//           >
-//             <option value="a">A</option>
-//             <option value="b">B</option>
-//             <option value="c">C</option>
-//             <option value="d">D</option>
-//             <option value="e">E</option>
-//           </select>
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Grupo</label>
+//   <select
+//     value={tempBasica.grupo}
+//     onChange={handleTempChange(setTempBasica, "grupo")}
+//   >
+//     <option value="a">A</option>
+//     <option value="b">B</option>
+//     <option value="c">C</option>
+//     <option value="d">D</option>
+//     <option value="e">E</option>
+//   </select>
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Sinonimo</label>
-//           <input
-//             type="text"
-//             value={tempBasica.sinonimo}
-//             onChange={handleTempChange(setTempBasica, "sinonimo")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Sinonimo</label>
+//   <input
+//     type="text"
+//     value={tempBasica.sinonimo}
+//     onChange={handleTempChange(setTempBasica, "sinonimo")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Cas</label>
-//           <input
-//             type="text"
-//             value={tempBasica.cas}
-//             onChange={handleTempChange(setTempBasica, "cas")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Cas</label>
+//   <input
+//     type="text"
+//     value={tempBasica.cas}
+//     onChange={handleTempChange(setTempBasica, "cas")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Marca</label>
-//           <input
-//             type="text"
-//             value={tempBasica.marca}
-//             onChange={handleTempChange(setTempBasica, "marca")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Marca</label>
+//   <input
+//     type="text"
+//     value={tempBasica.marca}
+//     onChange={handleTempChange(setTempBasica, "marca")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Referencia</label>
-//           <input
-//             type="text"
-//             value={tempBasica.referencia}
-//             onChange={handleTempChange(setTempBasica, "referencia")}
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Referencia</label>
+//   <input
+//     type="text"
+//     value={tempBasica.referencia}
+//     onChange={handleTempChange(setTempBasica, "referencia")}
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">¿FDS completa?</label>
-//           <select
-//             value={tempBasica.fdsCompleta}
-//             onChange={handleTempChange(setTempBasica, "fdsCompleta")}
-//           >
-//             <option value="si">Sí</option>
-//             <option value="no">No</option>
-//           </select>
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">¿FDS completa?</label>
+//   <select
+//     value={tempBasica.fdsCompleta}
+//     onChange={handleTempChange(setTempBasica, "fdsCompleta")}
+//   >
+//     <option value="si">Sí</option>
+//     <option value="no">No</option>
+//   </select>
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">
-//             Ultima fecha de actualizacion o creacion de FDS
-//           </label>
-//           <input
-//             value={tempBasica.ultimaFechaActualizacion}
-//             onChange={handleTempChange(
-//               setTempBasica,
-//               "ultimaFechaActualizacion",
-//             )}
-//             type="date"
-//             id=""
-//             name="fecha"
-//           />
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">
+//     Ultima fecha de actualizacion o creacion de FDS
+//   </label>
+//   <input
+//     value={tempBasica.ultimaFechaActualizacion}
+//     onChange={handleTempChange(
+//       setTempBasica,
+//       "ultimaFechaActualizacion",
+//     )}
+//     type="date"
+//     id=""
+//     name="fecha"
+//   />
+// </div>
 
-//         <div className="contnedorBasica">
-//           <label htmlFor="">Estado fisico</label>
-//           <select
-//             value={tempBasica.estadoFisico}
-//             onChange={handleTempChange(setTempBasica, "estadoFisico")}
-//           >
-//             <option value="solido">Solido</option>
-//             <option value="liquido">Liquido</option>
-//           </select>
-//         </div>
+// <div className="contnedorBasica">
+//   <label htmlFor="">Estado fisico</label>
+//   <select
+//     value={tempBasica.estadoFisico}
+//     onChange={handleTempChange(setTempBasica, "estadoFisico")}
+//   >
+//     <option value="solido">Solido</option>
+//     <option value="liquido">Liquido</option>
+//   </select>
+// </div>
 
-//         <button
-//           className="botonModalPictogramas_1"
-//           onClick={() => {
-//             setTempPictogramas([]); // 🔥 SIEMPRE vacío
-//             setIsPictogramasModalOpen(true);
-//           }}
-//         >
-//           Peligrosidad SGA
-//         </button>
+{
+  /* <button
+  className="botonModalPictogramas_1"
+  onClick={() => {
+    setTempPictogramas([]); // 🔥 SIEMPRE vacío
+    setIsPictogramasModalOpen(true);
+  }}
+>
+  Peligrosidad SGA
+</button> */
+}
 
 //         <div className="botonModalBasica">
 //           <button
@@ -576,42 +578,42 @@
 //       </Modal>
 
 //       {/* PICTOGRAMAS */}
-//       <Modal isOpen={isPictogramasModalOpen}>
-//         <div className="contenedor-pictogramas">
-//           {catalogoPictogramas.map((p) => (
-//             <div
-//               key={p.id}
-//               className={`pictograma-item ${
-//                 tempPictogramas.includes(p.id) ? "activo" : ""
-//               }`}
-//               onClick={() => toggleTempPictograma(p.id)}
-//             >
-//               <img src={`http://localhost:8000${p.url}`} alt="" />
-//             </div>
-//           ))}
-//         </div>
+// <Modal isOpen={isPictogramasModalOpen}>
+//   <div className="contenedor-pictogramas">
+//     {catalogoPictogramas.map((p) => (
+//       <div
+//         key={p.id}
+//         className={`pictograma-item ${
+//           tempPictogramas.includes(p.id) ? "activo" : ""
+//         }`}
+//         onClick={() => toggleTempPictograma(p.id)}
+//       >
+//         <img src={`http://localhost:8000${p.url}`} alt="" />
+//       </div>
+//     ))}
+//   </div>
 
-//         <div className="botonModalPictogramas_2">
-//           <button
-//             onClick={() => {
-//               setFormData((prev) => ({
-//                 ...prev,
-//                 pictogramas: tempPictogramas,
-//               }));
+//   <div className="botonModalPictogramas_2">
+//     <button
+//       onClick={() => {
+//         setFormData((prev) => ({
+//           ...prev,
+//           pictogramas: tempPictogramas,
+//         }));
 
-//               console.log("Seleccionados:", tempPictogramas); // 👈 verificar
+//         console.log("Seleccionados:", tempPictogramas); // 👈 verificar
 
-//               setTempPictogramas([]); //LIMPIAR SELECCIÓN
-//               setIsPictogramasModalOpen(false);
-//             }}
-//           >
-//             Guardar selección
-//           </button>
-//           <button onClick={() => setIsPictogramasModalOpen(false)}>
-//             Cancelar
-//           </button>
-//         </div>
-//       </Modal>
+//         setTempPictogramas([]); //LIMPIAR SELECCIÓN
+//         setIsPictogramasModalOpen(false);
+//       }}
+//     >
+//       Guardar selección
+//     </button>
+//     <button onClick={() => setIsPictogramasModalOpen(false)}>
+//       Cancelar
+//     </button>
+//   </div>
+// </Modal>
 
 //       {/* TABLA */}
 //       <table>
@@ -654,40 +656,27 @@ import PanelReactivo from "./PanelReactivo";
 
 import { useState, useEffect } from "react";
 
-function TablaReactivos({ seleccionarReactivo }) {
+function TablaReactivos() {
   const [reactivos, setReactivos] = useState([]);
   const [reactivoSeleccionado, setReactivoSeleccionado] = useState(null);
   const [editandoId, setEditandoId] = useState(null);
 
   // 🔥 ESTADO GLOBAL
   const [formData, setFormData] = useState({
-    basica: {
-      reactivo: "",
-      familia: "",
-      grupo: "",
-      sinonimo: "",
-      cas: "",
-      marca: "",
-      referencia: "",
-      fdsCompleta: "",
-      ultimaFechaActualizacion: "",
-      estadoFisico: "",
-    },
-    general: {
-      cantidadTotal: "",
-      cantidadReal: "",
-    },
-    especifica: {
-      palabraDvertencia: "",
-    },
+    basica: {},
+    general: {},
+    especifica: {},
     pictogramas: [],
   });
 
-  // 🔥 ESTADOS TEMPORALES (NUEVO)
-  const [tempBasica, setTempBasica] = useState(formData.basica);
-  const [tempGeneral, setTempGeneral] = useState(formData.general);
-  const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
+  // 🔥 TEMPORALES
+  const [tempBasica, setTempBasica] = useState({});
+  const [tempGeneral, setTempGeneral] = useState({});
+  const [tempEspecifica, setTempEspecifica] = useState({});
+
+  // 🔥 PICTOGRAMAS
   const [tempPictogramas, setTempPictogramas] = useState([]);
+  const [originalPictogramas, setOriginalPictogramas] = useState([]);
 
   // 🔹 MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -698,48 +687,51 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
 
-  // 🔥 HANDLER UNIVERSAL PARA TEMP (YA LO TENÍAS BIEN)
-  const handleTempChange =
-    (setter, campo, isNumber = false) =>
-    (e) => {
-      let value = e.target.value;
+  // ========================
+  // 🧠 UTILIDADES
+  // ========================
+  const toUpperSafe = (value) =>
+    typeof value === "string"
+      ? value.normalize("NFC").toLocaleUpperCase("es-CO")
+      : value;
 
-      if (isNumber) {
-        value = value === "" ? "" : parseFloat(value);
-        if (isNaN(value)) value = "";
-      }
+  const upperObject = (obj) => {
+    const nuevo = {};
+    for (let key in obj) {
+      nuevo[key] = toUpperSafe(obj[key]);
+    }
+    return nuevo;
+  };
 
-      setter((prev) => ({
+  const toFloatSafe = (value) => {
+    if (value === "" || value === null || value === undefined) return 0;
+    return parseFloat(value.toString().replace(",", ".")) || 0;
+  };
+
+  const handleTempChange = (setter, campo) => (e) => {
+    const value = e.target.value;
+
+    setter((prev) => {
+      const nuevo = {
         ...prev,
         [campo]: value,
-      }));
-    };
+      };
 
-  // 🔥 FUNCIÓN PRO DE MAPEO (NUEVO)
-  const mapItemToFormData = (item) => ({
-    basica: {
-      reactivo: item.nombre || "",
-      familia: item.basica?.familia || "",
-      grupo: item.basica?.grupo || "",
-      sinonimo: item.basica?.sinonimo || "",
-      cas: item.basica?.cas || "",
-      marca: item.basica?.marca || "",
-      referencia: item.basica?.referencia || "",
-      fdsCompleta: item.basica?.fdsCompleta || "",
-      ultimaFechaActualizacion: item.basica?.ultimaFechaActualizacion || "",
-      estadoFisico: item.basica?.estadoFisico || "",
-    },
-    general: {
-      cantidadTotal: item.general?.cantidadTotal || "",
-      cantidadReal: item.general?.cantidadReal || "",
-    },
-    especifica: {
-      palabraDvertencia: item.especifica?.palabraDvertencia || "",
-    },
-    pictogramas: item.pictogramas?.map((p) => p.id) || [],
-  });
+      console.log("✏️ TEMP UPDATE:", campo, nuevo);
 
+      return nuevo;
+    });
+  };
+
+  const toggleTempPictograma = (id) => {
+    setTempPictogramas((prev) =>
+      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
+    );
+  };
+
+  // ========================
   // 🔹 FETCH
+  // ========================
   const fetchReactivos = async () => {
     const res = await fetch("http://localhost:8000/api/sustancias");
     const data = await res.json();
@@ -757,48 +749,40 @@ function TablaReactivos({ seleccionarReactivo }) {
     fetchPictogramas();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("🟡 TEMP BASICA:", tempBasica);
-  // }, [tempBasica]);
+  // DEBUG GLOBAL
+  useEffect(() => {
+    console.log("🟢 FORM DATA GLOBAL:", formData);
+  }, [formData]);
 
-  // useEffect(() => {
-  //   console.log("🟡 TEMP GENERAL:", tempGeneral);
-  // }, [tempGeneral]);
-
-  // useEffect(() => {
-  //   console.log("🟡 TEMP ESPECIFICA:", tempEspecifica);
-  // }, [tempEspecifica]);
-
-  // useEffect(() => {
-  //   console.log("🟢 GLOBAL formData:", formData);
-  // }, [formData]);
-
-  // 🔥 EDITAR CORREGIDO (SINCRONIZA TODO)
+  // ========================
+  // ✏️ EDITAR
+  // ========================
   const editar = (item) => {
-    const data = mapItemToFormData(item);
+    const data = {
+      basica: item.basica || {},
+      general: item.general || {},
+      especifica: item.especifica || {},
+      pictogramas: item.pictogramas?.map((p) => p.id) || [],
+    };
 
     setEditandoId(item.id);
-
     setFormData(data);
 
-    // 🔥 IMPORTANTE: sincronizar temporales
     setTempBasica(data.basica);
     setTempGeneral(data.general);
     setTempEspecifica(data.especifica);
+
     setTempPictogramas(data.pictogramas);
+    setOriginalPictogramas(data.pictogramas);
 
     setIsModalOpen(true);
   };
 
-  const toggleTempPictograma = (id) => {
-    setTempPictogramas((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
-    );
-  };
-
-  // 🔹 ENVIAR
+  // ========================
+  // 🚀 ENVIAR TODO
+  // ========================
   const enviarTodo = async () => {
-    console.log("FORM DATA:", formData);
+    console.log("📦 ENVIANDO:", formData);
 
     const url = editandoId
       ? `http://localhost:8000/api/sustancias/${editandoId}`
@@ -812,62 +796,29 @@ function TablaReactivos({ seleccionarReactivo }) {
       body: JSON.stringify(formData),
     });
 
-    alert(editandoId ? "Actualizado" : "Creado");
-
     setIsModalOpen(false);
     setEditandoId(null);
     fetchReactivos();
   };
 
-  // 🔹 ELIMINAR
-  const eliminar = async (id) => {
-    if (!confirm("¿Eliminar?")) return;
-
-    await fetch(`http://localhost:8000/api/sustancias/${id}`, {
-      method: "DELETE",
-    });
-
-    fetchReactivos();
-  };
-
   return (
     <div>
-      {/* 🔥 BOTÓN NUEVO CORREGIDO */}
+      {/* NUEVO */}
       <div
         className="contenedor-cierreSesion"
         onClick={() => {
-          setEditandoId(null);
-
-          const limpio = {
-            basica: {
-              reactivo: "",
-              familia: "",
-              grupo: "",
-              sinonimo: "",
-              cas: "",
-              marca: "",
-              referencia: "",
-              fdsCompleta: "",
-              ultimaFechaActualizacion: "",
-              estadoFisico: "",
-            },
-            general: {
-              cantidadTotal: "",
-              cantidadReal: "",
-            },
-            especifica: {
-              palabraDvertencia: "",
-            },
+          setFormData({
+            basica: {},
+            general: {},
+            especifica: {},
             pictogramas: [],
-          };
+          });
 
-          setFormData(limpio);
-
-          // 🔥 sincronizar temporales
-          setTempBasica(limpio.basica);
-          setTempGeneral(limpio.general);
-          setTempEspecifica(limpio.especifica);
+          setTempBasica({});
+          setTempGeneral({});
+          setTempEspecifica({});
           setTempPictogramas([]);
+          setOriginalPictogramas([]);
 
           setIsModalOpen(true);
         }}
@@ -878,132 +829,84 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       {/* MODAL PRINCIPAL */}
       <Modal isOpen={isModalOpen}>
-        <h2>Ingreso de reactivos quimicos</h2>
-
-        {/* 🔥 sincroniza temp antes de abrir */}
-        <button
-          onClick={() => {
-            setTempBasica(formData.basica);
-            setIsFirstModalOpen(true);
-          }}
-        >
-          Información básica
-        </button>
-
-        <button
-          onClick={() => {
-            setTempGeneral(formData.general);
-            setIsSecondModalOpen(true);
-          }}
-        >
-          Información general
-        </button>
-
-        <button
-          onClick={() => {
-            setTempEspecifica(formData.especifica);
-            setIsThirdModalOpen(true);
-          }}
-        >
-          Información específica
-        </button>
-
-        <button onClick={enviarTodo}>
-          {editandoId ? "Actualizar" : "Guardar"}
-        </button>
-
-        <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
+        <button onClick={() => setIsFirstModalOpen(true)}>Básica</button>
+        <button onClick={() => setIsSecondModalOpen(true)}>General</button>
+        <button onClick={() => setIsThirdModalOpen(true)}>Específica</button>
+        <button onClick={enviarTodo}>Guardar TODO</button>
       </Modal>
 
       {/* BASICA */}
       <Modal isOpen={isFirstModalOpen}>
         <input
-          value={tempBasica.reactivo}
+          value={tempBasica.reactivo || ""}
           onChange={handleTempChange(setTempBasica, "reactivo")}
         />
-
         <input
-          value={tempBasica.familia}
+          value={tempBasica.familia || ""}
           onChange={handleTempChange(setTempBasica, "familia")}
         />
 
-        {/* 🔥 BOTONES CORREGIDOS */}
+        <button
+          className="botonModalPictogramas_1"
+          onClick={() => {
+            setTempPictogramas(formData.pictogramas || []);
+            setOriginalPictogramas(formData.pictogramas || []);
+            setIsPictogramasModalOpen(true);
+          }}
+        >
+          Peligrosidad SGA
+        </button>
+
         <button
           onClick={() => {
             setFormData((prev) => ({
               ...prev,
-              basica: tempBasica,
+              basica: upperObject(tempBasica),
             }));
             setIsFirstModalOpen(false);
           }}
         >
           Guardar
-        </button>
-
-        <button
-          onClick={() => {
-            setTempBasica(formData.basica);
-            setIsFirstModalOpen(false);
-          }}
-        >
-          Cancelar
         </button>
       </Modal>
 
       {/* GENERAL */}
       <Modal isOpen={isSecondModalOpen}>
         <input
-          value={tempGeneral.cantidadTotal}
+          value={tempGeneral.cantidadTotal || ""}
           onChange={handleTempChange(setTempGeneral, "cantidadTotal")}
         />
-
         <input
-          value={tempGeneral.cantidadReal}
+          value={tempGeneral.cantidadReal || ""}
           onChange={handleTempChange(setTempGeneral, "cantidadReal")}
         />
-        {/* 
-        <button
-          onClick={() => {
-            setFormData((prev) => ({
-              ...prev,
-              general: tempGeneral,
-            }));
-            setIsSecondModalOpen(false);
-          }}
-        >
-          Guardar
-        </button> */}
+        <input
+          value={tempGeneral.cantidadNueva || ""}
+          onChange={handleTempChange(setTempGeneral, "cantidadNueva")}
+        />
+
         <button
           onClick={() => {
             setFormData((prev) => ({
               ...prev,
               general: {
                 ...tempGeneral,
-                cantidadTotal: parseFloat(tempGeneral.cantidadTotal) || 0,
-                cantidadReal: parseFloat(tempGeneral.cantidadReal) || 0,
+                cantidadTotal: toFloatSafe(tempGeneral.cantidadTotal),
+                cantidadReal: toFloatSafe(tempGeneral.cantidadReal),
+                cantidadNueva: toFloatSafe(tempGeneral.cantidadNueva),
               },
             }));
-
             setIsSecondModalOpen(false);
           }}
         >
           Guardar
-        </button>
-
-        <button
-          onClick={() => {
-            setTempGeneral(formData.general);
-            setIsSecondModalOpen(false);
-          }}
-        >
-          Cancelar
         </button>
       </Modal>
 
       {/* ESPECIFICA */}
       <Modal isOpen={isThirdModalOpen}>
         <input
-          value={tempEspecifica.palabraDvertencia}
+          value={tempEspecifica.palabraDvertencia || ""}
           onChange={handleTempChange(setTempEspecifica, "palabraDvertencia")}
         />
 
@@ -1011,46 +914,51 @@ function TablaReactivos({ seleccionarReactivo }) {
           onClick={() => {
             setFormData((prev) => ({
               ...prev,
-              especifica: tempEspecifica,
+              especifica: upperObject(tempEspecifica),
             }));
             setIsThirdModalOpen(false);
           }}
         >
           Guardar
         </button>
-
-        <button
-          onClick={() => {
-            setTempEspecifica(formData.especifica);
-            setIsThirdModalOpen(false);
-          }}
-        >
-          Cancelar
-        </button>
       </Modal>
 
       {/* PICTOGRAMAS */}
       <Modal isOpen={isPictogramasModalOpen}>
-        <div>
+        <div className="contenedor-pictogramas">
           {catalogoPictogramas.map((p) => (
-            <div key={p.id} onClick={() => toggleTempPictograma(p.id)}>
-              <img src={`http://localhost:8000${p.url}`} />
+            <div
+              key={p.id}
+              className={`pictograma-item ${
+                tempPictogramas.includes(p.id) ? "activo" : ""
+              }`}
+              onClick={() => toggleTempPictograma(p.id)}
+            >
+              <img src={`http://localhost:8000${p.url}`} alt="" />
             </div>
           ))}
         </div>
 
-        <button
-          onClick={() => {
-            setFormData((prev) => ({
-              ...prev,
-              pictogramas: tempPictogramas,
-            }));
+        <div className="botonModalPictogramas_2">
+          <button
+            onClick={() => {
+              setFormData((prev) => ({
+                ...prev,
+                pictogramas: tempPictogramas,
+              }));
 
-            setIsPictogramasModalOpen(false);
-          }}
-        >
-          Guardar selección
-        </button>
+              console.log("Seleccionados:", tempPictogramas); // 👈 verificar
+
+              setTempPictogramas([]); //LIMPIAR SELECCIÓN
+              setIsPictogramasModalOpen(false);
+            }}
+          >
+            Guardar selección
+          </button>
+          <button onClick={() => setIsPictogramasModalOpen(false)}>
+            Cancelar
+          </button>
+        </div>
       </Modal>
 
       {/* TABLA */}
@@ -1060,9 +968,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             <tr key={r.id}>
               <td>{r.nombre}</td>
               <td>
-                <button onClick={() => setReactivoSeleccionado(r)}>Ver</button>
                 <button onClick={() => editar(r)}>Editar</button>
-                <button onClick={() => eliminar(r.id)}>Eliminar</button>
               </td>
             </tr>
           ))}
