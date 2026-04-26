@@ -37,8 +37,8 @@ function TablaReactivos({ seleccionarReactivo }) {
       unidadDeMedida: "",
       presentacion: "",
       numeroDeRecipientes: "",
-      cantidadTotal: "",
-      cantidadReal: "",
+      cantidad_total: "",
+      cantidad_real: "",
     },
     especifica: {
       esControlado: "",
@@ -61,6 +61,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   //ESTADOS TEMPORALES
   const [tempBasica, setTempBasica] = useState(formData.basica);
   const [tempGeneral, setTempGeneral] = useState(formData.general);
+  const [tempEspecifica, setTempEspecifica] = useState(formData.general);
 
   // 🔹 MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,8 +92,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       let value = e.target.value;
 
       if (isNumber) {
-        value = value === "" ? "" : Number(value);
-        if (isNaN(value)) value = "";
+        value = value.replace(",", ".");
       }
 
       setFormData((prev) => ({
@@ -103,15 +103,30 @@ function TablaReactivos({ seleccionarReactivo }) {
         },
       }));
     };
+  // const handleTempChange =
+  //   (setter, campo, isNumber = false) =>
+  //   (e) => {
+  //     let value = e.target.value;
 
+  //     if (isNumber) {
+  //       value = value === "" ? "" : Number(value);
+  //       if (isNaN(value)) value = "";
+  //     }
+
+  //     setter((prev) => ({
+  //       ...prev,
+  //       [campo]: value,
+  //     }));
+  //   };
+
+  /////probando
   const handleTempChange =
     (setter, campo, isNumber = false) =>
     (e) => {
       let value = e.target.value;
 
       if (isNumber) {
-        value = value === "" ? "" : Number(value);
-        if (isNaN(value)) value = "";
+        value = value.replace(",", ".");
       }
 
       setter((prev) => ({
@@ -139,11 +154,15 @@ function TablaReactivos({ seleccionarReactivo }) {
   }, []);
 
   useEffect(() => {
-    console.log("TEMP BASICA:", tempBasica);
-  }, [tempBasica]);
+    console.log("TEMP BASICA:", tempGeneral);
+  }, [tempGeneral]);
 
   useEffect(() => {
     console.log("ESTADO GLOBAL:", formData);
+  }, [formData]);
+
+  useEffect(() => {
+    console.log("GLOBAL:", formData.general);
   }, [formData]);
 
   // 🔥 EDITAR LIMPIO
@@ -457,8 +476,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Codigo frase H</label>
           <textarea
-            className="contenedorGenearl"
-            className="contenedorGenearl"
+            value={tempGeneral.codigoFraseH}
+            onChange={handleTempChange(setTempGeneral, "codigoFraseH")}
           ></textarea>
         </div>
 
@@ -467,13 +486,16 @@ function TablaReactivos({ seleccionarReactivo }) {
             Toxicidad aguda CAT 1 CAT 2
           </label>
           <textarea
-            className="contenedorGenearl"
-            className="contenedorGenearl"
+            value={tempGeneral.toxicidadCat1Cat2}
+            onChange={handleTempChange(setTempGeneral, "toxicidadCat1Cat2")}
           ></textarea>
         </div>
         <div className="contenedorGenearl">
           <label htmlFor="SusCancer">Sustancia cancerigena</label>
-          <select>
+          <select
+            value={tempGeneral.sustanciaCancerigena}
+            onChange={handleTempChange(setTempGeneral, "sustanciaCancerigena")}
+          >
             <option value="si">Si</option>
             <option value="no">No</option>
           </select>
@@ -482,17 +504,26 @@ function TablaReactivos({ seleccionarReactivo }) {
         <h2>Ubicacion</h2>
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Sitio de almacenamiento</label>
-          <input />
+          <input
+            value={tempGeneral.sitioAlmacenamiento}
+            onChange={handleTempChange(setTempGeneral, "sitioAlmacenamiento")}
+          />
         </div>
 
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Ubicacion especifica</label>
-          <input />
+          <input
+            value={tempGeneral.ubicacionEspecifica}
+            onChange={handleTempChange(setTempGeneral, "ubicacionEspecifica")}
+          />
         </div>
 
         <div className="contenedorGenearl">
           <label htmlFor="UniMedida">Unidad de medida</label>
-          <select>
+          <select
+            value={tempGeneral.unidadDeMedida}
+            onChange={handleTempChange(setTempGeneral, "unidadDeMedida")}
+          >
             <option value="gl">gl</option>
             <option value="g">g</option>
             <option value="Kg">Kg</option>
@@ -505,22 +536,28 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Presentacion</label>
-          <input />
+          <input
+            value={tempGeneral.presentacion}
+            onChange={handleTempChange(setTempGeneral, "presentacion")}
+          />
         </div>
 
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Numero de recipientes</label>
-          <input />
+          <input
+            value={tempGeneral.numeroDeRecipientes}
+            onChange={handleTempChange(setTempGeneral, "numeroDeRecipientes")}
+          />
         </div>
 
         <div className="contenedorGenearl">
           <label className="contenedorGenearl">Cantidad total</label>
 
           <input
-            type="number"
-            step="any"
-            value={tempGeneral.cantidadTotal}
-            onChange={handleTempChange(setTempGeneral, "cantidadTotal", true)}
+            type="text"
+            inputMode="decimal"
+            value={tempGeneral.cantidad_total ?? ""}
+            onChange={handleTempChange(setTempGeneral, "cantidad_total", true)}
           />
         </div>
 
@@ -528,10 +565,10 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label className="contenedorGenearl">Cantidad real</label>
 
           <input
-            type="number"
-            step="any"
-            value={tempGeneral.cantidadReal}
-            onChange={handleTempChange(setTempGeneral, "cantidadReal", true)}
+            type="text"
+            inputMode="decimal"
+            value={tempGeneral.cantidad_real ?? ""}
+            onChange={handleTempChange(setTempGeneral, "cantidad_real", true)}
           />
         </div>
 
@@ -549,7 +586,17 @@ function TablaReactivos({ seleccionarReactivo }) {
             onClick={() => {
               setFormData((prev) => ({
                 ...prev,
-                general: convertirMayusculas(tempGeneral),
+                general: {
+                  ...tempGeneral,
+
+                  numeroDeRecipientes: parseInt(
+                    tempGeneral.numeroDeRecipientes || 0,
+                  ),
+
+                  cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
+
+                  cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
+                },
               }));
 
               setIsSecondModalOpen(false);
@@ -560,7 +607,19 @@ function TablaReactivos({ seleccionarReactivo }) {
 
           <button
             onClick={() => {
-              setTempGeneral(estadoInicial.general);
+              setTempGeneral({
+                codigoFraseH: "",
+                toxicidadCat1Cat2: "",
+                sustanciaCancerigena: "",
+                sitioAlmacenamiento: "",
+                ubicacionEspecifica: "",
+                unidadDeMedida: "",
+                presentacion: "",
+                numeroDeRecipientes: "",
+                cantidadTotal: "",
+                cantidadReal: "",
+              });
+
               setIsSecondModalOpen(false);
             }}
           >
@@ -690,7 +749,22 @@ function TablaReactivos({ seleccionarReactivo }) {
           </button>
           <button
             onClick={() => {
-              setTempEspecifica(estadoInicial.especifica);
+              setTempEspecifica({
+                esControlado: "",
+                componente1: "",
+                clasificacionAlmacenamiento: "",
+                separacionMetodoSAFTDATA: "",
+                fechaIngresoLabQuimica: "",
+                fechaVencimientoProyectada: "",
+                observaciones: "",
+                palabraAdvertencia: "",
+                preventivaCodigoDetalle: "",
+                respuestaOintervencionCodigoDetalle: "",
+                razonSocial: "",
+                direccion: "",
+                contacto: "",
+              });
+
               setIsThirdModalOpen(false);
             }}
           >

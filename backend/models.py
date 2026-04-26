@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Numeric
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -61,8 +61,8 @@ class InfoGeneral(Base):
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))
 
-    cantidad_total = Column(Integer)
-    cantidad_real = Column(Integer)
+    cantidad_total = Column(Numeric(12,3))
+    cantidad_real = Column(Numeric(12,3))
 
     sustancia = relationship("Sustancia", back_populates="general")
 
