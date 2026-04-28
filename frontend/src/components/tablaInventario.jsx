@@ -4,6 +4,8 @@ import "../styles/pictogramas.css";
 import "../styles/tabla.css";
 import "../styles/inputsModales.css";
 
+import ResetsEstados from "./resetsEstados";
+
 import Modal from "../hoosk/modalReutilizable";
 import PanelReactivo from "./PanelReactivo";
 
@@ -14,49 +16,52 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [reactivoSeleccionado, setReactivoSeleccionado] = useState(null);
   const [editandoId, setEditandoId] = useState(null);
 
+  // estado unico prueba
+  const [formData, setFormData] = useState(ResetsEstados);
+
   // 🔥 ESTADO ÚNICO
-  const [formData, setFormData] = useState({
-    basica: {
-      reactivo: "",
-      familia: "",
-      grupo: "",
-      sinonimo: "",
-      cas: "",
-      marca: "",
-      referencia: "",
-      fdsCompleta: "",
-      ultimaFechaActualizacion: "",
-      estadoFisico: "",
-    },
-    general: {
-      codigoFraseH: "",
-      toxicidadCat1Cat2: "",
-      sustanciaCancerigena: "",
-      sitioAlmacenamiento: "",
-      ubicacionEspecifica: "",
-      unidadDeMedida: "",
-      presentacion: "",
-      numeroDeRecipientes: "",
-      cantidad_total: "",
-      cantidad_real: "",
-    },
-    especifica: {
-      esControlado: "",
-      componente1: "",
-      clasificacionAlmacenamiento: "",
-      separacionMetodoSAFTDATA: "T",
-      fechaIngresoLabQuimica: "",
-      fechaVencimientoProyectada: "",
-      observaciones: "",
-      palabraDvertencia: "",
-      preventivaCodigoDetalle: "",
-      respuestaOintervencionCodigoDetalle: "",
-      razonSocial: "",
-      direccion: "",
-      contacto: "",
-    },
-    pictogramas: [],
-  });
+  // const [formData, setFormData] = useState({
+  //   basica: {
+  //     reactivo: "",
+  //     familia: "",
+  //     grupo: "",
+  //     sinonimo: "",
+  //     cas: "",
+  //     marca: "",
+  //     referencia: "",
+  //     fdsCompleta: "",
+  //     ultimaFechaActualizacion: "",
+  //     estadoFisico: "",
+  //   },
+  //   general: {
+  //     codigoFraseH: "",
+  //     toxicidadCat1Cat2: "",
+  //     sustanciaCancerigena: "",
+  //     sitioAlmacenamiento: "",
+  //     ubicacionEspecifica: "",
+  //     unidadDeMedida: "",
+  //     presentacion: "",
+  //     numeroDeRecipientes: "",
+  //     cantidad_total: "",
+  //     cantidad_real: "",
+  //   },
+  //   especifica: {
+  //     esControlado: "",
+  //     componente1: "",
+  //     clasificacionAlmacenamiento: "",
+  //     separacionMetodoSAFTDATA: "",
+  //     fechaIngresoLabQuimica: "",
+  //     fechaVencimientoProyectada: "",
+  //     observaciones: "",
+  //     palabraDvertencia: "",
+  //     preventivaCodigoDetalle: "",
+  //     respuestaOintervencionCodigoDetalle: "",
+  //     razonSocial: "",
+  //     direccion: "",
+  //     contacto: "",
+  //   },
+  //   pictogramas: [],
+  // });
 
   //ESTADOS TEMPORALES
   const [tempBasica, setTempBasica] = useState(formData.basica);
@@ -74,12 +79,26 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
   // CONVERTIR A MAYÚSCULAS
+  // const convertirMayusculas = (obj) => {
+  //   const nuevo = {};
+
+  //   for (let key in obj) {
+  //     nuevo[key] =
+  //       typeof obj[key] === "string" ? obj[key].toUpperCase() : obj[key];
+  //   }
+
+  //   return nuevo;
+  // };
   const convertirMayusculas = (obj) => {
+    const excluir = ["unidadDeMedida"];
+
     const nuevo = {};
 
     for (let key in obj) {
       nuevo[key] =
-        typeof obj[key] === "string" ? obj[key].toUpperCase() : obj[key];
+        typeof obj[key] === "string" && !excluir.includes(key)
+          ? obj[key].toUpperCase()
+          : obj[key];
     }
 
     return nuevo;
@@ -140,6 +159,10 @@ function TablaReactivos({ seleccionarReactivo }) {
   useEffect(() => {
     console.log("TEMP BASICA:", tempBasica);
   }, [tempBasica]);
+
+  useEffect(() => {
+    console.log("TEMP PICTOGRAMAS:", tempPictogramas);
+  }, [tempPictogramas]);
 
   // useEffect(() => {
   //   console.log("TEMP GENERAL:", tempGeneral);
@@ -238,8 +261,33 @@ function TablaReactivos({ seleccionarReactivo }) {
               ultimaFechaActualizacion: "",
               estadoFisico: "Solido",
             },
-            general: { cantidad_total: "", cantidad_real: "" },
-            especifica: { palabra_advertencia: "" },
+            general: {
+              codigoFraseH: "",
+              toxicidadCat1Cat2: "",
+              sustanciaCancerigena: "Sí",
+              sitioAlmacenamiento: "",
+              ubicacionEspecifica: "",
+              unidadDeMedida: "gl",
+              presentacion: "",
+              numeroDeRecipientes: "",
+              cantidad_total: "",
+              cantidad_real: "",
+            },
+            especifica: {
+              esControlado: "Sí",
+              componente1: "",
+              clasificacionAlmacenamiento: "",
+              separacionMetodoSAFTDATA: "T",
+              fechaIngresoLabQuimica: "",
+              fechaVencimientoProyectada: "",
+              observaciones: "",
+              palabraDvertencia: "",
+              preventivaCodigoDetalle: "",
+              respuestaOintervencionCodigoDetalle: "",
+              razonSocial: "",
+              direccion: "",
+              contacto: "",
+            },
             pictogramas: [],
           });
 
@@ -270,14 +318,20 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <button
           className="botonModalPrincipal"
-          onClick={() => setIsSecondModalOpen(true)}
+          onClick={() => {
+            setTempGeneral(formData.general);
+            setIsSecondModalOpen(true);
+          }}
         >
           Información general
         </button>
 
         <button
           className="botonModalPrincipal"
-          onClick={() => setIsThirdModalOpen(true)}
+          onClick={() => {
+            setTempEspecifica(formData.especifica);
+            setIsThirdModalOpen(true);
+          }}
         >
           Información específica
         </button>
@@ -407,20 +461,6 @@ function TablaReactivos({ seleccionarReactivo }) {
         </button>
 
         <div className="botonModalBasica">
-          {/* <button
-            onClick={() => {
-              setFormData((prev) => ({
-                ...prev,
-                basica: tempBasica,
-              }));
-
-              console.log("Guardado basica:", tempBasica);
-
-              setIsFirstModalOpen(false);
-            }}
-          >
-            Guardar
-          </button> */}
           <button
             onClick={() => {
               setFormData((prev) => ({
@@ -447,6 +487,7 @@ function TablaReactivos({ seleccionarReactivo }) {
                 ultimaFechaActualizacion: "",
                 estadoFisico: "",
               });
+              setTempPictogramas([]);
 
               setIsFirstModalOpen(false);
             }}
@@ -562,21 +603,14 @@ function TablaReactivos({ seleccionarReactivo }) {
         </div>
 
         <div className="botonModalGeneral">
-          {/* <button
-            onClick={() => {
-              console.log("Datos guardados (general):", formData.general);
-              setIsFirstModalOpen(false);
-            }}
-          >
-            Guardar
-          </button> */}
-
           <button
             onClick={() => {
+              const datosMayusculas = convertirMayusculas(tempGeneral);
+
               setFormData((prev) => ({
                 ...prev,
                 general: {
-                  ...tempGeneral,
+                  ...datosMayusculas,
 
                   numeroDeRecipientes: parseInt(
                     tempGeneral.numeroDeRecipientes || 0,
@@ -623,7 +657,10 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <div className="contenedorEspecifica">
           <label>Es controlado</label>
-          <select>
+          <select
+            value={tempEspecifica.esControlado}
+            onChange={handleTempChange(setTempEspecifica, "esControlado")}
+          >
             <option value="si">Sí</option>
             <option value="no">No</option>
           </select>
@@ -631,17 +668,32 @@ function TablaReactivos({ seleccionarReactivo }) {
 
         <div className="contenedorEspecifica">
           <label>Componente 1</label>
-          <input />
+          <input
+            value={tempEspecifica.componente1}
+            onChange={handleTempChange(setTempEspecifica, "componente1")}
+          />
         </div>
 
         <div className="contenedorEspecifica">
           <label>clasificacion almacenamiento</label>
-          <input />
+          <input
+            value={tempEspecifica.clasificacionAlmacenamiento}
+            onChange={handleTempChange(
+              setTempEspecifica,
+              "clasificacionAlmacenamiento",
+            )}
+          />
         </div>
 
         <div className="contenedorEspecifica">
           <label>Separacion metodo SAF-T-DATA</label>
-          <select>
+          <select
+            value={tempEspecifica.separacionMetodoSAFTDATA}
+            onChange={handleTempChange(
+              setTempEspecifica,
+              "separacionMetodoSAFTDATA",
+            )}
+          >
             <option value="T">T</option>
             <option value="C">C</option>
             <option value="I">I</option>
@@ -655,50 +707,94 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label>
             Fecha de ingreso de la sustancia al laboratorio de quimica
           </label>
-          <input type="date" />
+          <input
+            type="date"
+            value={tempEspecifica.fechaIngresoLabQuimica}
+            onChange={handleTempChange(
+              setTempEspecifica,
+              "fechaIngresoLabQuimica",
+            )}
+          />
         </div>
 
         <div className="contenedorEspecifica">
           <label>Fecha de vencimiento proyectada</label>
-          <input type="date" />
+          <input
+            type="date"
+            value={tempEspecifica.fechaVencimientoProyectada}
+            onChange={handleTempChange(
+              setTempEspecifica,
+              "fechaVencimientoProyectada",
+            )}
+          />
         </div>
 
         <div className="contenedorEspecifica">
           <label>Observaciones</label>
-          <textarea></textarea>
+          <textarea
+            value={tempEspecifica.observaciones}
+            onChange={handleTempChange(setTempEspecifica, "observaciones")}
+          ></textarea>
         </div>
 
         <div className="contenedorEspecifica">
           <label>Palabra advertencia</label>
-          <input />
+          <input
+            value={tempEspecifica.palabraDvertencia}
+            onChange={handleTempChange(setTempEspecifica, "palabraDvertencia")}
+          />
         </div>
 
         <div className="contenedorEspecifica2">
           <h2>Consejos de prudencia (Frases P)</h2>
           <div className="contenedorEspecifica">
             <label>Preventiva codigo/detalle</label>
-            <textarea></textarea>
+            <textarea
+              value={tempEspecifica.preventivaCodigoDetalle}
+              onChange={handleTempChange(
+                setTempEspecifica,
+                "preventivaCodigoDetalle",
+              )}
+            ></textarea>
           </div>
 
           <div className="contenedorEspecifica">
             <label>respuesta o intervencion codigo/detalle</label>
-            <textarea></textarea>
+            <textarea
+              value={tempEspecifica.respuestaOintervencionCodigoDetalle}
+              onChange={handleTempChange(
+                setTempEspecifica,
+                "respuestaOintervencionCodigoDetalle",
+              )}
+            ></textarea>
           </div>
 
           <div className="contenedorEspecifica">
             <h2>Informacion proveedor</h2>
             <label>Razon social</label>
-            <input type="text" />
+            <input
+              type="text"
+              value={tempEspecifica.razonSocial}
+              onChange={handleTempChange(setTempEspecifica, "razonSocial")}
+            />
           </div>
 
           <div className="contenedorEspecifica">
             <label>Direccion</label>
-            <input type="text" />
+            <input
+              type="text"
+              value={tempEspecifica.direccion}
+              onChange={handleTempChange(setTempEspecifica, "direccion")}
+            />
           </div>
 
           <div className="contenedorEspecifica">
             <label>Contacto</label>
-            <input type="text" />
+            <input
+              type="text"
+              value={tempEspecifica.contacto}
+              onChange={handleTempChange(setTempEspecifica, "contacto")}
+            />
           </div>
         </div>
 
@@ -725,7 +821,7 @@ function TablaReactivos({ seleccionarReactivo }) {
                 fechaIngresoLabQuimica: "",
                 fechaVencimientoProyectada: "",
                 observaciones: "",
-                palabraAdvertencia: "",
+                palabraDvertencia: "",
                 preventivaCodigoDetalle: "",
                 respuestaOintervencionCodigoDetalle: "",
                 razonSocial: "",
