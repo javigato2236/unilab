@@ -44,7 +44,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       esControlado: "",
       componente1: "",
       clasificacionAlmacenamiento: "",
-      separacionMetodoSAFTDATA: "",
+      separacionMetodoSAFTDATA: "T",
       fechaIngresoLabQuimica: "",
       fechaVencimientoProyectada: "",
       observaciones: "",
@@ -103,23 +103,7 @@ function TablaReactivos({ seleccionarReactivo }) {
         },
       }));
     };
-  // const handleTempChange =
-  //   (setter, campo, isNumber = false) =>
-  //   (e) => {
-  //     let value = e.target.value;
 
-  //     if (isNumber) {
-  //       value = value === "" ? "" : Number(value);
-  //       if (isNaN(value)) value = "";
-  //     }
-
-  //     setter((prev) => ({
-  //       ...prev,
-  //       [campo]: value,
-  //     }));
-  //   };
-
-  /////probando
   const handleTempChange =
     (setter, campo, isNumber = false) =>
     (e) => {
@@ -154,15 +138,19 @@ function TablaReactivos({ seleccionarReactivo }) {
   }, []);
 
   useEffect(() => {
-    console.log("TEMP BASICA:", tempGeneral);
-  }, [tempGeneral]);
+    console.log("TEMP BASICA:", tempBasica);
+  }, [tempBasica]);
+
+  // useEffect(() => {
+  //   console.log("TEMP GENERAL:", tempGeneral);
+  // }, [tempGeneral]);
+
+  // useEffect(() => {
+  //   console.log("TEMP ESPECIFICA:", tempEspecifica);
+  // }, [tempEspecifica]);
 
   useEffect(() => {
-    console.log("ESTADO GLOBAL:", formData);
-  }, [formData]);
-
-  useEffect(() => {
-    console.log("GLOBAL:", formData.general);
+    console.log("FORM DATA GLOBAL:", formData);
   }, [formData]);
 
   // 🔥 EDITAR LIMPIO
@@ -241,14 +229,14 @@ function TablaReactivos({ seleccionarReactivo }) {
             basica: {
               reactivo: "",
               familia: "",
-              grupo: "",
+              grupo: "A",
               sinonimo: "",
               cas: "",
               marca: "",
               referencia: "",
-              fdsCompleta: "",
+              fdsCompleta: "Sí",
               ultimaFechaActualizacion: "",
-              estadoFisico: "",
+              estadoFisico: "Solido",
             },
             general: { cantidad_total: "", cantidad_real: "" },
             especifica: { palabra_advertencia: "" },
@@ -262,7 +250,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           setIsModalOpen(true);
         }}
       >
-        <img src={iconoAgregarRegistro} className="contenedorGenearl" />
+        <img src={iconoAgregarRegistro} />
         <h3>Nuevo registro</h3>
       </div>
 
@@ -304,9 +292,9 @@ function TablaReactivos({ seleccionarReactivo }) {
       </Modal>
 
       {/* BASICA */}
-      <Modal isOpen={isFirstModalOpen}>
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Reactivo</label>
+      <Modal isOpen={isFirstModalOpen} className="contenedorModalBasica">
+        <div className="contenedorBasica">
+          <label>Reactivo</label>
           <input
             type="text"
             value={tempBasica.reactivo}
@@ -314,8 +302,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Familia</label>
+        <div className="contenedorBasica">
+          <label>Familia</label>
           <input
             type="text"
             value={tempBasica.familia}
@@ -323,8 +311,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Grupo</label>
+        <div className="contenedorBasica">
+          <label>Grupo</label>
           <select
             value={tempBasica.grupo}
             onChange={handleTempChange(setTempBasica, "grupo")}
@@ -337,8 +325,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           </select>
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Sinonimo</label>
+        <div className="contenedorBasica">
+          <label>Sinonimo</label>
           <input
             type="text"
             value={tempBasica.sinonimo}
@@ -346,8 +334,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Cas</label>
+        <div className="contenedorBasica">
+          <label>Cas</label>
           <input
             type="text"
             value={tempBasica.cas}
@@ -355,8 +343,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Marca</label>
+        <div className="contenedorBasica">
+          <label>Marca</label>
           <input
             type="text"
             value={tempBasica.marca}
@@ -364,8 +352,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Referencia</label>
+        <div className="contenedorBasica">
+          <label>Referencia</label>
           <input
             type="text"
             value={tempBasica.referencia}
@@ -373,8 +361,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">¿FDS completa?</label>
+        <div className="contenedorBasica">
+          <label>¿FDS completa?</label>
           <select
             value={tempBasica.fdsCompleta}
             onChange={handleTempChange(setTempBasica, "fdsCompleta")}
@@ -384,10 +372,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           </select>
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">
-            Ultima fecha de actualizacion o creacion de FDS
-          </label>
+        <div className="contenedorBasica">
+          <label>Ultima fecha de actualizacion o creacion de FDS</label>
           <input
             value={tempBasica.ultimaFechaActualizacion}
             onChange={handleTempChange(
@@ -395,13 +381,12 @@ function TablaReactivos({ seleccionarReactivo }) {
               "ultimaFechaActualizacion",
             )}
             type="date"
-            className="contenedorGenearl"
             name="fecha"
           />
         </div>
 
-        <div className="contnedorBasica">
-          <label className="contenedorGenearl">Estado fisico</label>
+        <div className="contenedorBasica">
+          <label>Estado fisico</label>
           <select
             value={tempBasica.estadoFisico}
             onChange={handleTempChange(setTempBasica, "estadoFisico")}
@@ -472,104 +457,108 @@ function TablaReactivos({ seleccionarReactivo }) {
       </Modal>
 
       {/* GENERAL */}
-      <Modal isOpen={isSecondModalOpen}>
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Codigo frase H</label>
+      <Modal isOpen={isSecondModalOpen} className="contenedorModalGeneral">
+        <div className="contenedorGeneral">
+          <label>Codigo frase H</label>
           <textarea
             value={tempGeneral.codigoFraseH}
             onChange={handleTempChange(setTempGeneral, "codigoFraseH")}
           ></textarea>
         </div>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">
-            Toxicidad aguda CAT 1 CAT 2
-          </label>
+        <div className="contenedorGeneral">
+          <label>Toxicidad aguda CAT 1 CAT 2</label>
           <textarea
             value={tempGeneral.toxicidadCat1Cat2}
             onChange={handleTempChange(setTempGeneral, "toxicidadCat1Cat2")}
           ></textarea>
         </div>
-        <div className="contenedorGenearl">
-          <label htmlFor="SusCancer">Sustancia cancerigena</label>
+
+        <div className="contenedorGeneral">
+          <label>Sustancia cancerigena</label>
           <select
             value={tempGeneral.sustanciaCancerigena}
             onChange={handleTempChange(setTempGeneral, "sustanciaCancerigena")}
           >
-            <option value="si">Si</option>
+            <option value="si">Sí</option>
             <option value="no">No</option>
           </select>
         </div>
 
-        <h2>Ubicacion</h2>
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Sitio de almacenamiento</label>
-          <input
-            value={tempGeneral.sitioAlmacenamiento}
-            onChange={handleTempChange(setTempGeneral, "sitioAlmacenamiento")}
-          />
-        </div>
+        <h2 className="contenedorGeneraltitulo">Ubicacion</h2>
+        <div className="contenedorGeneral2">
+          <div className="contenedorGeneral">
+            <label>Sitio de almacenamiento</label>
+            <input
+              value={tempGeneral.sitioAlmacenamiento}
+              onChange={handleTempChange(setTempGeneral, "sitioAlmacenamiento")}
+            />
+          </div>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Ubicacion especifica</label>
-          <input
-            value={tempGeneral.ubicacionEspecifica}
-            onChange={handleTempChange(setTempGeneral, "ubicacionEspecifica")}
-          />
-        </div>
+          <div className="contenedorGeneral">
+            <label>Ubicacion especifica</label>
+            <input
+              value={tempGeneral.ubicacionEspecifica}
+              onChange={handleTempChange(setTempGeneral, "ubicacionEspecifica")}
+            />
+          </div>
 
-        <div className="contenedorGenearl">
-          <label htmlFor="UniMedida">Unidad de medida</label>
-          <select
-            value={tempGeneral.unidadDeMedida}
-            onChange={handleTempChange(setTempGeneral, "unidadDeMedida")}
-          >
-            <option value="gl">gl</option>
-            <option value="g">g</option>
-            <option value="Kg">Kg</option>
-            <option value="L">L</option>
-            <option value="ml">ml</option>
-            <option value="mg">mg</option>
-            <option value="Oz">Oz</option>{" "}
-          </select>
-        </div>
+          <div className="contenedorGeneral">
+            <label htmlFor="UniMedida">Unidad de medida</label>
+            <select
+              value={tempGeneral.unidadDeMedida}
+              onChange={handleTempChange(setTempGeneral, "unidadDeMedida")}
+            >
+              <option value="gl">gl</option>
+              <option value="g">g</option>
+              <option value="Kg">Kg</option>
+              <option value="L">L</option>
+              <option value="ml">ml</option>
+              <option value="mg">mg</option>
+              <option value="Oz">Oz</option>{" "}
+            </select>
+          </div>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Presentacion</label>
-          <input
-            value={tempGeneral.presentacion}
-            onChange={handleTempChange(setTempGeneral, "presentacion")}
-          />
-        </div>
+          <div className="contenedorGeneral">
+            <label>Presentacion</label>
+            <input
+              value={tempGeneral.presentacion}
+              onChange={handleTempChange(setTempGeneral, "presentacion")}
+            />
+          </div>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Numero de recipientes</label>
-          <input
-            value={tempGeneral.numeroDeRecipientes}
-            onChange={handleTempChange(setTempGeneral, "numeroDeRecipientes")}
-          />
-        </div>
+          <div className="contenedorGeneral">
+            <label>Numero de recipientes</label>
+            <input
+              value={tempGeneral.numeroDeRecipientes}
+              onChange={handleTempChange(setTempGeneral, "numeroDeRecipientes")}
+            />
+          </div>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Cantidad total</label>
+          <div className="contenedorGeneral">
+            <label>Cantidad total</label>
+            <input
+              type="text"
+              inputMode="decimal"
+              value={tempGeneral.cantidad_total ?? ""}
+              onChange={handleTempChange(
+                setTempGeneral,
+                "cantidad_total",
+                true,
+              )}
+            />
+          </div>
 
-          <input
-            type="text"
-            inputMode="decimal"
-            value={tempGeneral.cantidad_total ?? ""}
-            onChange={handleTempChange(setTempGeneral, "cantidad_total", true)}
-          />
-        </div>
+          <div className="contenedorGeneral">
+            <label>Cantidad real</label>
 
-        <div className="contenedorGenearl">
-          <label className="contenedorGenearl">Cantidad real</label>
-
-          <input
-            type="text"
-            inputMode="decimal"
-            value={tempGeneral.cantidad_real ?? ""}
-            onChange={handleTempChange(setTempGeneral, "cantidad_real", true)}
-          />
+            <input
+              type="text"
+              inputMode="decimal"
+              value={tempGeneral.cantidad_real ?? ""}
+              onChange={handleTempChange(setTempGeneral, "cantidad_real", true)}
+            />
+          </div>
         </div>
 
         <div className="botonModalGeneral">
@@ -629,31 +618,29 @@ function TablaReactivos({ seleccionarReactivo }) {
       </Modal>
 
       {/* ESPECIFICA */}
-      <Modal isOpen={isThirdModalOpen} className="modal-content">
+      <Modal isOpen={isThirdModalOpen} className="contenedorModalEpecifica">
         <h2>Sustancias controladas RES001:2015</h2>
 
-        <div className="form-group">
-          <label htmlFor="EsControlado">Es controlado</label>
+        <div className="contenedorEspecifica">
+          <label>Es controlado</label>
           <select>
-            <option value="si">Si</option>
+            <option value="si">Sí</option>
             <option value="no">No</option>
           </select>
         </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">Componente 1</label>
+        <div className="contenedorEspecifica">
+          <label>Componente 1</label>
           <input />
         </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">
-            clasificacion almacenamiento
-          </label>
+        <div className="contenedorEspecifica">
+          <label>clasificacion almacenamiento</label>
           <input />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="SAF-T-DATA">Separacion metodo SAF-T-DATA</label>
+        <div className="contenedorEspecifica">
+          <label>Separacion metodo SAF-T-DATA</label>
           <select>
             <option value="T">T</option>
             <option value="C">C</option>
@@ -664,74 +651,55 @@ function TablaReactivos({ seleccionarReactivo }) {
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="fechaIngresoLab">
+        <div className="contenedorEspecifica">
+          <label>
             Fecha de ingreso de la sustancia al laboratorio de quimica
           </label>
-          <input
-            type="date"
-            className="contenedorGenearl"
-            className="contenedorGenearl"
-          />
+          <input type="date" />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="fechaVencimientoProyec">
-            Fecha de vencimiento proyectada
-          </label>
-          <input
-            type="date"
-            className="contenedorGenearl"
-            className="contenedorGenearl"
-          />
+        <div className="contenedorEspecifica">
+          <label>Fecha de vencimiento proyectada</label>
+          <input type="date" />
         </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">Observaciones</label>
-          <textarea
-            className="contenedorGenearl"
-            className="contenedorGenearl"
-          ></textarea>
+        <div className="contenedorEspecifica">
+          <label>Observaciones</label>
+          <textarea></textarea>
         </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">Palabra advertencia</label>
+        <div className="contenedorEspecifica">
+          <label>Palabra advertencia</label>
           <input />
         </div>
 
-        <h2>Consejos de prudencia (Frases P)</h2>
-        <div className="form-group">
-          <label className="contenedorGenearl">Preventiva codigo/detalle</label>
-          <textarea
-            className="contenedorGenearl"
-            className="contenedorGenearl"
-          ></textarea>
-        </div>
+        <div className="contenedorEspecifica2">
+          <h2>Consejos de prudencia (Frases P)</h2>
+          <div className="contenedorEspecifica">
+            <label>Preventiva codigo/detalle</label>
+            <textarea></textarea>
+          </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">
-            respuesta o intervencion codigo/detalle
-          </label>
-          <textarea
-            className="contenedorGenearl"
-            className="contenedorGenearl"
-          ></textarea>
-        </div>
+          <div className="contenedorEspecifica">
+            <label>respuesta o intervencion codigo/detalle</label>
+            <textarea></textarea>
+          </div>
 
-        <h2>Informacion proveedor</h2>
-        <div className="form-group">
-          <label className="contenedorGenearl">Razon social</label>
-          <input type="text" />
-        </div>
+          <div className="contenedorEspecifica">
+            <h2>Informacion proveedor</h2>
+            <label>Razon social</label>
+            <input type="text" />
+          </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">Direccion</label>
-          <input type="text" />
-        </div>
+          <div className="contenedorEspecifica">
+            <label>Direccion</label>
+            <input type="text" />
+          </div>
 
-        <div className="form-group">
-          <label className="contenedorGenearl">Contacto</label>
-          <input type="text" />
+          <div className="contenedorEspecifica">
+            <label>Contacto</label>
+            <input type="text" />
+          </div>
         </div>
 
         <div className="botonModalEspecifica">
@@ -784,10 +752,7 @@ function TablaReactivos({ seleccionarReactivo }) {
               }`}
               onClick={() => toggleTempPictograma(p.id)}
             >
-              <img
-                src={`http://localhost:8000${p.url}`}
-                className="contenedorGenearl"
-              />
+              <img src={`http://localhost:8000${p.url}`} />
             </div>
           ))}
         </div>

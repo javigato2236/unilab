@@ -1,49 +1,3 @@
-.contnedorBasica {
-  /* display: flex;
-  align-items: center;
-  margin-bottom: 10px; */
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.contnedorBasica label {
-  width: 180px; /* ancho fijo para alinear todo */
-  font-weight: 500;
-}
-
-.contnedorBasica input,
-.contnedorBasicaselect,
-.contnedorBasica textarea {
-  flex: 1; /* ocupa el resto del espacio */
-  padding: 6px;
-}
-
-.contenedorGenearl {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.modal-content {
-  top: 1px;
-  width: 90%;
-  max-width: 400px;
-  max-height: 90vh;
-  overflow-y: auto;
-  overflow-x: auto;
-  padding: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* centra horizontalmente */
-  margin-bottom: 5px;
-}
-
 .botonModalPrincipal,
 .botonModalPictogramas_1,
 .botonModalPrincipalEnviarGuardar button,
@@ -60,4 +14,98 @@
   border-radius: 10px;
   background-color: transparent;
   cursor: pointer;
+}
+
+/* basica*/
+.contenedorModalBasica {
+  max-height: 85vh;
+
+  margin-top: 80px;
+  border-radius: 5%;
+}
+
+.contenedorBasica {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: -20px;
+}
+
+.contenedorBasica input {
+  padding: 5px;
+}
+
+.contenedorBasica label {
+  margin-bottom: 1px;
+}
+
+/* general*/
+.contenedorModalGeneral {
+  max-height: 85vh;
+
+  margin-top: 80px;
+  border-radius: 5%;
+}
+
+.contenedorGeneral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  bottom: 25px;
+}
+
+.contenedorGeneral input {
+  padding: 2px;
+}
+
+.contenedorGeneral label {
+  margin-bottom: 1px;
+}
+
+.contenedorGeneral2 {
+  position: relative;
+  bottom: 35px;
+  margin-bottom: -50px;
+}
+
+.contenedorGeneraltitulo {
+  position: relative;
+  bottom: 40px;
+}
+
+/* especifica */
+
+.contenedorEspecifica {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  bottom: 25px;
+}
+
+.contenedorModalEpecifica {
+  width: 90%;
+  max-width: 700px;
+
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+
+  max-height: 85vh;
+  overflow-y: auto;
+
+  box-sizing: border-box;
+}
+
+.contenedorEspecifica label {
+  margin: 3px;
+  padding: 3px;
+}
+
+.contenedorEspecifica2 {
+  position: relative;
+  bottom: 35px;
+  margin-bottom: -50px;
 }

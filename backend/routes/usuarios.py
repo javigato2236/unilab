@@ -37,6 +37,7 @@ def register(user: schemas.UsuarioCreate, db: Session = Depends(get_db)):
 
     db.add(new_user)
     db.commit()
+   
 
     return {"msg": "Usuario creado"}
 
