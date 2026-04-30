@@ -78,17 +78,6 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
-  // CONVERTIR A MAYÚSCULAS
-  // const convertirMayusculas = (obj) => {
-  //   const nuevo = {};
-
-  //   for (let key in obj) {
-  //     nuevo[key] =
-  //       typeof obj[key] === "string" ? obj[key].toUpperCase() : obj[key];
-  //   }
-
-  //   return nuevo;
-  // };
   const convertirMayusculas = (obj) => {
     const excluir = ["unidadDeMedida"];
 
