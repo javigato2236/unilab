@@ -1,4 +1,4 @@
-function ResetsEstados() {
+function ResetEstados() {
   return {
     basica: {
       reactivo: "",
@@ -46,4 +46,49 @@ function ResetsEstados() {
   };
 }
 
-export default ResetsEstados;
+function ResetEstadosIniciales() {
+  return {
+    basica: {
+      reactivo: "",
+      familia: "",
+      grupo: "A",
+      sinonimo: "",
+      cas: "",
+      marca: "",
+      referencia: "",
+      fdsCompleta: "Sí",
+      ultimaFechaActualizacion: "",
+      estadoFisico: "Solido",
+    },
+    general: {
+      codigoFraseH: "",
+      toxicidadCat1Cat2: "",
+      sustanciaCancerigena: "Sí",
+      sitioAlmacenamiento: "",
+      ubicacionEspecifica: "",
+      unidadDeMedida: "gl",
+      presentacion: "",
+      numeroDeRecipientes: "",
+      cantidad_total: "",
+      cantidad_real: "",
+    },
+    especifica: {
+      esControlado: "Sí",
+      componente1: "",
+      clasificacionAlmacenamiento: "",
+      separacionMetodoSAFTDATA: "T",
+      fechaIngresoLabQuimica: "",
+      fechaVencimientoProyectada: "",
+      observaciones: "",
+      palabraAdvertencia: "",
+      preventivaCodigoDetalle: "",
+      respuestaOintervencionCodigoDetalle: "",
+      razonSocial: "",
+      direccion: "",
+      contacto: "",
+    },
+    pictogramas: [],
+  };
+}
+
+export default { ResetEstados, ResetEstadosIniciales };

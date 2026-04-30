@@ -4,10 +4,10 @@ import "../styles/pictogramas.css";
 import "../styles/tabla.css";
 import "../styles/inputsModales.css";
 
-import ResetsEstados from "./resetsEstados";
-
 import Modal from "../hoosk/modalReutilizable";
 import PanelReactivo from "./PanelReactivo";
+
+import resetsEstados from "./resetsEstados";
 
 import { useState, useEffect } from "react";
 
@@ -17,7 +17,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [editandoId, setEditandoId] = useState(null);
 
   // estado unico prueba
-  const [formData, setFormData] = useState(ResetsEstados);
+  const [formData, setFormData] = useState(resetsEstados.ResetEstados());
 
   // 🔥 ESTADO ÚNICO
   // const [formData, setFormData] = useState({
@@ -145,21 +145,21 @@ function TablaReactivos({ seleccionarReactivo }) {
     fetchPictogramas();
   }, []);
 
-  useEffect(() => {
-    console.log("TEMP BASICA:", tempBasica);
-  }, [tempBasica]);
+  // useEffect(() => {
+  //   console.log("TEMP BASICA:", tempBasica);
+  // }, [tempBasica]);
 
-  useEffect(() => {
-    console.log("TEMP PICTOGRAMAS:", tempPictogramas);
-  }, [tempPictogramas]);
+  // useEffect(() => {
+  //   console.log("TEMP PICTOGRAMAS:", tempPictogramas);
+  // }, [tempPictogramas]);
 
   // useEffect(() => {
   //   console.log("TEMP GENERAL:", tempGeneral);
   // }, [tempGeneral]);
 
-  // useEffect(() => {
-  //   console.log("TEMP ESPECIFICA:", tempEspecifica);
-  // }, [tempEspecifica]);
+  useEffect(() => {
+    console.log("TEMP ESPECIFICA:", tempEspecifica);
+  }, [tempEspecifica]);
 
   useEffect(() => {
     console.log("FORM DATA GLOBAL:", formData);
@@ -237,48 +237,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           setEditandoId(null);
 
           // limpiar formulario completo
-          setFormData({
-            basica: {
-              reactivo: "",
-              familia: "",
-              grupo: "A",
-              sinonimo: "",
-              cas: "",
-              marca: "",
-              referencia: "",
-              fdsCompleta: "Sí",
-              ultimaFechaActualizacion: "",
-              estadoFisico: "Solido",
-            },
-            general: {
-              codigoFraseH: "",
-              toxicidadCat1Cat2: "",
-              sustanciaCancerigena: "Sí",
-              sitioAlmacenamiento: "",
-              ubicacionEspecifica: "",
-              unidadDeMedida: "gl",
-              presentacion: "",
-              numeroDeRecipientes: "",
-              cantidad_total: "",
-              cantidad_real: "",
-            },
-            especifica: {
-              esControlado: "Sí",
-              componente1: "",
-              clasificacionAlmacenamiento: "",
-              separacionMetodoSAFTDATA: "T",
-              fechaIngresoLabQuimica: "",
-              fechaVencimientoProyectada: "",
-              observaciones: "",
-              palabraDvertencia: "",
-              preventivaCodigoDetalle: "",
-              respuestaOintervencionCodigoDetalle: "",
-              razonSocial: "",
-              direccion: "",
-              contacto: "",
-            },
-            pictogramas: [],
-          });
+          setFormData(resetsEstados.ResetEstadosIniciales());
 
           //MUY IMPORTANTE: limpiar selección temporal
           setTempPictogramas([]);
@@ -464,18 +423,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           </button>
           <button
             onClick={() => {
-              setTempBasica({
-                reactivo: "",
-                familia: "",
-                grupo: "",
-                sinonimo: "",
-                cas: "",
-                marca: "",
-                referencia: "",
-                fdsCompleta: "",
-                ultimaFechaActualizacion: "",
-                estadoFisico: "",
-              });
+              setTempBasica(resetsEstados.ResetEstados().basica);
               setTempPictogramas([]);
 
               setIsFirstModalOpen(false);
@@ -619,18 +567,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
           <button
             onClick={() => {
-              setTempGeneral({
-                codigoFraseH: "",
-                toxicidadCat1Cat2: "",
-                sustanciaCancerigena: "",
-                sitioAlmacenamiento: "",
-                ubicacionEspecifica: "",
-                unidadDeMedida: "",
-                presentacion: "",
-                numeroDeRecipientes: "",
-                cantidadTotal: "",
-                cantidadReal: "",
-              });
+              setTempGeneral(resetsEstados.ResetEstados().general);
 
               setIsSecondModalOpen(false);
             }}
@@ -729,8 +666,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorEspecifica">
           <label>Palabra advertencia</label>
           <input
-            value={tempEspecifica.palabraDvertencia}
-            onChange={handleTempChange(setTempEspecifica, "palabraDvertencia")}
+            value={tempEspecifica.palabraAdvertencia}
+            onChange={handleTempChange(setTempEspecifica, "palabraAdvertencia")}
           />
         </div>
 
@@ -802,21 +739,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           </button>
           <button
             onClick={() => {
-              setTempEspecifica({
-                esControlado: "",
-                componente1: "",
-                clasificacionAlmacenamiento: "",
-                separacionMetodoSAFTDATA: "",
-                fechaIngresoLabQuimica: "",
-                fechaVencimientoProyectada: "",
-                observaciones: "",
-                palabraDvertencia: "",
-                preventivaCodigoDetalle: "",
-                respuestaOintervencionCodigoDetalle: "",
-                razonSocial: "",
-                direccion: "",
-                contacto: "",
-              });
+              setTempEspecifica(resetsEstados.ResetEstados().especifica);
 
               setIsThirdModalOpen(false);
             }}
