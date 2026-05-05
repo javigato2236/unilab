@@ -362,8 +362,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label>Reactivo</label>
           <input
             type="text"
-            value={tempBasica.reactivo}
-            onChange={handleTempChange(setTempBasica, "reactivo")}
+            value={tempBasica.nombre}
+            onChange={handleTempChange(setTempBasica, "nombre")}
           />
         </div>
 

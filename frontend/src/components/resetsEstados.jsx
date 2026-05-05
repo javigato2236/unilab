@@ -1,7 +1,7 @@
 function ResetEstados() {
   return {
     basica: {
-      reactivo: "",
+      nombre: "",
       familia: "",
       grupo: "",
       sinonimo: "",

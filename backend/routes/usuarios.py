@@ -242,11 +242,29 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
     basica = models.InfoBasica(
         sustancia_id=sustancia.id,
         familia=data.basica.familia,
-        sinonimo=data.basica.sinonimo
+        grupo=data.basica.grupo,
+        sinonimo=data.basica.sinonimo,
+        cas=data.basica.cas,
+        marca=data.basica.marca,
+        referencia=data.basica.referencia,
+        fds_completa=data.basica.fdsCompleta,
+        fecha_actualizacion=data.basica.ultimaFechaActualizacion,
+        estado_fisico=data.basica.estadoFisico
+
+
+        
     )
 
     general = models.InfoGeneral(
         sustancia_id=sustancia.id,
+        codigo_frase_h=data.general.codigoFraseH,
+        toxicidad_aguda_cat1_cat2=data.general.toxicidadCat1Cat2,
+        sustancia_cancerigena=data.general.sustanciaCancerigena,
+        sitio_almacenamiento=data.general.sitioAlmacenamiento,
+        ubicacion_especifica=data.general.ubicacionEspecifica,
+        unidad_medida=data.general.unidadDeMedida,
+        presentacion=data.general.presentacion,
+        numero_recipientes=data.general.numeroDeRecipientes,
         cantidad_total=data.general.cantidad_total,
         cantidad_real=data.general.cantidad_real
     )
