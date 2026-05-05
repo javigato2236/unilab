@@ -128,11 +128,11 @@ function TablaReactivos({ seleccionarReactivo }) {
     };
 
   // 🔹 FETCH
-  const fetchReactivos = async () => {
-    const res = await fetch("http://localhost:8000/api/sustancias");
-    const data = await res.json();
-    setReactivos(data);
-  };
+  // const fetchReactivos = async () => {
+  //   const res = await fetch("http://localhost:8000/api/sustancias");
+  //   const data = await res.json();
+  //   setReactivos(data);
+  // };
 
   const fetchPictogramas = async () => {
     const res = await fetch("http://localhost:8000/api/pictogramas");
@@ -143,6 +143,10 @@ function TablaReactivos({ seleccionarReactivo }) {
   useEffect(() => {
     fetchReactivos();
     fetchPictogramas();
+  }, []);
+
+  useEffect(() => {
+    fetchReactivos();
   }, []);
 
   // useEffect(() => {
@@ -157,13 +161,36 @@ function TablaReactivos({ seleccionarReactivo }) {
   //   console.log("TEMP GENERAL:", tempGeneral);
   // }, [tempGeneral]);
 
-  useEffect(() => {
-    console.log("TEMP ESPECIFICA:", tempEspecifica);
-  }, [tempEspecifica]);
+  // useEffect(() => {
+  //   console.log("TEMP ESPECIFICA:", tempEspecifica);
+  // }, [tempEspecifica]);
 
-  useEffect(() => {
-    console.log("FORM DATA GLOBAL:", formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log("FORM DATA GLOBAL:", formData);
+  // }, [formData]);
+
+  //////////////////////probando envio de datos
+  const fetchReactivos = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/sustancias");
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("ERROR BACKEND:", errorText);
+        throw new Error("Error en API");
+      }
+
+      const data = await res.json();
+
+      console.log("DATA BACKEND:", data); // 👈 clave para debug
+
+      setReactivos(data);
+    } catch (error) {
+      console.error("❌ ERROR FETCH:", error);
+    }
+  };
+
+  //////////////////////probando envio de datos
 
   // 🔥 EDITAR LIMPIO
   const editar = (item) => {
@@ -194,27 +221,63 @@ function TablaReactivos({ seleccionarReactivo }) {
     );
   };
 
-  // 🔹 ENVIAR
+  //////////////////////////77 probando nuevo enviar
+
   const enviarTodo = async () => {
-    console.log("FORM DATA:", formData);
+    console.log("📤 FORM DATA:", formData);
+
     const url = editandoId
       ? `http://localhost:8000/api/sustancias/${editandoId}`
       : "http://localhost:8000/api/sustancias";
 
     const method = editandoId ? "PUT" : "POST";
 
-    await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    alert(editandoId ? "Actualizado" : "Creado");
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("❌ ERROR BACKEND:", errorText);
+        throw new Error("Error al guardar");
+      }
 
-    setIsModalOpen(false);
-    setEditandoId(null);
-    fetchReactivos();
+      alert(editandoId ? "Actualizado" : "Creado");
+
+      setEditandoId(null);
+
+      fetchReactivos(); // 🔥 refrescar tabla
+    } catch (error) {
+      console.error("❌ ERROR FRONT:", error);
+      alert("Error al guardar datos");
+    }
   };
+  ///////////////////// probando nuevo enviar
+
+  //  ENVIAR
+  // const enviarTodo = async () => {
+  //   console.log("FORM DATA:", formData);
+  //   const url = editandoId
+  //     ? `http://localhost:8000/api/sustancias/${editandoId}`
+  //     : "http://localhost:8000/api/sustancias";
+
+  //   const method = editandoId ? "PUT" : "POST";
+
+  //   await fetch(url, {
+  //     method,
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(formData),
+  //   });
+
+  //   alert(editandoId ? "Actualizado" : "Creado");
+
+  //   setIsModalOpen(false);
+  //   setEditandoId(null);
+  //   fetchReactivos();
+  // };
 
   // 🔹 ELIMINAR
   const eliminar = async (id) => {
@@ -788,7 +851,58 @@ function TablaReactivos({ seleccionarReactivo }) {
       </Modal>
 
       {/* TABLA */}
+
+      {/* probando nueva tabla */}
+      <h2>Tabla de Reactivos</h2>
+
       <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Familia</th>
+            <th>Sinonimo</th>
+            <th>Cantidad Total</th>
+            <th>Cantidad Real</th>
+            <th>Advertencia</th>
+            <th>Pictogramas</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {reactivos.map((r) => (
+            <tr key={r.id}>
+              <td>{r.nombre}</td>
+
+              <td>{r.basica?.familia}</td>
+              <td>{r.basica?.sinonimo}</td>
+
+              <td>{r.general?.cantidad_total}</td>
+              <td>{r.general?.cantidad_real}</td>
+
+              <td>{r.especifica?.palabra_advertencia}</td>
+
+              <td>
+                {r.pictogramas?.map((p) => (
+                  <img
+                    key={p.pictograma.id}
+                    src={`http://localhost:8000${p.pictograma.url}`}
+                    width="30"
+                  />
+                ))}
+              </td>
+
+              <td>
+                <button onClick={() => editar(r)}>Editar</button>
+                <button onClick={() => eliminar(r.id)}>Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* probando nueva tabla */}
+
+      {/* <table>
         <tbody>
           {reactivos.map((r) => (
             <tr key={r.id}>
@@ -801,7 +915,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
 
       {reactivoSeleccionado && (
         <PanelReactivo

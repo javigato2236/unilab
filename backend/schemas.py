@@ -105,3 +105,62 @@ class SustanciaCreate(BaseModel):
     general: InfoGeneralSchema
     especifica: InfoEspecificaSchema
     pictogramas: List[int]  
+
+# /////////////////////////////////////
+
+class PictogramaOut(BaseModel):
+    id: int
+    nombre: str
+    url: str
+
+    class Config:
+        from_attributes = True
+
+
+# 🔹 RELACIÓN INTERMEDIA
+class SustanciaPictogramaOut(BaseModel):
+    id: int
+    pictograma: PictogramaOut
+
+    class Config:
+        from_attributes = True
+
+
+# 🔹 BASICA
+class InfoBasicaOut(BaseModel):
+    familia: str
+    sinonimo: str
+
+    class Config:
+        from_attributes = True
+
+
+# 🔹 GENERAL
+class InfoGeneralOut(BaseModel):
+    cantidad_total: float
+    cantidad_real: float
+
+    class Config:
+        from_attributes = True
+
+
+# 🔹 ESPECIFICA
+class InfoEspecificaOut(BaseModel):
+    palabra_advertencia: str
+
+    class Config:
+        from_attributes = True
+
+
+# 🔹 SUSTANCIA FINAL
+class SustanciaOut(BaseModel):
+    id: int
+    nombre: str
+
+    basica: InfoBasicaOut | None
+    general: InfoGeneralOut | None
+    especifica: InfoEspecificaOut | None
+    pictogramas: List[SustanciaPictogramaOut]
+
+    class Config:
+        from_attributes = True

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
+from typing import List
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from datetime import timedelta
 import models, schemas, database, auth, config, email_utils
 from urllib.parse import quote
@@ -192,6 +193,77 @@ def obtener_pictogramas(db: Session = Depends(get_db)):
 
 
 ############################
-@router.get("/sustancias")
-def get_sustancias():
-    return [{"id": 1, "nombre": "ACIDO"}]
+# @router.get("/sustancias")
+# def get_sustancias():
+#     return [{"id": 1, "nombre": "ACIDO"}]
+
+##########################################################
+
+# @router.get("/sustancias")
+# def obtener_sustancias(db: Session = Depends(get_db)):
+
+#     sustancias = db.query(models.Sustancia).all()
+
+#     resultado = []
+
+#     for s in sustancias:
+#         resultado.append({
+#             "id": s.id,
+#             "nombre": s.nombre
+#         })
+
+#     return resultado
+
+######################################################
+@router.get("/sustancias", response_model=list[schemas.SustanciaOut])
+def obtener_sustancias(db: Session = Depends(get_db)):
+
+    sustancias = db.query(models.Sustancia).options(
+        joinedload(models.Sustancia.basica),
+        joinedload(models.Sustancia.general),
+        joinedload(models.Sustancia.especifica),
+        joinedload(models.Sustancia.pictogramas)
+        .joinedload(models.SustanciaPictograma.pictograma)
+    ).all()
+
+    return sustancias
+
+###################################################################
+@router.post("/sustancias")
+def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
+
+    sustancia = models.Sustancia(
+        nombre=data.basica.nombre  # ⚠️ este campo debe coincidir con tu frontend
+    )
+
+    db.add(sustancia)
+    db.flush()
+
+    basica = models.InfoBasica(
+        sustancia_id=sustancia.id,
+        familia=data.basica.familia,
+        sinonimo=data.basica.sinonimo
+    )
+
+    general = models.InfoGeneral(
+        sustancia_id=sustancia.id,
+        cantidad_total=data.general.cantidad_total,
+        cantidad_real=data.general.cantidad_real
+    )
+
+    especifica = models.InfoEspecifica(
+        sustancia_id=sustancia.id,
+        palabra_advertencia=data.especifica.palabra_advertencia
+    )
+
+    db.add_all([basica, general, especifica])
+
+    for pictograma_id in data.pictogramas:
+        db.add(models.SustanciaPictograma(
+            sustancia_id=sustancia.id,
+            pictograma_id=pictograma_id
+        ))
+
+    db.commit()
+
+    return {"msg": "ok"}
