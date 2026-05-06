@@ -271,7 +271,19 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
     especifica = models.InfoEspecifica(
         sustancia_id=sustancia.id,
-        palabra_advertencia=data.especifica.palabra_advertencia
+        es_controlado=data.especifica.esControlado,
+        componente_1=data.especifica.componente1,
+        clasificacion_almacenamiento=data.especifica.clasificacionAlmacenamiento,
+        separacion_saftdata=data.especifica.separacionMetodoSAFTDATA,
+        fecha_ingreso=data.especifica.fechaIngresoLabQuimica,
+        fecha_vencimiento=data.especifica.fechaVencimientoProyectada,
+        observaciones=data.especifica.observaciones,
+        palabra_advertencia=data.especifica.palabraAdvertencia,
+        preventiva=data.especifica.preventivaCodigoDetalle,
+        respuesta=data.especifica.respuestaOintervencionCodigoDetalle,
+        razon_social=data.especifica.razonSocial,
+        direccion=data.especifica.direccion,
+        contacto=data.especifica.contacto
     )
 
     db.add_all([basica, general, especifica])

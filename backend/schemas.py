@@ -48,6 +48,8 @@ class InfoBasicaSchema(BaseModel):
 
 class InfoGeneralSchema(BaseModel):
     codigo_frase_h: str
+    toxicidad_aguda_cat1_cat2: str
+
     sustancia_cancerigena: str  # SI / NO
 
     sitio_almacenamiento: str
@@ -61,6 +63,14 @@ class InfoGeneralSchema(BaseModel):
     cantidad_total: float
     cantidad_real: float
 
+   
+
+
+
+# MODAL 3: INFO ESPECÍFICA
+
+
+class InfoEspecificaSchema(BaseModel):
     es_controlado: str  # SI / NO
     componente_1: str
 
@@ -71,17 +81,10 @@ class InfoGeneralSchema(BaseModel):
     fecha_vencimiento: Optional[date]
 
     observaciones: Optional[str]
-
-
-
-# MODAL 3: INFO ESPECÍFICA
-
-
-class InfoEspecificaSchema(BaseModel):
     palabra_advertencia: str
 
     preventiva: str
-    respuesta_intervencion: str
+    respuesta: str
 
     razon_social: str
     direccion: str
