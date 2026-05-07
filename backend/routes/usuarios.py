@@ -156,18 +156,18 @@ def forgot_password(data: schemas.ForgotPassword, db: Session = Depends(get_db))
 @router.post("/reset-password")
 def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
 
-    # 🔎 Verificar token JWT (firma y expiración)
+    #  Verificar token JWT (firma y expiración)
     
     payload = auth.verify_token(data.token)
 
-    # 📌 Obtener correo desde el JWT
+    #  Obtener correo desde el JWT
     correo = payload.get("sub")
     
 
     if not correo:
         raise HTTPException(status_code=400, detail="Token inválido")
 
-    # 🔎 Buscar usuario
+    #  Buscar usuario
     user = db.query(models.RegistroUsuarios).filter(
         models.RegistroUsuarios.correo == correo
     ).first()
@@ -175,10 +175,10 @@ def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # 🔒 Hashear nueva contraseña
+    #  ¿Hashear nueva contraseña
     hashed_password = auth.hash_password(data.nueva_clave)
 
-    # 💾 Actualizar en base de datos
+    #  Actualizar en base de datos
     user.clave = hashed_password
     db.commit()
 
@@ -192,27 +192,7 @@ def obtener_pictogramas(db: Session = Depends(get_db)):
     return db.query(models.CatalogoPictograma).all()
 
 
-############################
-# @router.get("/sustancias")
-# def get_sustancias():
-#     return [{"id": 1, "nombre": "ACIDO"}]
 
-##########################################################
-
-# @router.get("/sustancias")
-# def obtener_sustancias(db: Session = Depends(get_db)):
-
-#     sustancias = db.query(models.Sustancia).all()
-
-#     resultado = []
-
-#     for s in sustancias:
-#         resultado.append({
-#             "id": s.id,
-#             "nombre": s.nombre
-#         })
-
-#     return resultado
 
 ######################################################
 @router.get("/sustancias", response_model=list[schemas.SustanciaOut])
@@ -231,69 +211,131 @@ def obtener_sustancias(db: Session = Depends(get_db)):
 ###################################################################
 @router.post("/sustancias")
 def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
+    try:
+        print("DATA:", data.dict())
 
-    sustancia = models.Sustancia(
-        nombre=data.basica.nombre  # ⚠️ este campo debe coincidir con tu frontend
-    )
+        sustancia = models.Sustancia(
+            nombre=data.basica.nombre
+        )
 
-    db.add(sustancia)
-    db.flush()
+        db.add(sustancia)
+        db.flush()
 
-    basica = models.InfoBasica(
-        sustancia_id=sustancia.id,
-        familia=data.basica.familia,
-        grupo=data.basica.grupo,
-        sinonimo=data.basica.sinonimo,
-        cas=data.basica.cas,
-        marca=data.basica.marca,
-        referencia=data.basica.referencia,
-        fds_completa=data.basica.fdsCompleta,
-        fecha_actualizacion=data.basica.ultimaFechaActualizacion,
-        estado_fisico=data.basica.estadoFisico
+        print("ID GENERADO:", sustancia.id)
+
+        # resto igual...
+
+        db.commit()
+
+        return {"msg": "ok"}
+
+    except Exception as e:
+        print("ERROR BACKEND:", str(e))
+        db.rollback()
+        return {"error": str(e)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################################################################3
+# @router.post("/sustancias")
+# def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
+
+#     sustancia = models.Sustancia(
+#         nombre=data.basica.nombre  # ⚠️ este campo debe coincidir con tu frontend
+#     )
+
+#     db.add(sustancia)
+#     db.flush()
+
+#     basica = models.InfoBasica(
+#         sustancia_id=sustancia.id,
+#         familia=data.basica.familia,
+#         grupo=data.basica.grupo,
+#         sinonimo=data.basica.sinonimo,
+#         cas=data.basica.cas,
+#         marca=data.basica.marca,
+#         referencia=data.basica.referencia,
+#         fds_completa=data.basica.fdsCompleta,
+#         fecha_actualizacion=data.basica.ultimaFechaActualizacion,
+#         estado_fisico=data.basica.estadoFisico
 
 
         
-    )
+#     )
 
-    general = models.InfoGeneral(
-        sustancia_id=sustancia.id,
-        codigo_frase_h=data.general.codigoFraseH,
-        toxicidad_aguda_cat1_cat2=data.general.toxicidadCat1Cat2,
-        sustancia_cancerigena=data.general.sustanciaCancerigena,
-        sitio_almacenamiento=data.general.sitioAlmacenamiento,
-        ubicacion_especifica=data.general.ubicacionEspecifica,
-        unidad_medida=data.general.unidadDeMedida,
-        presentacion=data.general.presentacion,
-        numero_recipientes=data.general.numeroDeRecipientes,
-        cantidad_total=data.general.cantidad_total,
-        cantidad_real=data.general.cantidad_real
-    )
+#     general = models.InfoGeneral(
+#         sustancia_id=sustancia.id,
+#         codigo_frase_h=data.general.codigoFraseH,
+#         toxicidad_aguda_cat1_cat2=data.general.toxicidadCat1Cat2,
+#         sustancia_cancerigena=data.general.sustanciaCancerigena,
+#         sitio_almacenamiento=data.general.sitioAlmacenamiento,
+#         ubicacion_especifica=data.general.ubicacionEspecifica,
+#         unidad_medida=data.general.unidadDeMedida,
+#         presentacion=data.general.presentacion,
+#         numero_recipientes=data.general.numeroDeRecipientes,
+#         cantidad_total=data.general.cantidadTotal,
+#         cantidad_real=data.general.cantidadReal
+#     )
 
-    especifica = models.InfoEspecifica(
-        sustancia_id=sustancia.id,
-        es_controlado=data.especifica.esControlado,
-        componente_1=data.especifica.componente1,
-        clasificacion_almacenamiento=data.especifica.clasificacionAlmacenamiento,
-        separacion_saftdata=data.especifica.separacionMetodoSAFTDATA,
-        fecha_ingreso=data.especifica.fechaIngresoLabQuimica,
-        fecha_vencimiento=data.especifica.fechaVencimientoProyectada,
-        observaciones=data.especifica.observaciones,
-        palabra_advertencia=data.especifica.palabraAdvertencia,
-        preventiva=data.especifica.preventivaCodigoDetalle,
-        respuesta=data.especifica.respuestaOintervencionCodigoDetalle,
-        razon_social=data.especifica.razonSocial,
-        direccion=data.especifica.direccion,
-        contacto=data.especifica.contacto
-    )
+#     especifica = models.InfoEspecifica(
+#         sustancia_id=sustancia.id,
+#         es_controlado=data.especifica.esControlado,
+#         componente_1=data.especifica.componente1,
+#         clasificacion_almacenamiento=data.especifica.clasificacionAlmacenamiento,
+#         separacion_saftdata=data.especifica.separacionMetodoSAFTDATA,
+#         fecha_ingreso=data.especifica.fechaIngresoLabQuimica,
+#         fecha_vencimiento=data.especifica.fechaVencimientoProyectada,
+#         observaciones=data.especifica.observaciones,
+#         palabra_advertencia=data.especifica.palabraAdvertencia,
+#         preventiva=data.especifica.preventivaCodigoDetalle,
+#         respuesta=data.especifica.respuestaOintervencionCodigoDetalle,
+#         razon_social=data.especifica.razonSocial,
+#         direccion=data.especifica.direccion,
+#         contacto=data.especifica.contacto
+#     )
 
-    db.add_all([basica, general, especifica])
+#     db.add_all([basica, general, especifica])
 
-    for pictograma_id in data.pictogramas:
-        db.add(models.SustanciaPictograma(
-            sustancia_id=sustancia.id,
-            pictograma_id=pictograma_id
-        ))
+#     for pictograma_id in data.pictogramas:
+#         db.add(models.SustanciaPictograma(
+#             sustancia_id=sustancia.id,
+#             pictograma_id=pictograma_id
+#         ))
 
+#     db.commit()
+
+#     return {"msg": "ok"}
+
+
+
+
+
+##############################################################################3
+
+
+
+
+
+
+@router.delete("/sustancias/{id}")
+def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
+
+    sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
+
+    if not sustancia:
+        raise HTTPException(status_code=404, detail="No encontrado")
+
+    db.delete(sustancia)
     db.commit()
 
-    return {"msg": "ok"}
+    return {"msg": "Eliminado"}

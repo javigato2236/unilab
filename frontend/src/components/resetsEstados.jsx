@@ -22,8 +22,8 @@ function ResetEstados() {
       unidadDeMedida: "",
       presentacion: "",
       numeroDeRecipientes: "",
-      cantidad_total: "",
-      cantidad_real: "",
+      cantidadTotal: "",
+      cantidadReal: "",
     },
 
     especifica: {
@@ -49,7 +49,7 @@ function ResetEstados() {
 function ResetEstadosIniciales() {
   return {
     basica: {
-      reactivo: "",
+      nombre: "",
       familia: "",
       grupo: "A",
       sinonimo: "",
@@ -69,8 +69,8 @@ function ResetEstadosIniciales() {
       unidadDeMedida: "gl",
       presentacion: "",
       numeroDeRecipientes: "",
-      cantidad_total: "",
-      cantidad_real: "",
+      cantidadTotal: "",
+      cantidadReal: "",
     },
     especifica: {
       esControlado: "Sí",

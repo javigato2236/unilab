@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Numeric
+from sqlalchemy import Column, Integer, String, ForeignKey, Numeric, Date
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -49,8 +49,15 @@ class InfoBasica(Base):
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))
 
-    familia = Column(String(100))
+    familia = Column(String(150))
+    grupo = Column(String(30))
     sinonimo = Column(String(150))
+    cas = Column(String(100))
+    marca = Column(String(100))
+    referencia = Column(String(100))
+    fdsCompleta = Column(String(10))
+    ultimaFechaActualizacion = Column(Date)
+    estadoFisico = Column(String(50))
 
     sustancia = relationship("Sustancia", back_populates="basica")
 
@@ -60,9 +67,16 @@ class InfoGeneral(Base):
 
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))
-
-    cantidad_total = Column(Numeric(12,3))
-    cantidad_real = Column(Numeric(12,3))
+    codigoFraseH = Column(String(100))
+    toxicidadCat1Cat2 = Column(String(200))
+    sustanciaCancerigena = Column(String(10))
+    sitioAlmacenamiento = Column(String(150))
+    ubicacionEspecifica = Column(String(150))
+    unidadDeMedida = Column(String(50))
+    presentacion = Column(String(150))
+    numeroDeRecipientes = Column(Integer)
+    cantidadTotal = Column(Numeric(12,3))
+    cantidadReal = Column(Numeric(12,3))
 
     sustancia = relationship("Sustancia", back_populates="general")
 
@@ -72,7 +86,18 @@ class InfoEspecifica(Base):
 
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))
-
-    palabra_advertencia = Column(String(50))
+    esControlado = Column(String(30))
+    componente1 = Column(String(100))
+    clasificacionAlmacenamiento = Column(String(100))
+    separacionMetodoSAFTDATA = Column(String(50))
+    fechaIngresoLabQuimica = Column(String(30))
+    fechaVencimientoProyectada = Column(Date)
+    observaciones = Column(String(300))
+    palabraAdvertencia = Column(String(50))
+    preventivaCodigoDetalle = Column(String(200))
+    respuestaOintervencionCodigoDetalle = Column(String(200))
+    razonSocial = Column(String(150))
+    direccion = Column(String(150))
+    contacto = Column(String(100))
 
     sustancia = relationship("Sustancia", back_populates="especifica")

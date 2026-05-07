@@ -223,71 +223,108 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   //////////////////////////77 probando nuevo enviar
 
-  const enviarTodo = async () => {
-    console.log("📤 FORM DATA:", formData);
-
-    const url = editandoId
-      ? `http://localhost:8000/api/sustancias/${editandoId}`
-      : "http://localhost:8000/api/sustancias";
-
-    const method = editandoId ? "PUT" : "POST";
-
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("❌ ERROR BACKEND:", errorText);
-        throw new Error("Error al guardar");
-      }
-
-      alert(editandoId ? "Actualizado" : "Creado");
-
-      setEditandoId(null);
-
-      fetchReactivos(); // 🔥 refrescar tabla
-    } catch (error) {
-      console.error("❌ ERROR FRONT:", error);
-      alert("Error al guardar datos");
-    }
-  };
-  ///////////////////// probando nuevo enviar
-
-  //  ENVIAR
   // const enviarTodo = async () => {
-  //   console.log("FORM DATA:", formData);
+  //   console.log(" FORM DATA:", formData);
+
   //   const url = editandoId
   //     ? `http://localhost:8000/api/sustancias/${editandoId}`
   //     : "http://localhost:8000/api/sustancias";
 
   //   const method = editandoId ? "PUT" : "POST";
 
-  //   await fetch(url, {
-  //     method,
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(formData),
-  //   });
+  //   try {
+  //     const res = await fetch(url, {
+  //       method,
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formData),
+  //     });
 
-  //   alert(editandoId ? "Actualizado" : "Creado");
+  //     if (!res.ok) {
+  //       const errorText = await res.text();
+  //       console.error(" ERROR BACKEND:", errorText);
+  //       throw new Error("Error al guardar");
+  //     }
 
-  //   setIsModalOpen(false);
-  //   setEditandoId(null);
-  //   fetchReactivos();
+  //     alert(editandoId ? "Actualizado" : "Creado");
+
+  //     setEditandoId(null);
+
+  //     fetchReactivos(); // refrescar tabla
+  //   } catch (error) {
+  //     console.error(" ERROR FRONT:", error);
+  //     alert("Error al guardar datos");
+  //   }
   // };
 
-  // 🔹 ELIMINAR
+  ///////////////////////////////////////////
+  const enviarTodo = async () => {
+    const url = editandoId
+      ? `http://localhost:8000/api/sustancias/${editandoId}`
+      : "http://localhost:8000/api/sustancias";
+
+    const method = editandoId ? "PUT" : "POST";
+
+    const body = JSON.stringify(formData);
+
+    console.log(" FORM DATA:", formData);
+    console.log(" URL:", url);
+    console.log(" METHOD:", method);
+    console.log(" BODY JSON:", body);
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body,
+      });
+
+      console.log(" STATUS:", res.status);
+
+      const responseText = await res.text();
+      console.log(" RESPONSE RAW:", responseText);
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+        console.log(" RESPONSE JSON:", data);
+      } catch {
+        console.warn(" La respuesta no es JSON");
+      }
+
+      if (!res.ok) {
+        throw new Error(responseText);
+      }
+
+      alert(editandoId ? "Actualizado" : "Creado");
+
+      setEditandoId(null);
+      fetchReactivos();
+    } catch (error) {
+      console.error(" ERROR FRONT:", error);
+      alert("Error al guardar datos");
+    }
+  };
+  //////////////////////////////////////////7
+
   const eliminar = async (id) => {
-    if (!confirm("¿Eliminar?")) return;
+    if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
 
-    await fetch(`http://localhost:8000/api/sustancias/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`http://localhost:8000/api/sustancias/${id}`, {
+        method: "DELETE",
+      });
 
-    fetchReactivos();
+      if (!res.ok) {
+        throw new Error("Error al eliminar");
+      }
+
+      alert("Reactivo eliminado correctamente");
+
+      fetchReactivos(); // 🔄 recargar tabla
+    } catch (error) {
+      console.error("ERROR:", error);
+      alert("No se pudo eliminar el reactivo");
+    }
   };
 
   return (
@@ -571,8 +608,13 @@ function TablaReactivos({ seleccionarReactivo }) {
           <div className="contenedorGeneral">
             <label>Numero de recipientes</label>
             <input
+              type="text"
               value={tempGeneral.numeroDeRecipientes}
-              onChange={handleTempChange(setTempGeneral, "numeroDeRecipientes")}
+              onChange={handleTempChange(
+                setTempGeneral,
+                "numeroDeRecipientes",
+                true,
+              )}
             />
           </div>
 
@@ -580,13 +622,10 @@ function TablaReactivos({ seleccionarReactivo }) {
             <label>Cantidad total</label>
             <input
               type="text"
+              step="any"
               inputMode="decimal"
-              value={tempGeneral.cantidad_total ?? ""}
-              onChange={handleTempChange(
-                setTempGeneral,
-                "cantidad_total",
-                true,
-              )}
+              value={tempGeneral.cantidadTotal ?? ""}
+              onChange={handleTempChange(setTempGeneral, "cantidadTotal", true)}
             />
           </div>
 
@@ -595,9 +634,10 @@ function TablaReactivos({ seleccionarReactivo }) {
 
             <input
               type="text"
+              step="any"
               inputMode="decimal"
-              value={tempGeneral.cantidad_real ?? ""}
-              onChange={handleTempChange(setTempGeneral, "cantidad_real", true)}
+              value={tempGeneral.cantidadReal ?? ""}
+              onChange={handleTempChange(setTempGeneral, "cantidadReal", true)}
             />
           </div>
         </div>
@@ -616,9 +656,9 @@ function TablaReactivos({ seleccionarReactivo }) {
                     tempGeneral.numeroDeRecipientes || 0,
                   ),
 
-                  cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
+                  cantidadTotal: parseFloat(tempGeneral.cantidadTotal || 0),
 
-                  cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
+                  cantidadReal: parseFloat(tempGeneral.cantidadReal || 0),
                 },
               }));
 

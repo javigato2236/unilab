@@ -20,7 +20,7 @@ class ResetPassword(BaseModel):
     token: str
     nueva_clave: str
 
-class ValidateToken(BaseModel):##########################
+class ValidateToken(BaseModel):
     token: str
 
 
@@ -36,10 +36,10 @@ class InfoBasicaSchema(BaseModel):
     marca: str
     referencia: str
 
-    fds_completa: str  # SI / NO
-    fecha_actualizacion_fds: Optional[date]
+    fdsCompleta: str  # SI / NO
+    ultimaFechaActualizacion: Optional[date]
 
-    estado_fisico: str  # SOLIDO / LIQUIDO
+    estadoFisico: str  # SOLIDO / LIQUIDO
 
 
 # =========================
@@ -47,21 +47,21 @@ class InfoBasicaSchema(BaseModel):
 # =========================
 
 class InfoGeneralSchema(BaseModel):
-    codigo_frase_h: str
-    toxicidad_aguda_cat1_cat2: str
+    codigoFraseH: str
+    toxicidadCat1Cat2: str
 
-    sustancia_cancerigena: str  # SI / NO
+    sustanciaCancerigena: str  # SI / NO
 
-    sitio_almacenamiento: str
-    ubicacion_especifica: str
+    sitioAlmacenamiento: str
+    ubicacionEspecifica: str
 
-    unidad_medida: str
+    unidadDeMedida: str
     presentacion: str
 
-    numero_recipientes: int
+    numeroDeRecipientes: int
 
-    cantidad_total: float
-    cantidad_real: float
+    cantidadTotal: float
+    cantidadReal: float
 
    
 
@@ -71,22 +71,22 @@ class InfoGeneralSchema(BaseModel):
 
 
 class InfoEspecificaSchema(BaseModel):
-    es_controlado: str  # SI / NO
-    componente_1: str
+    esControlado: str  # SI / NO
+    componente1: str
 
-    clasificacion_almacenamiento: str
-    separacion_saftdata: str
+    clasificacionAlmacenamiento: str
+    separacionMetodoSAFTDATA: str
 
-    fecha_ingreso: Optional[date]
-    fecha_vencimiento: Optional[date]
+    fechaIngresoLabQuimica: Optional[date]
+    fechaVencimientoProyectada: Optional[date]
 
     observaciones: Optional[str]
-    palabra_advertencia: str
+    palabraAdvertencia: str
 
-    preventiva: str
-    respuesta: str
+    preventivaCodigoDetalle: str
+    respuestaOintervencionCodigoDetalle: str
 
-    razon_social: str
+    razonSocial: str
     direccion: str
     contacto: str
 
