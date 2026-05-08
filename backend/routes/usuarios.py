@@ -323,3 +323,83 @@ def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"msg": "Eliminado"}
+
+@router.put("/sustancias/{id}")
+def actualizar_sustancia(
+    id: int,
+    data: schemas.SustanciaCreate,
+    db: Session = Depends(get_db)
+):
+    # Buscar sustancia
+    sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
+
+    if not sustancia:
+        raise HTTPException(status_code=404, detail="Sustancia no encontrada")
+
+  
+    #  ACTUALIZAR SUSTANCIA
+    
+    sustancia.nombre = data.basica.nombre
+
+   
+    #  INFO BASICA
+    
+    if sustancia.basica:
+        sustancia.basica.familia = data.basica.familia
+        sustancia.basica.sinonimo = data.basica.sinonimo
+    else:
+        sustancia.basica = models.InfoBasica(
+            familia=data.basica.familia,
+            sinonimo=data.basica.sinonimo
+        )
+
+  
+    # INFO GENERAL
+   
+    if sustancia.general:
+        sustancia.general.cantidad_total = data.general.cantidad_total
+        sustancia.general.cantidad_real = data.general.cantidad_real
+    else:
+        sustancia.general = models.InfoGeneral(
+            cantidad_total=data.general.cantidad_total,
+            cantidad_real=data.general.cantidad_real
+        )
+
+   
+    # INFO ESPECIFICA
+    
+    if sustancia.especifica:
+        sustancia.especifica.palabra_advertencia = data.especifica.palabra_advertencia
+    else:
+        sustancia.especifica = models.InfoEspecifica(
+            palabra_advertencia=data.especifica.palabra_advertencia
+        )
+
+   
+    # PICTOGRAMAS (CLAVE)
+   
+
+    # IDs actuales en BD
+    actuales = {p.pictograma_id for p in sustancia.pictogramas}
+
+    # IDs nuevos enviados desde frontend
+    nuevos = set(data.pictogramas)
+
+    # 🔴 eliminar los que ya no están
+    for p in sustancia.pictogramas:
+        if p.pictograma_id not in nuevos:
+            db.delete(p)
+
+    # 🔵 agregar los nuevos
+    for pictograma_id in nuevos - actuales:
+        db.add(models.SustanciaPictograma(
+            sustancia_id=sustancia.id,
+            pictograma_id=pictograma_id
+        ))
+
+    
+    # GUARDAR
+   
+    db.commit()
+
+    return {"msg": "Sustancia actualizada correctamente"}

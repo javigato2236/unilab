@@ -148,7 +148,15 @@ function TablaReactivos({ seleccionarReactivo }) {
       basica: {
         nombre: item.nombre || "",
         familia: item.basica?.familia || "",
+        grupo: item.basica?.grupo || "",
         sinonimo: item.basica?.sinonimo || "",
+        cas: item.basica?.cas || "",
+        marca: item.basica?.marca || "",
+        referencia: item.basica?.referencia || "",
+        fdsCompleta: item.basica?.fdsCompleta || "",
+        fecha_actualizacion:
+          item.fecha_actualizacion?.fecha_actualizacion || "",
+        estadoFisico: item.estadoFisico?.estadoFisico || "",
       },
       general: {
         cantidad_total: item.general?.cantidad_total || "",
@@ -330,6 +338,9 @@ function TablaReactivos({ seleccionarReactivo }) {
 
           //MUY IMPORTANTE: limpiar selección temporal
           setTempPictogramas([]);
+
+          //LIMPIAR LOS ORIGINALES
+          setPictogramasOriginales([]);
 
           // abrir modal principal/
           setIsModalOpen(true);
