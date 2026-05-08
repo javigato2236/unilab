@@ -16,59 +16,14 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [reactivoSeleccionado, setReactivoSeleccionado] = useState(null);
   const [editandoId, setEditandoId] = useState(null);
 
-  // estado unico prueba
   const [formData, setFormData] = useState(resetsEstados.ResetEstados());
-
-  // 🔥 ESTADO ÚNICO
-  // const [formData, setFormData] = useState({
-  //   basica: {
-  //     reactivo: "",
-  //     familia: "",
-  //     grupo: "",
-  //     sinonimo: "",
-  //     cas: "",
-  //     marca: "",
-  //     referencia: "",
-  //     fdsCompleta: "",
-  //     ultimaFechaActualizacion: "",
-  //     estadoFisico: "",
-  //   },
-  //   general: {
-  //     codigoFraseH: "",
-  //     toxicidadCat1Cat2: "",
-  //     sustanciaCancerigena: "",
-  //     sitioAlmacenamiento: "",
-  //     ubicacionEspecifica: "",
-  //     unidadDeMedida: "",
-  //     presentacion: "",
-  //     numeroDeRecipientes: "",
-  //     cantidad_total: "",
-  //     cantidad_real: "",
-  //   },
-  //   especifica: {
-  //     esControlado: "",
-  //     componente1: "",
-  //     clasificacionAlmacenamiento: "",
-  //     separacionMetodoSAFTDATA: "",
-  //     fechaIngresoLabQuimica: "",
-  //     fechaVencimientoProyectada: "",
-  //     observaciones: "",
-  //     palabraDvertencia: "",
-  //     preventivaCodigoDetalle: "",
-  //     respuestaOintervencionCodigoDetalle: "",
-  //     razonSocial: "",
-  //     direccion: "",
-  //     contacto: "",
-  //   },
-  //   pictogramas: [],
-  // });
 
   //ESTADOS TEMPORALES
   const [tempBasica, setTempBasica] = useState(formData.basica);
   const [tempGeneral, setTempGeneral] = useState(formData.general);
   const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
 
-  // 🔹 MODALES
+  //MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -76,6 +31,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [isPictogramasModalOpen, setIsPictogramasModalOpen] = useState(false);
 
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
+  const [pictogramasOriginales, setPictogramasOriginales] = useState([]); ////////////////////
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
   const convertirMayusculas = (obj) => {
@@ -127,13 +83,6 @@ function TablaReactivos({ seleccionarReactivo }) {
       }));
     };
 
-  // 🔹 FETCH
-  // const fetchReactivos = async () => {
-  //   const res = await fetch("http://localhost:8000/api/sustancias");
-  //   const data = await res.json();
-  //   setReactivos(data);
-  // };
-
   const fetchPictogramas = async () => {
     const res = await fetch("http://localhost:8000/api/pictogramas");
     const data = await res.json();
@@ -169,7 +118,6 @@ function TablaReactivos({ seleccionarReactivo }) {
   //   console.log("FORM DATA GLOBAL:", formData);
   // }, [formData]);
 
-  //////////////////////probando envio de datos
   const fetchReactivos = async () => {
     try {
       const res = await fetch("http://localhost:8000/api/sustancias");
@@ -190,11 +138,11 @@ function TablaReactivos({ seleccionarReactivo }) {
     }
   };
 
-  //////////////////////probando envio de datos
-
-  // 🔥 EDITAR LIMPIO
+  /////////////probando nuevo editar
   const editar = (item) => {
     setEditandoId(item.id);
+
+    const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
 
     setFormData({
       basica: {
@@ -209,102 +157,74 @@ function TablaReactivos({ seleccionarReactivo }) {
       especifica: {
         palabra_advertencia: item.especifica?.palabra_advertencia || "",
       },
-      pictogramas: item.pictogramas?.map((p) => p.id) || [],
+      pictogramas: ids,
     });
+
+    setPictogramasOriginales(ids); // 🔴
+    setTempPictogramas(ids); // 🔵
 
     setIsModalOpen(true);
   };
 
+  /////////////////////////////////probando nuevo editar
+
+  ///////////////////////////////////////// EDITAR LIMPIO y funcional
+  // const editar = (item) => {
+  //   setEditandoId(item.id);
+
+  //   setFormData({
+  //     basica: {
+  //       nombre: item.nombre || "",
+  //       familia: item.basica?.familia || "",
+  //       sinonimo: item.basica?.sinonimo || "",
+  //     },
+  //     general: {
+  //       cantidad_total: item.general?.cantidad_total || "",
+  //       cantidad_real: item.general?.cantidad_real || "",
+  //     },
+  //     especifica: {
+  //       palabra_advertencia: item.especifica?.palabra_advertencia || "",
+  //     },
+  //     pictogramas: item.pictogramas?.map((p) => p.id) || [],
+  //   });
+
+  //   setIsModalOpen(true);
+  // };
+  ///////////////////////////////////////////////////////////////////////////////////
   const toggleTempPictograma = (id) => {
     setTempPictogramas((prev) =>
       prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
     );
   };
 
-  //////////////////////////77 probando nuevo enviar
+  ///////////////////////////////////nuevo codigo
+  const getClasePictograma = (id) => {
+    const esOriginal = pictogramasOriginales.includes(id);
+    const estaSeleccionado = tempPictogramas.includes(id);
 
-  // const enviarTodo = async () => {
-  //   console.log(" FORM DATA:", formData);
+    // 🔴 estaba en BD y sigue seleccionado
+    if (esOriginal && estaSeleccionado) return "original";
 
-  //   const url = editandoId
-  //     ? `http://localhost:8000/api/sustancias/${editandoId}`
-  //     : "http://localhost:8000/api/sustancias";
+    // 🔵 nuevo seleccionado
+    if (!esOriginal && estaSeleccionado) return "activo";
 
-  //   const method = editandoId ? "PUT" : "POST";
+    // ❌ estaba pero lo quitó
+    if (esOriginal && !estaSeleccionado) return "removido";
 
-  //   try {
-  //     const res = await fetch(url, {
-  //       method,
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(formData),
-  //     });
+    return "";
+  };
 
-  //     if (!res.ok) {
-  //       const errorText = await res.text();
-  //       console.error(" ERROR BACKEND:", errorText);
-  //       throw new Error("Error al guardar");
-  //     }
+  const guardarPictogramas = () => {
+    setFormData((prev) => ({
+      ...prev,
+      pictogramas: tempPictogramas,
+    }));
 
-  //     alert(editandoId ? "Actualizado" : "Creado");
+    setIsPictogramasModalOpen(false);
+  };
 
-  //     setEditandoId(null);
+  //////////////////////////nuevo codigo
 
-  //     fetchReactivos(); // refrescar tabla
-  //   } catch (error) {
-  //     console.error(" ERROR FRONT:", error);
-  //     alert("Error al guardar datos");
-  //   }
-  // };
-
-  ///////////////////////////////////////////
-  // const enviarTodo = async () => {
-  //   const url = editandoId
-  //     ? `http://localhost:8000/api/sustancias/${editandoId}`
-  //     : "http://localhost:8000/api/sustancias";
-
-  //   const method = editandoId ? "PUT" : "POST";
-
-  //   const body = JSON.stringify(formData);
-
-  //   console.log(" FORM DATA:", formData);
-  //   console.log(" URL:", url);
-  //   console.log(" METHOD:", method);
-  //   console.log(" BODY JSON:", body);
-
-  //   try {
-  //     const res = await fetch(url, {
-  //       method,
-  //       headers: { "Content-Type": "application/json" },
-  //       body,
-  //     });
-
-  //     console.log(" STATUS:", res.status);
-
-  //     const responseText = await res.text();
-  //     console.log(" RESPONSE RAW:", responseText);
-
-  //     let data;
-  //     try {
-  //       data = JSON.parse(responseText);
-  //       console.log(" RESPONSE JSON:", data);
-  //     } catch {
-  //       console.warn(" La respuesta no es JSON");
-  //     }
-
-  //     if (!res.ok) {
-  //       throw new Error(responseText);
-  //     }
-
-  //     alert(editandoId ? "Actualizado" : "Creado");
-
-  //     setEditandoId(null);
-  //     fetchReactivos();
-  //   } catch (error) {
-  //     console.error(" ERROR FRONT:", error);
-  //     alert("Error al guardar datos");
-  //   }
-  // };
-  ////////////////////////////////////////////////////////////ultimo enviar todo prueba
   const enviarTodo = async () => {
     const url = editandoId
       ? `http://localhost:8000/api/sustancias/${editandoId}`
@@ -312,7 +232,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
     const method = editandoId ? "PUT" : "POST";
 
-    // ✅ LIMPIAR FECHAS VACÍAS
+    //LIMPIAR FECHAS VACÍAS
     const bodyData = {
       ...formData,
 
@@ -376,8 +296,6 @@ function TablaReactivos({ seleccionarReactivo }) {
     }
   };
 
-  //////////////////////////////////////////7
-
   const eliminar = async (id) => {
     if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
 
@@ -401,7 +319,6 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   return (
     <div>
-      {/* BOTÓN NUEVO */}
       <div
         className="contenedor-cierreSesion"
         onClick={() => {
@@ -940,6 +857,16 @@ function TablaReactivos({ seleccionarReactivo }) {
           {catalogoPictogramas.map((p) => (
             <div
               key={p.id}
+              className={`pictograma-item ${getClasePictograma(p.id)}`}
+              onClick={() => toggleTempPictograma(p.id)}
+            >
+              <img src={`http://localhost:8000${p.url}`} />
+            </div>
+          ))}
+
+          {/* {catalogoPictogramas.map((p) => (
+            <div
+              key={p.id}
               className={`pictograma-item ${
                 tempPictogramas.includes(p.id) ? "activo" : ""
               }`}
@@ -947,7 +874,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             >
               <img src={`http://localhost:8000${p.url}`} />
             </div>
-          ))}
+          ))} */}
         </div>
 
         <div className="botonModalPictogramas_2">

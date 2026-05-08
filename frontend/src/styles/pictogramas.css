@@ -64,3 +64,26 @@
   border: 2px solid blue;
   transform: scale(1.05);
 }
+
+/* nuevo codigo */
+/* .pictograma-item {
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: 0.2s;
+} */
+
+/* 🔴 estaba guardado */
+.pictograma-item.original {
+  border: 3px solid red;
+}
+
+/* 🔵 nuevo seleccionado */
+.pictograma-item.activo {
+  border: 3px solid blue;
+}
+
+/* ❌ quitado (opcional visual) */
+.pictograma-item.removido {
+  border: 3px dashed gray;
+  opacity: 0.5;
+}
