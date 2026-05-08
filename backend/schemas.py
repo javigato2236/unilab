@@ -37,7 +37,7 @@ class InfoBasicaSchema(BaseModel):
     referencia: str
 
     fdsCompleta: str  # SI / NO
-    ultimaFechaActualizacion: Optional[date]
+    fecha_actualizacion: Optional[date] = None
 
     estadoFisico: str  # SOLIDO / LIQUIDO
 
@@ -60,8 +60,8 @@ class InfoGeneralSchema(BaseModel):
 
     numeroDeRecipientes: int
 
-    cantidadTotal: float
-    cantidadReal: float
+    cantidad_total: float
+    cantidad_real: float
 
    
 
@@ -77,11 +77,11 @@ class InfoEspecificaSchema(BaseModel):
     clasificacionAlmacenamiento: str
     separacionMetodoSAFTDATA: str
 
-    fechaIngresoLabQuimica: Optional[date]
-    fechaVencimientoProyectada: Optional[date]
+    fecha_ingreso: Optional[date] = None
+    fecha_vencimiento: Optional[date] = None
 
-    observaciones: Optional[str]
-    palabraAdvertencia: str
+    observaciones: Optional[str] = None
+    palabra_advertencia: str
 
     preventivaCodigoDetalle: str
     respuestaOintervencionCodigoDetalle: str

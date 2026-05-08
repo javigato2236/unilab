@@ -66,7 +66,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   //ESTADOS TEMPORALES
   const [tempBasica, setTempBasica] = useState(formData.basica);
   const [tempGeneral, setTempGeneral] = useState(formData.general);
-  const [tempEspecifica, setTempEspecifica] = useState(formData.general);
+  const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
 
   // 🔹 MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -257,6 +257,54 @@ function TablaReactivos({ seleccionarReactivo }) {
   // };
 
   ///////////////////////////////////////////
+  // const enviarTodo = async () => {
+  //   const url = editandoId
+  //     ? `http://localhost:8000/api/sustancias/${editandoId}`
+  //     : "http://localhost:8000/api/sustancias";
+
+  //   const method = editandoId ? "PUT" : "POST";
+
+  //   const body = JSON.stringify(formData);
+
+  //   console.log(" FORM DATA:", formData);
+  //   console.log(" URL:", url);
+  //   console.log(" METHOD:", method);
+  //   console.log(" BODY JSON:", body);
+
+  //   try {
+  //     const res = await fetch(url, {
+  //       method,
+  //       headers: { "Content-Type": "application/json" },
+  //       body,
+  //     });
+
+  //     console.log(" STATUS:", res.status);
+
+  //     const responseText = await res.text();
+  //     console.log(" RESPONSE RAW:", responseText);
+
+  //     let data;
+  //     try {
+  //       data = JSON.parse(responseText);
+  //       console.log(" RESPONSE JSON:", data);
+  //     } catch {
+  //       console.warn(" La respuesta no es JSON");
+  //     }
+
+  //     if (!res.ok) {
+  //       throw new Error(responseText);
+  //     }
+
+  //     alert(editandoId ? "Actualizado" : "Creado");
+
+  //     setEditandoId(null);
+  //     fetchReactivos();
+  //   } catch (error) {
+  //     console.error(" ERROR FRONT:", error);
+  //     alert("Error al guardar datos");
+  //   }
+  // };
+  ////////////////////////////////////////////////////////////ultimo enviar todo prueba
   const enviarTodo = async () => {
     const url = editandoId
       ? `http://localhost:8000/api/sustancias/${editandoId}`
@@ -264,9 +312,29 @@ function TablaReactivos({ seleccionarReactivo }) {
 
     const method = editandoId ? "PUT" : "POST";
 
-    const body = JSON.stringify(formData);
+    // ✅ LIMPIAR FECHAS VACÍAS
+    const bodyData = {
+      ...formData,
+
+      basica: {
+        ...formData.basica,
+
+        fecha_actualizacion: formData.basica.fecha_actualizacion || null,
+      },
+
+      especifica: {
+        ...formData.especifica,
+
+        fecha_ingreso: formData.especifica.fecha_ingreso || null,
+
+        fecha_vencimiento: formData.especifica.fecha_vencimiento || null,
+      },
+    };
+
+    const body = JSON.stringify(bodyData);
 
     console.log(" FORM DATA:", formData);
+    console.log(" BODY LIMPIO:", bodyData);
     console.log(" URL:", url);
     console.log(" METHOD:", method);
     console.log(" BODY JSON:", body);
@@ -284,6 +352,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       console.log(" RESPONSE RAW:", responseText);
 
       let data;
+
       try {
         data = JSON.parse(responseText);
         console.log(" RESPONSE JSON:", data);
@@ -298,12 +367,15 @@ function TablaReactivos({ seleccionarReactivo }) {
       alert(editandoId ? "Actualizado" : "Creado");
 
       setEditandoId(null);
+
       fetchReactivos();
     } catch (error) {
       console.error(" ERROR FRONT:", error);
+
       alert("Error al guardar datos");
     }
   };
+
   //////////////////////////////////////////7
 
   const eliminar = async (id) => {
@@ -477,11 +549,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorBasica">
           <label>Ultima fecha de actualizacion o creacion de FDS</label>
           <input
-            value={tempBasica.ultimaFechaActualizacion}
-            onChange={handleTempChange(
-              setTempBasica,
-              "ultimaFechaActualizacion",
-            )}
+            value={tempBasica.fecha_actualizacion}
+            onChange={handleTempChange(setTempBasica, "fecha_actualizacion")}
             type="date"
             name="fecha"
           />
@@ -513,7 +582,12 @@ function TablaReactivos({ seleccionarReactivo }) {
             onClick={() => {
               setFormData((prev) => ({
                 ...prev,
-                basica: convertirMayusculas(tempBasica),
+
+                basica: {
+                  ...convertirMayusculas(tempBasica),
+
+                  fecha_actualizacion: tempBasica.fecha_actualizacion || null,
+                },
               }));
 
               setIsFirstModalOpen(false);
@@ -624,8 +698,12 @@ function TablaReactivos({ seleccionarReactivo }) {
               type="text"
               step="any"
               inputMode="decimal"
-              value={tempGeneral.cantidadTotal ?? ""}
-              onChange={handleTempChange(setTempGeneral, "cantidadTotal", true)}
+              value={tempGeneral.cantidad_total ?? ""}
+              onChange={handleTempChange(
+                setTempGeneral,
+                "cantidad_total",
+                true,
+              )}
             />
           </div>
 
@@ -636,8 +714,8 @@ function TablaReactivos({ seleccionarReactivo }) {
               type="text"
               step="any"
               inputMode="decimal"
-              value={tempGeneral.cantidadReal ?? ""}
-              onChange={handleTempChange(setTempGeneral, "cantidadReal", true)}
+              value={tempGeneral.cantidad_real ?? ""}
+              onChange={handleTempChange(setTempGeneral, "cantidad_real", true)}
             />
           </div>
         </div>
@@ -656,9 +734,9 @@ function TablaReactivos({ seleccionarReactivo }) {
                     tempGeneral.numeroDeRecipientes || 0,
                   ),
 
-                  cantidadTotal: parseFloat(tempGeneral.cantidadTotal || 0),
+                  cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
 
-                  cantidadReal: parseFloat(tempGeneral.cantidadReal || 0),
+                  cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
                 },
               }));
 
@@ -738,11 +816,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           </label>
           <input
             type="date"
-            value={tempEspecifica.fechaIngresoLabQuimica}
-            onChange={handleTempChange(
-              setTempEspecifica,
-              "fechaIngresoLabQuimica",
-            )}
+            value={tempEspecifica.fecha_ingreso}
+            onChange={handleTempChange(setTempEspecifica, "fecha_ingreso")}
           />
         </div>
 
@@ -750,11 +825,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label>Fecha de vencimiento proyectada</label>
           <input
             type="date"
-            value={tempEspecifica.fechaVencimientoProyectada}
-            onChange={handleTempChange(
-              setTempEspecifica,
-              "fechaVencimientoProyectada",
-            )}
+            value={tempEspecifica.fecha_vencimiento}
+            onChange={handleTempChange(setTempEspecifica, "fecha_vencimiento")}
           />
         </div>
 
@@ -769,8 +841,11 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorEspecifica">
           <label>Palabra advertencia</label>
           <input
-            value={tempEspecifica.palabraAdvertencia}
-            onChange={handleTempChange(setTempEspecifica, "palabraAdvertencia")}
+            value={tempEspecifica.palabra_advertencia}
+            onChange={handleTempChange(
+              setTempEspecifica,
+              "palabra_advertencia",
+            )}
           />
         </div>
 
@@ -832,7 +907,14 @@ function TablaReactivos({ seleccionarReactivo }) {
             onClick={() => {
               setFormData((prev) => ({
                 ...prev,
-                especifica: convertirMayusculas(tempEspecifica),
+
+                especifica: {
+                  ...convertirMayusculas(tempEspecifica),
+
+                  fecha_ingreso: tempEspecifica.fecha_ingreso || null,
+
+                  fecha_vencimiento: tempEspecifica.fecha_vencimiento || null,
+                },
               }));
 
               setIsThirdModalOpen(false);
