@@ -159,11 +159,34 @@ function TablaReactivos({ seleccionarReactivo }) {
         estadoFisico: item.estadoFisico?.estadoFisico || "",
       },
       general: {
+        codigoFraseH: item.general?.codigoFraseH || "",
+        toxicidadCat1Cat2: item.general?.toxicidadCat1Cat2 || "",
+        sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
+        sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
+        ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
+        unidadDeMedida: item.general?.unidadDeMedida || "",
+        presentacion: item.general?.presentacion || "",
+        numeroDeRecipientes: item.general?.numeroDeRecipientes || "",
         cantidad_total: item.general?.cantidad_total || "",
         cantidad_real: item.general?.cantidad_real || "",
       },
       especifica: {
+        esControlado: item.especifica?.esControlado || "",
+        componente1: item.especifica?.componente1 || "",
+        clasificacionAlmacenamiento:
+          item.especifica?.clasificacionAlmacenamiento || "",
+        separacionMetodoSAFTDATA:
+          item.especifica?.separacionMetodoSAFTDATA || "",
+        fecha_ingreso: item.especifica?.fecha_ingreso || "",
+        fecha_vencimiento: item.especifica?.fecha_vencimiento || "",
+        observaciones: item.especifica?.observaciones || "",
         palabra_advertencia: item.especifica?.palabra_advertencia || "",
+        preventivaCodigoDetalle: item.especifica?.preventivaCodigoDetalle || "",
+        respuestaOintervencionCodigoDetalle:
+          item.especifica?.respuestaOintervencionCodigoDetalle || "",
+        razonSocial: item.especifica?.razonSocial || "",
+        direccion: item.especifica?.direccion || "",
+        contacto: item.especifica?.contacto || "",
       },
       pictogramas: ids,
     });
