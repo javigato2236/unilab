@@ -52,7 +52,7 @@ function ResetEstadosIniciales() {
       nombre: "",
       familia: "",
       grupo: "A",
-      sinonisinonimomo: "",
+      sinonimo: "",
       cas: "",
       marca: "",
       referencia: "",
