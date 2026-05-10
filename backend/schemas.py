@@ -144,7 +144,7 @@ class InfoGeneralOut(BaseModel):
     unidadMedida: Optional[str] = None
     presentacion: Optional[str] = None
     numeroRecipientes: Optional[int] = None
-    cantidad_total: Optional[float] = None
+    cantidad_total: Optional[float] = None    
     cantidad_real: Optional[float] = None
 
     class Config:

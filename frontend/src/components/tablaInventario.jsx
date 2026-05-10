@@ -100,6 +100,20 @@ function TablaReactivos({ seleccionarReactivo }) {
     setCatalogoPictogramas(data);
   };
 
+  /////////////////////////////////nuevo
+  const toFixedString = (value) =>
+    value !== null && value !== undefined ? Number(value).toFixed(3) : "";
+  /////////////////////////////////nuevo
+
+  /////////funcion para evitar bugs comodatos falsos al enviar un 0 que significaria
+  //////////como dato nulo y con esta funcion hacemso real el cero
+  const parseNumber = (value, isInt = false) => {
+    if (value === "" || value === null || value === undefined) return null;
+    return isInt ? parseInt(value) : parseFloat(value);
+  };
+  /////////funcion para evitar bugs comodatos falsos al enviar un 0 que significaria
+  //////////como dato nulo y con esta funcion hacemso real el cero
+
   useEffect(() => {
     fetchReactivos();
     fetchPictogramas();
@@ -148,15 +162,13 @@ function TablaReactivos({ seleccionarReactivo }) {
       console.error("❌ ERROR FETCH:", error);
     }
   };
-
-  /////////////probando nuevo editar
+  //////////////////////////////probando nuevo editar
   const editar = (item) => {
-    console.log("ITEM GENERAL:", item.general);
     setEditandoId(item.id);
 
     const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
 
-    const nuevosDatos = {
+    setFormData({
       basica: {
         nombre: item.nombre || "",
         familia: item.basica?.familia || "",
@@ -173,77 +185,49 @@ function TablaReactivos({ seleccionarReactivo }) {
       general: {
         codigoFraseH: item.general?.codigoFraseH || "",
         toxicidadAgudaCat1Cat2: item.general?.toxicidadAgudaCat1Cat2 || "",
-
         sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
-
         sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
-
         ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
-
         unidadMedida: item.general?.unidadMedida || "",
-
         presentacion: item.general?.presentacion || "",
-
-        numeroRecipientes: item.general?.numeroRecipientes || "",
-
-        cantidad_total: item.general?.cantidad_total || "",
-
-        cantidad_real: item.general?.cantidad_real || "",
+        numeroRecipientes: item.general?.numeroRecipientes ?? "",
+        cantidad_total: toFixedString(item.general?.cantidad_total),
+        cantidad_real: toFixedString(item.general?.cantidad_real),
       },
 
       especifica: {
         esControlado: item.especifica?.esControlado || "",
-
         componente1: item.especifica?.componente1 || "",
-
         clasificacionAlmacenamiento:
           item.especifica?.clasificacionAlmacenamiento || "",
-
         separacionSaftdata: item.especifica?.separacionSaftdata || "",
-
         fechaIngreso: item.especifica?.fechaIngreso || "",
-
         fechaVencimiento: item.especifica?.fechaVencimiento || "",
-
         observaciones: item.especifica?.observaciones || "",
-
         palabraAdvertencia: item.especifica?.palabraAdvertencia || "",
-
         preventiva: item.especifica?.preventiva || "",
-
         respuesta: item.especifica?.respuesta || "",
-
         razonSocial: item.especifica?.razonSocial || "",
-
         direccion: item.especifica?.direccion || "",
-
         contacto: item.especifica?.contacto || "",
       },
 
       pictogramas: ids,
-    };
-
-    // 🔥 USAR EL MISMO OBJETO
-    setFormData(nuevosDatos);
-
-    setTempBasica(nuevosDatos.basica);
-    setTempGeneral(nuevosDatos.general);
-    setTempEspecifica(nuevosDatos.especifica);
+    });
 
     setPictogramasOriginales(ids);
     setTempPictogramas(ids);
 
     setIsModalOpen(true);
   };
-
   /////////////probando nuevo editar
-
   // const editar = (item) => {
+  //   console.log("ITEM GENERAL:", item.general);
   //   setEditandoId(item.id);
 
   //   const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
 
-  //   setFormData({
+  //   const nuevosDatos = {
   //     basica: {
   //       nombre: item.nombre || "",
   //       familia: item.basica?.familia || "",
@@ -256,39 +240,68 @@ function TablaReactivos({ seleccionarReactivo }) {
   //       fechaActualizacion: item.basica?.fechaActualizacion || "",
   //       estadoFisico: item.basica?.estadoFisico || "",
   //     },
+
   //     general: {
   //       codigoFraseH: item.general?.codigoFraseH || "",
   //       toxicidadAgudaCat1Cat2: item.general?.toxicidadAgudaCat1Cat2 || "",
+
   //       sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
+
   //       sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
+
   //       ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
+
   //       unidadMedida: item.general?.unidadMedida || "",
+
   //       presentacion: item.general?.presentacion || "",
+
   //       numeroRecipientes: item.general?.numeroRecipientes || "",
+
   //       cantidad_total: item.general?.cantidad_total || "",
+
   //       cantidad_real: item.general?.cantidad_real || "",
   //     },
+
   //     especifica: {
   //       esControlado: item.especifica?.esControlado || "",
+
   //       componente1: item.especifica?.componente1 || "",
+
   //       clasificacionAlmacenamiento:
   //         item.especifica?.clasificacionAlmacenamiento || "",
+
   //       separacionSaftdata: item.especifica?.separacionSaftdata || "",
+
   //       fechaIngreso: item.especifica?.fechaIngreso || "",
+
   //       fechaVencimiento: item.especifica?.fechaVencimiento || "",
+
   //       observaciones: item.especifica?.observaciones || "",
+
   //       palabraAdvertencia: item.especifica?.palabraAdvertencia || "",
+
   //       preventiva: item.especifica?.preventiva || "",
+
   //       respuesta: item.especifica?.respuesta || "",
+
   //       razonSocial: item.especifica?.razonSocial || "",
+
   //       direccion: item.especifica?.direccion || "",
+
   //       contacto: item.especifica?.contacto || "",
   //     },
-  //     pictogramas: ids,
-  //   });
 
-  //   setPictogramasOriginales(ids); // 🔴
-  //   setTempPictogramas(ids); // 🔵
+  //     pictogramas: ids,
+  //   };
+
+  //   setFormData(nuevosDatos);
+
+  //   setTempBasica(nuevosDatos.basica);
+  //   setTempGeneral(nuevosDatos.general);
+  //   setTempEspecifica(nuevosDatos.especifica);
+
+  //   setPictogramasOriginales(ids);
+  //   setTempPictogramas(ids);
 
   //   setIsModalOpen(true);
   // };
@@ -754,38 +767,14 @@ function TablaReactivos({ seleccionarReactivo }) {
                 ...prev,
                 general: {
                   ...datosMayusculas,
-
-                  numeroRecipientes:
-                    tempGeneral.numeroRecipientes === ""
-                      ? 0
-                      : parseInt(tempGeneral.numeroRecipientes),
-
-                  cantidad_total:
-                    tempGeneral.cantidad_total === ""
-                      ? 0
-                      : parseFloat(tempGeneral.cantidad_total),
-
-                  cantidad_real:
-                    tempGeneral.cantidad_real === ""
-                      ? 0
-                      : parseFloat(tempGeneral.cantidad_real),
+                  numeroRecipientes: parseNumber(
+                    tempGeneral.numeroRecipientes,
+                    true,
+                  ),
+                  cantidad_total: parseNumber(tempGeneral.cantidad_total),
+                  cantidad_real: parseNumber(tempGeneral.cantidad_real),
                 },
               }));
-
-              // setFormData((prev) => ({
-              //   ...prev,
-              //   general: {
-              //     ...datosMayusculas,
-
-              //     numeroRecipientes: parseInt(
-              //       tempGeneral.numeroRecipientes || 0,
-              //     ),
-
-              //     cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
-
-              //     cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
-              //   },
-              // }));
 
               setIsSecondModalOpen(false);
             }}
