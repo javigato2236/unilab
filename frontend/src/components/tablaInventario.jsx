@@ -19,9 +19,6 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [formData, setFormData] = useState(resetsEstados.ResetEstados());
 
   //ESTADOS TEMPORALES
-  // const [tempBasica, setTempBasica] = useState(formData.basica);
-  // const [tempGeneral, setTempGeneral] = useState(formData.general);
-  // const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
   const [tempBasica, setTempBasica] = useState(
     resetsEstados.ResetEstados().basica,
   );
@@ -221,90 +218,6 @@ function TablaReactivos({ seleccionarReactivo }) {
     setIsModalOpen(true);
   };
   /////////////probando nuevo editar
-  // const editar = (item) => {
-  //   console.log("ITEM GENERAL:", item.general);
-  //   setEditandoId(item.id);
-
-  //   const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
-
-  //   const nuevosDatos = {
-  //     basica: {
-  //       nombre: item.nombre || "",
-  //       familia: item.basica?.familia || "",
-  //       grupo: item.basica?.grupo || "",
-  //       sinonimo: item.basica?.sinonimo || "",
-  //       cas: item.basica?.cas || "",
-  //       marca: item.basica?.marca || "",
-  //       referencia: item.basica?.referencia || "",
-  //       fdsCompleta: item.basica?.fdsCompleta || "",
-  //       fechaActualizacion: item.basica?.fechaActualizacion || "",
-  //       estadoFisico: item.basica?.estadoFisico || "",
-  //     },
-
-  //     general: {
-  //       codigoFraseH: item.general?.codigoFraseH || "",
-  //       toxicidadAgudaCat1Cat2: item.general?.toxicidadAgudaCat1Cat2 || "",
-
-  //       sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
-
-  //       sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
-
-  //       ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
-
-  //       unidadMedida: item.general?.unidadMedida || "",
-
-  //       presentacion: item.general?.presentacion || "",
-
-  //       numeroRecipientes: item.general?.numeroRecipientes || "",
-
-  //       cantidad_total: item.general?.cantidad_total || "",
-
-  //       cantidad_real: item.general?.cantidad_real || "",
-  //     },
-
-  //     especifica: {
-  //       esControlado: item.especifica?.esControlado || "",
-
-  //       componente1: item.especifica?.componente1 || "",
-
-  //       clasificacionAlmacenamiento:
-  //         item.especifica?.clasificacionAlmacenamiento || "",
-
-  //       separacionSaftdata: item.especifica?.separacionSaftdata || "",
-
-  //       fechaIngreso: item.especifica?.fechaIngreso || "",
-
-  //       fechaVencimiento: item.especifica?.fechaVencimiento || "",
-
-  //       observaciones: item.especifica?.observaciones || "",
-
-  //       palabraAdvertencia: item.especifica?.palabraAdvertencia || "",
-
-  //       preventiva: item.especifica?.preventiva || "",
-
-  //       respuesta: item.especifica?.respuesta || "",
-
-  //       razonSocial: item.especifica?.razonSocial || "",
-
-  //       direccion: item.especifica?.direccion || "",
-
-  //       contacto: item.especifica?.contacto || "",
-  //     },
-
-  //     pictogramas: ids,
-  //   };
-
-  //   setFormData(nuevosDatos);
-
-  //   setTempBasica(nuevosDatos.basica);
-  //   setTempGeneral(nuevosDatos.general);
-  //   setTempEspecifica(nuevosDatos.especifica);
-
-  //   setPictogramasOriginales(ids);
-  //   setTempPictogramas(ids);
-
-  //   setIsModalOpen(true);
-  // };
 
   const toggleTempPictograma = (id) => {
     setTempPictogramas((prev) =>
@@ -402,6 +315,19 @@ function TablaReactivos({ seleccionarReactivo }) {
       alert(editandoId ? "Actualizado" : "Creado");
 
       setEditandoId(null);
+
+      // 🔴 cerrar TODOS los modales
+      setIsModalOpen(false);
+      setIsFirstModalOpen(false);
+      setIsSecondModalOpen(false);
+      setIsThirdModalOpen(false);
+      setIsPictogramasModalOpen(false);
+
+      // 🔴 limpiar temporales
+      setTempBasica(resetsEstados.ResetEstados().basica);
+      setTempGeneral(resetsEstados.ResetEstados().general);
+      setTempEspecifica(resetsEstados.ResetEstados().especifica);
+      setTempPictogramas([]);
 
       fetchReactivos();
     } catch (error) {
