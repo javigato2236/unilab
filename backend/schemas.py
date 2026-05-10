@@ -37,7 +37,7 @@ class InfoBasicaSchema(BaseModel):
     referencia: str
 
     fdsCompleta: str  # SI / NO
-    fecha_actualizacion: Optional[date] = None
+    fechaActualizacion: Optional[date] = None
 
     estadoFisico: str  # SOLIDO / LIQUIDO
 
@@ -48,17 +48,17 @@ class InfoBasicaSchema(BaseModel):
 
 class InfoGeneralSchema(BaseModel):
     codigoFraseH: str
-    toxicidadCat1Cat2: str
+    toxicidadAgudaCat1Cat2: str
 
     sustanciaCancerigena: str  # SI / NO
 
     sitioAlmacenamiento: str
     ubicacionEspecifica: str
 
-    unidadDeMedida: str
+    unidadMedida: str
     presentacion: str
 
-    numeroDeRecipientes: int
+    numeroRecipientes: int
 
     cantidad_total: float
     cantidad_real: float
@@ -75,16 +75,16 @@ class InfoEspecificaSchema(BaseModel):
     componente1: str
 
     clasificacionAlmacenamiento: str
-    separacionMetodoSAFTDATA: str
+    separacionSaftdata: str
 
-    fecha_ingreso: Optional[date] = None
-    fecha_vencimiento: Optional[date] = None
+    fechaIngreso: Optional[date] = None
+    fechaVencimiento: Optional[date] = None
 
     observaciones: Optional[str] = None
-    palabra_advertencia: str
+    palabraAdvertencia: str
 
-    preventivaCodigoDetalle: str
-    respuestaOintervencionCodigoDetalle: str
+    preventiva: str
+    respuesta: str
 
     razonSocial: str
     direccion: str
@@ -131,17 +131,31 @@ class SustanciaPictogramaOut(BaseModel):
 
 # 🔹 BASICA
 class InfoBasicaOut(BaseModel):
-    familia: str
-    sinonimo: str
+    familia: Optional[str] = None
+    grupo: Optional[str] = None
+    sinonimo: Optional[str] = None
+    cas: Optional[str] = None
+    marca: Optional[str] = None
+    referencia: Optional[str] = None
+    fdsCompleta: Optional[str] = None
+    fecha_actualizacion: Optional[date] = None
+    estadoFisico: Optional[str] = None
 
     class Config:
         from_attributes = True
 
-
 # 🔹 GENERAL
 class InfoGeneralOut(BaseModel):
-    cantidad_total: float
-    cantidad_real: float
+    codigoFraseH: Optional[str] = None
+    toxicidadCat1Cat2: Optional[str] = None
+    sustanciaCancerigena: Optional[str] = None
+    sitioAlmacenamiento: Optional[str] = None
+    ubicacionEspecifica: Optional[str] = None
+    unidadDeMedida: Optional[str] = None
+    presentacion: Optional[str] = None
+    numeroDeRecipientes: Optional[int] = None
+    cantidad_total: Optional[float] = None
+    cantidad_real: Optional[float] = None
 
     class Config:
         from_attributes = True
@@ -149,7 +163,19 @@ class InfoGeneralOut(BaseModel):
 
 # 🔹 ESPECIFICA
 class InfoEspecificaOut(BaseModel):
-    palabra_advertencia: str
+    esControlado: Optional[str] = None
+    componente1: Optional[str] = None
+    clasificacionAlmacenamiento: Optional[str] = None
+    separacionMetodoSAFTDATA: Optional[str] = None
+    fecha_ingreso: Optional[date] = None
+    fecha_vencimiento: Optional[date] = None
+    observaciones: Optional[str] = None
+    palabra_advertencia: Optional[str] = None
+    preventivaCodigoDetalle: Optional[str] = None
+    respuestaOintervencionCodigoDetalle: Optional[str] = None
+    razonSocial: Optional[str] = None
+    direccion: Optional[str] = None
+    contacto: Optional[str] = None
 
     class Config:
         from_attributes = True

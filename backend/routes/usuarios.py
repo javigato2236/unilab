@@ -227,16 +227,14 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         basica = models.InfoBasica(
             sustancia_id=sustancia.id,
-
             familia=data.basica.familia,
             grupo=data.basica.grupo,
             sinonimo=data.basica.sinonimo,
             cas=data.basica.cas,
             marca=data.basica.marca,
             referencia=data.basica.referencia,
-
             fds_completa=data.basica.fdsCompleta,
-            fecha_actualizacion=data.basica.fecha_actualizacion,
+            fecha_actualizacion=data.basica.fechaActualizacion,
             estado_fisico=data.basica.estadoFisico
         )
 
@@ -244,15 +242,14 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         general = models.InfoGeneral(
             sustancia_id=sustancia.id,
-
             codigo_frase_h=data.general.codigoFraseH,
-            toxicidad_aguda_cat1_cat2=data.general.toxicidadCat1Cat2,
+            toxicidad_aguda_cat1_cat2=data.general.toxicidadAgudaCat1Cat2,
             sustancia_cancerigena=data.general.sustanciaCancerigena,
             sitio_almacenamiento=data.general.sitioAlmacenamiento,
             ubicacion_especifica=data.general.ubicacionEspecifica,
-            unidad_medida=data.general.unidadDeMedida,
+            unidad_medida=data.general.unidadMedida,
             presentacion=data.general.presentacion,
-            numero_recipientes=data.general.numeroDeRecipientes,
+            numero_recipientes=data.general.numeroRecipientes,
             cantidad_total=data.general.cantidad_total,
             cantidad_real=data.general.cantidad_real
         )
@@ -261,17 +258,16 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         especifica = models.InfoEspecifica(
             sustancia_id=sustancia.id,
-
             es_controlado=data.especifica.esControlado,
             componente_1=data.especifica.componente1,
             clasificacion_almacenamiento=data.especifica.clasificacionAlmacenamiento,
-            separacion_saftdata=data.especifica.separacionMetodoSAFTDATA,
-            fecha_ingreso=data.especifica.fecha_ingreso,
-            fecha_vencimiento=data.especifica.fecha_vencimiento,
+            separacion_saftdata=data.especifica.separacionSaftdata,
+            fecha_ingreso=data.especifica.fechaIngreso,
+            fecha_vencimiento=data.especifica.fechaVencimiento,
             observaciones=data.especifica.observaciones,
-            palabra_advertencia=data.especifica.palabra_advertencia,
-            preventiva=data.especifica.preventivaCodigoDetalle,
-            respuesta=data.especifica.respuestaOintervencionCodigoDetalle,
+            palabra_advertencia=data.especifica.palabraAdvertencia,
+            preventiva=data.especifica.preventiva,
+            respuesta=data.especifica.respuesta,
             razon_social=data.especifica.razonSocial,
             direccion=data.especifica.direccion,
             contacto=data.especifica.contacto

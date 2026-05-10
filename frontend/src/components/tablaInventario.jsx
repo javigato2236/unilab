@@ -500,8 +500,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorBasica">
           <label>Ultima fecha de actualizacion o creacion de FDS</label>
           <input
-            value={tempBasica.fecha_actualizacion}
-            onChange={handleTempChange(setTempBasica, "fecha_actualizacion")}
+            value={tempBasica.fechaActualizacion}
+            onChange={handleTempChange(setTempBasica, "fechaActualizacion")}
             type="date"
             name="fecha"
           />
@@ -537,7 +537,7 @@ function TablaReactivos({ seleccionarReactivo }) {
                 basica: {
                   ...convertirMayusculas(tempBasica),
 
-                  fecha_actualizacion: tempBasica.fecha_actualizacion || null,
+                  fechaActualizacion: tempBasica.fechaActualizacion || null,
                 },
               }));
 
@@ -572,8 +572,11 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorGeneral">
           <label>Toxicidad aguda CAT 1 CAT 2</label>
           <textarea
-            value={tempGeneral.toxicidadCat1Cat2}
-            onChange={handleTempChange(setTempGeneral, "toxicidadCat1Cat2")}
+            value={tempGeneral.toxicidadAgudaCat1Cat2}
+            onChange={handleTempChange(
+              setTempGeneral,
+              "toxicidadAgudaCat1Cat2",
+            )}
           ></textarea>
         </div>
 
@@ -609,8 +612,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <div className="contenedorGeneral">
             <label htmlFor="UniMedida">Unidad de medida</label>
             <select
-              value={tempGeneral.unidadDeMedida}
-              onChange={handleTempChange(setTempGeneral, "unidadDeMedida")}
+              value={tempGeneral.unidadMedida}
+              onChange={handleTempChange(setTempGeneral, "unidadMedida")}
             >
               <option value="gl">gl</option>
               <option value="g">g</option>
@@ -634,10 +637,10 @@ function TablaReactivos({ seleccionarReactivo }) {
             <label>Numero de recipientes</label>
             <input
               type="text"
-              value={tempGeneral.numeroDeRecipientes}
+              value={tempGeneral.numeroRecipientes}
               onChange={handleTempChange(
                 setTempGeneral,
-                "numeroDeRecipientes",
+                "numeroRecipientes",
                 true,
               )}
             />
@@ -681,8 +684,8 @@ function TablaReactivos({ seleccionarReactivo }) {
                 general: {
                   ...datosMayusculas,
 
-                  numeroDeRecipientes: parseInt(
-                    tempGeneral.numeroDeRecipientes || 0,
+                  numeroRecipientes: parseInt(
+                    tempGeneral.numeroRecipientes || 0,
                   ),
 
                   cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
@@ -746,11 +749,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorEspecifica">
           <label>Separacion metodo SAF-T-DATA</label>
           <select
-            value={tempEspecifica.separacionMetodoSAFTDATA}
-            onChange={handleTempChange(
-              setTempEspecifica,
-              "separacionMetodoSAFTDATA",
-            )}
+            value={tempEspecifica.separacionSaftdata}
+            onChange={handleTempChange(setTempEspecifica, "separacionSaftdata")}
           >
             <option value="T">T</option>
             <option value="C">C</option>
@@ -767,8 +767,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           </label>
           <input
             type="date"
-            value={tempEspecifica.fecha_ingreso}
-            onChange={handleTempChange(setTempEspecifica, "fecha_ingreso")}
+            value={tempEspecifica.fechaIngreso}
+            onChange={handleTempChange(setTempEspecifica, "fechaIngreso")}
           />
         </div>
 
@@ -776,8 +776,8 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label>Fecha de vencimiento proyectada</label>
           <input
             type="date"
-            value={tempEspecifica.fecha_vencimiento}
-            onChange={handleTempChange(setTempEspecifica, "fecha_vencimiento")}
+            value={tempEspecifica.fechaVencimiento}
+            onChange={handleTempChange(setTempEspecifica, "fechaVencimiento")}
           />
         </div>
 
@@ -792,11 +792,8 @@ function TablaReactivos({ seleccionarReactivo }) {
         <div className="contenedorEspecifica">
           <label>Palabra advertencia</label>
           <input
-            value={tempEspecifica.palabra_advertencia}
-            onChange={handleTempChange(
-              setTempEspecifica,
-              "palabra_advertencia",
-            )}
+            value={tempEspecifica.palabraAdvertencia}
+            onChange={handleTempChange(setTempEspecifica, "palabraAdvertencia")}
           />
         </div>
 
@@ -805,22 +802,16 @@ function TablaReactivos({ seleccionarReactivo }) {
           <div className="contenedorEspecifica">
             <label>Preventiva codigo/detalle</label>
             <textarea
-              value={tempEspecifica.preventivaCodigoDetalle}
-              onChange={handleTempChange(
-                setTempEspecifica,
-                "preventivaCodigoDetalle",
-              )}
+              value={tempEspecifica.preventiva}
+              onChange={handleTempChange(setTempEspecifica, "preventiva")}
             ></textarea>
           </div>
 
           <div className="contenedorEspecifica">
             <label>respuesta o intervencion codigo/detalle</label>
             <textarea
-              value={tempEspecifica.respuestaOintervencionCodigoDetalle}
-              onChange={handleTempChange(
-                setTempEspecifica,
-                "respuestaOintervencionCodigoDetalle",
-              )}
+              value={tempEspecifica.respuesta}
+              onChange={handleTempChange(setTempEspecifica, "respuesta")}
             ></textarea>
           </div>
 
@@ -862,9 +853,9 @@ function TablaReactivos({ seleccionarReactivo }) {
                 especifica: {
                   ...convertirMayusculas(tempEspecifica),
 
-                  fecha_ingreso: tempEspecifica.fecha_ingreso || null,
+                  fechaIngreso: tempEspecifica.fechaIngreso || null,
 
-                  fecha_vencimiento: tempEspecifica.fecha_vencimiento || null,
+                  fechaVencimiento: tempEspecifica.fechaVencimiento || null,
                 },
               }));
 
