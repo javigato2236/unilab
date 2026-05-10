@@ -80,7 +80,6 @@ class InfoGeneral(Base):
 
     sustancia = relationship("Sustancia", back_populates="general")
 
-
 class InfoEspecifica(Base):
     __tablename__ = "info_especifica"
 

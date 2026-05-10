@@ -19,9 +19,20 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [formData, setFormData] = useState(resetsEstados.ResetEstados());
 
   //ESTADOS TEMPORALES
-  const [tempBasica, setTempBasica] = useState(formData.basica);
-  const [tempGeneral, setTempGeneral] = useState(formData.general);
-  const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
+  // const [tempBasica, setTempBasica] = useState(formData.basica);
+  // const [tempGeneral, setTempGeneral] = useState(formData.general);
+  // const [tempEspecifica, setTempEspecifica] = useState(formData.especifica);
+  const [tempBasica, setTempBasica] = useState(
+    resetsEstados.ResetEstados().basica,
+  );
+
+  const [tempGeneral, setTempGeneral] = useState(
+    resetsEstados.ResetEstados().general,
+  );
+
+  const [tempEspecifica, setTempEspecifica] = useState(
+    resetsEstados.ResetEstados().especifica,
+  );
 
   //MODALES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +46,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
   const convertirMayusculas = (obj) => {
-    const excluir = ["unidadDeMedida"];
+    const excluir = ["unidadMedida"];
 
     const nuevo = {};
 
@@ -140,11 +151,12 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   /////////////probando nuevo editar
   const editar = (item) => {
+    console.log("ITEM GENERAL:", item.general);
     setEditandoId(item.id);
 
     const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
 
-    setFormData({
+    const nuevosDatos = {
       basica: {
         nombre: item.nombre || "",
         familia: item.basica?.familia || "",
@@ -154,74 +166,133 @@ function TablaReactivos({ seleccionarReactivo }) {
         marca: item.basica?.marca || "",
         referencia: item.basica?.referencia || "",
         fdsCompleta: item.basica?.fdsCompleta || "",
-        fecha_actualizacion:
-          item.fecha_actualizacion?.fecha_actualizacion || "",
-        estadoFisico: item.estadoFisico?.estadoFisico || "",
+        fechaActualizacion: item.basica?.fechaActualizacion || "",
+        estadoFisico: item.basica?.estadoFisico || "",
       },
+
       general: {
         codigoFraseH: item.general?.codigoFraseH || "",
-        toxicidadCat1Cat2: item.general?.toxicidadCat1Cat2 || "",
+        toxicidadAgudaCat1Cat2: item.general?.toxicidadAgudaCat1Cat2 || "",
+
         sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
+
         sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
+
         ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
-        unidadDeMedida: item.general?.unidadDeMedida || "",
+
+        unidadMedida: item.general?.unidadMedida || "",
+
         presentacion: item.general?.presentacion || "",
-        numeroDeRecipientes: item.general?.numeroDeRecipientes || "",
+
+        numeroRecipientes: item.general?.numeroRecipientes || "",
+
         cantidad_total: item.general?.cantidad_total || "",
+
         cantidad_real: item.general?.cantidad_real || "",
       },
+
       especifica: {
         esControlado: item.especifica?.esControlado || "",
+
         componente1: item.especifica?.componente1 || "",
+
         clasificacionAlmacenamiento:
           item.especifica?.clasificacionAlmacenamiento || "",
-        separacionMetodoSAFTDATA:
-          item.especifica?.separacionMetodoSAFTDATA || "",
-        fecha_ingreso: item.especifica?.fecha_ingreso || "",
-        fecha_vencimiento: item.especifica?.fecha_vencimiento || "",
+
+        separacionSaftdata: item.especifica?.separacionSaftdata || "",
+
+        fechaIngreso: item.especifica?.fechaIngreso || "",
+
+        fechaVencimiento: item.especifica?.fechaVencimiento || "",
+
         observaciones: item.especifica?.observaciones || "",
-        palabra_advertencia: item.especifica?.palabra_advertencia || "",
-        preventivaCodigoDetalle: item.especifica?.preventivaCodigoDetalle || "",
-        respuestaOintervencionCodigoDetalle:
-          item.especifica?.respuestaOintervencionCodigoDetalle || "",
+
+        palabraAdvertencia: item.especifica?.palabraAdvertencia || "",
+
+        preventiva: item.especifica?.preventiva || "",
+
+        respuesta: item.especifica?.respuesta || "",
+
         razonSocial: item.especifica?.razonSocial || "",
+
         direccion: item.especifica?.direccion || "",
+
         contacto: item.especifica?.contacto || "",
       },
-      pictogramas: ids,
-    });
 
-    setPictogramasOriginales(ids); // 🔴
-    setTempPictogramas(ids); // 🔵
+      pictogramas: ids,
+    };
+
+    // 🔥 USAR EL MISMO OBJETO
+    setFormData(nuevosDatos);
+
+    setTempBasica(nuevosDatos.basica);
+    setTempGeneral(nuevosDatos.general);
+    setTempEspecifica(nuevosDatos.especifica);
+
+    setPictogramasOriginales(ids);
+    setTempPictogramas(ids);
 
     setIsModalOpen(true);
   };
 
-  /////////////////////////////////probando nuevo editar
+  /////////////probando nuevo editar
 
-  ///////////////////////////////////////// EDITAR LIMPIO y funcional
   // const editar = (item) => {
   //   setEditandoId(item.id);
+
+  //   const ids = item.pictogramas?.map((p) => p.pictograma.id) || [];
 
   //   setFormData({
   //     basica: {
   //       nombre: item.nombre || "",
   //       familia: item.basica?.familia || "",
+  //       grupo: item.basica?.grupo || "",
   //       sinonimo: item.basica?.sinonimo || "",
+  //       cas: item.basica?.cas || "",
+  //       marca: item.basica?.marca || "",
+  //       referencia: item.basica?.referencia || "",
+  //       fdsCompleta: item.basica?.fdsCompleta || "",
+  //       fechaActualizacion: item.basica?.fechaActualizacion || "",
+  //       estadoFisico: item.basica?.estadoFisico || "",
   //     },
   //     general: {
+  //       codigoFraseH: item.general?.codigoFraseH || "",
+  //       toxicidadAgudaCat1Cat2: item.general?.toxicidadAgudaCat1Cat2 || "",
+  //       sustanciaCancerigena: item.general?.sustanciaCancerigena || "",
+  //       sitioAlmacenamiento: item.general?.sitioAlmacenamiento || "",
+  //       ubicacionEspecifica: item.general?.ubicacionEspecifica || "",
+  //       unidadMedida: item.general?.unidadMedida || "",
+  //       presentacion: item.general?.presentacion || "",
+  //       numeroRecipientes: item.general?.numeroRecipientes || "",
   //       cantidad_total: item.general?.cantidad_total || "",
   //       cantidad_real: item.general?.cantidad_real || "",
   //     },
   //     especifica: {
-  //       palabra_advertencia: item.especifica?.palabra_advertencia || "",
+  //       esControlado: item.especifica?.esControlado || "",
+  //       componente1: item.especifica?.componente1 || "",
+  //       clasificacionAlmacenamiento:
+  //         item.especifica?.clasificacionAlmacenamiento || "",
+  //       separacionSaftdata: item.especifica?.separacionSaftdata || "",
+  //       fechaIngreso: item.especifica?.fechaIngreso || "",
+  //       fechaVencimiento: item.especifica?.fechaVencimiento || "",
+  //       observaciones: item.especifica?.observaciones || "",
+  //       palabraAdvertencia: item.especifica?.palabraAdvertencia || "",
+  //       preventiva: item.especifica?.preventiva || "",
+  //       respuesta: item.especifica?.respuesta || "",
+  //       razonSocial: item.especifica?.razonSocial || "",
+  //       direccion: item.especifica?.direccion || "",
+  //       contacto: item.especifica?.contacto || "",
   //     },
-  //     pictogramas: item.pictogramas?.map((p) => p.id) || [],
+  //     pictogramas: ids,
   //   });
+
+  //   setPictogramasOriginales(ids); // 🔴
+  //   setTempPictogramas(ids); // 🔵
 
   //   setIsModalOpen(true);
   // };
-  ///////////////////////////////////////////////////////////////////////////////////
+
   const toggleTempPictograma = (id) => {
     setTempPictogramas((prev) =>
       prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
@@ -270,15 +341,15 @@ function TablaReactivos({ seleccionarReactivo }) {
       basica: {
         ...formData.basica,
 
-        fecha_actualizacion: formData.basica.fecha_actualizacion || null,
+        fechaActualizacion: formData.basica.fechaActualizacion || null,
       },
 
       especifica: {
         ...formData.especifica,
 
-        fecha_ingreso: formData.especifica.fecha_ingreso || null,
+        fechaIngreso: formData.especifica.fechaIngreso || null,
 
-        fecha_vencimiento: formData.especifica.fecha_vencimiento || null,
+        fechaVencimiento: formData.especifica.fechaVencimiento || null,
       },
     };
 
@@ -442,11 +513,11 @@ function TablaReactivos({ seleccionarReactivo }) {
             value={tempBasica.grupo}
             onChange={handleTempChange(setTempBasica, "grupo")}
           >
-            <option value="a">A</option>
-            <option value="b">B</option>
-            <option value="c">C</option>
-            <option value="d">D</option>
-            <option value="e">E</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
           </select>
         </div>
 
@@ -492,8 +563,8 @@ function TablaReactivos({ seleccionarReactivo }) {
             value={tempBasica.fdsCompleta}
             onChange={handleTempChange(setTempBasica, "fdsCompleta")}
           >
-            <option value="si">Sí</option>
-            <option value="no">No</option>
+            <option value="SI">Sí</option>
+            <option value="NO">No</option>
           </select>
         </div>
 
@@ -513,8 +584,8 @@ function TablaReactivos({ seleccionarReactivo }) {
             value={tempBasica.estadoFisico}
             onChange={handleTempChange(setTempBasica, "estadoFisico")}
           >
-            <option value="solido">Solido</option>
-            <option value="liquido">Liquido</option>
+            <option value="SOLIDO">Solido</option>
+            <option value="LIQUIDO">Liquido</option>
           </select>
         </div>
 
@@ -586,8 +657,8 @@ function TablaReactivos({ seleccionarReactivo }) {
             value={tempGeneral.sustanciaCancerigena}
             onChange={handleTempChange(setTempGeneral, "sustanciaCancerigena")}
           >
-            <option value="si">Sí</option>
-            <option value="no">No</option>
+            <option value="SI">Sí</option>
+            <option value="NO">No</option>
           </select>
         </div>
 
@@ -611,6 +682,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
           <div className="contenedorGeneral">
             <label htmlFor="UniMedida">Unidad de medida</label>
+            {console.log("UNIDAD:", JSON.stringify(tempGeneral.unidadMedida))}
             <select
               value={tempGeneral.unidadMedida}
               onChange={handleTempChange(setTempGeneral, "unidadMedida")}
@@ -678,21 +750,42 @@ function TablaReactivos({ seleccionarReactivo }) {
           <button
             onClick={() => {
               const datosMayusculas = convertirMayusculas(tempGeneral);
-
               setFormData((prev) => ({
                 ...prev,
                 general: {
                   ...datosMayusculas,
 
-                  numeroRecipientes: parseInt(
-                    tempGeneral.numeroRecipientes || 0,
-                  ),
+                  numeroRecipientes:
+                    tempGeneral.numeroRecipientes === ""
+                      ? 0
+                      : parseInt(tempGeneral.numeroRecipientes),
 
-                  cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
+                  cantidad_total:
+                    tempGeneral.cantidad_total === ""
+                      ? 0
+                      : parseFloat(tempGeneral.cantidad_total),
 
-                  cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
+                  cantidad_real:
+                    tempGeneral.cantidad_real === ""
+                      ? 0
+                      : parseFloat(tempGeneral.cantidad_real),
                 },
               }));
+
+              // setFormData((prev) => ({
+              //   ...prev,
+              //   general: {
+              //     ...datosMayusculas,
+
+              //     numeroRecipientes: parseInt(
+              //       tempGeneral.numeroRecipientes || 0,
+              //     ),
+
+              //     cantidad_total: parseFloat(tempGeneral.cantidad_total || 0),
+
+              //     cantidad_real: parseFloat(tempGeneral.cantidad_real || 0),
+              //   },
+              // }));
 
               setIsSecondModalOpen(false);
             }}
@@ -722,8 +815,8 @@ function TablaReactivos({ seleccionarReactivo }) {
             value={tempEspecifica.esControlado}
             onChange={handleTempChange(setTempEspecifica, "esControlado")}
           >
-            <option value="si">Sí</option>
-            <option value="no">No</option>
+            <option value="SI">Sí</option>
+            <option value="NO">No</option>
           </select>
         </div>
 
@@ -888,18 +981,6 @@ function TablaReactivos({ seleccionarReactivo }) {
               <img src={`http://localhost:8000${p.url}`} />
             </div>
           ))}
-
-          {/* {catalogoPictogramas.map((p) => (
-            <div
-              key={p.id}
-              className={`pictograma-item ${
-                tempPictogramas.includes(p.id) ? "activo" : ""
-              }`}
-              onClick={() => toggleTempPictograma(p.id)}
-            >
-              <img src={`http://localhost:8000${p.url}`} />
-            </div>
-          ))} */}
         </div>
 
         <div className="botonModalPictogramas_2">

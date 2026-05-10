@@ -49,17 +49,12 @@ class InfoBasicaSchema(BaseModel):
 class InfoGeneralSchema(BaseModel):
     codigoFraseH: str
     toxicidadAgudaCat1Cat2: str
-
     sustanciaCancerigena: str  # SI / NO
-
     sitioAlmacenamiento: str
     ubicacionEspecifica: str
-
     unidadMedida: str
     presentacion: str
-
-    numeroRecipientes: int
-
+    numeroRecipientes: Optional[int] = None
     cantidad_total: float
     cantidad_real: float
 
@@ -73,19 +68,14 @@ class InfoGeneralSchema(BaseModel):
 class InfoEspecificaSchema(BaseModel):
     esControlado: str  # SI / NO
     componente1: str
-
     clasificacionAlmacenamiento: str
     separacionSaftdata: str
-
     fechaIngreso: Optional[date] = None
     fechaVencimiento: Optional[date] = None
-
     observaciones: Optional[str] = None
     palabraAdvertencia: str
-
     preventiva: str
     respuesta: str
-
     razonSocial: str
     direccion: str
     contacto: str
@@ -138,7 +128,7 @@ class InfoBasicaOut(BaseModel):
     marca: Optional[str] = None
     referencia: Optional[str] = None
     fdsCompleta: Optional[str] = None
-    fecha_actualizacion: Optional[date] = None
+    fechaActualizacion: Optional[date] = None
     estadoFisico: Optional[str] = None
 
     class Config:
@@ -147,13 +137,13 @@ class InfoBasicaOut(BaseModel):
 # 🔹 GENERAL
 class InfoGeneralOut(BaseModel):
     codigoFraseH: Optional[str] = None
-    toxicidadCat1Cat2: Optional[str] = None
+    toxicidadAgudaCat1Cat2: Optional[str] = None
     sustanciaCancerigena: Optional[str] = None
     sitioAlmacenamiento: Optional[str] = None
     ubicacionEspecifica: Optional[str] = None
-    unidadDeMedida: Optional[str] = None
+    unidadMedida: Optional[str] = None
     presentacion: Optional[str] = None
-    numeroDeRecipientes: Optional[int] = None
+    numeroRecipientes: Optional[int] = None
     cantidad_total: Optional[float] = None
     cantidad_real: Optional[float] = None
 
@@ -166,13 +156,13 @@ class InfoEspecificaOut(BaseModel):
     esControlado: Optional[str] = None
     componente1: Optional[str] = None
     clasificacionAlmacenamiento: Optional[str] = None
-    separacionMetodoSAFTDATA: Optional[str] = None
-    fecha_ingreso: Optional[date] = None
-    fecha_vencimiento: Optional[date] = None
+    separacionSaftdata: Optional[str] = None
+    fechaIngreso: Optional[date] = None
+    fechaVencimiento: Optional[date] = None
     observaciones: Optional[str] = None
-    palabra_advertencia: Optional[str] = None
-    preventivaCodigoDetalle: Optional[str] = None
-    respuestaOintervencionCodigoDetalle: Optional[str] = None
+    palabraAdvertencia: Optional[str] = None
+    preventiva: Optional[str] = None
+    respuesta: Optional[str] = None
     razonSocial: Optional[str] = None
     direccion: Optional[str] = None
     contacto: Optional[str] = None

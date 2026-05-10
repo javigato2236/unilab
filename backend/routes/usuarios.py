@@ -322,10 +322,14 @@ def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
 
 @router.put("/sustancias/{id}")
 def actualizar_sustancia(
+    
     id: int,
     data: schemas.SustanciaCreate,
     db: Session = Depends(get_db)
 ):
+    print(data.dict())
+    print("BASICA:", data.basica.dict())
+    print("ESPECIFICA:", data.especifica.dict())
     # Buscar sustancia
     sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
 
@@ -342,21 +346,57 @@ def actualizar_sustancia(
     
     if sustancia.basica:
         sustancia.basica.familia = data.basica.familia
+        sustancia.basica.grupo = data.basica.grupo
         sustancia.basica.sinonimo = data.basica.sinonimo
+        sustancia.basica.cas = data.basica.cas
+        sustancia.basica.marca = data.basica.marca
+        sustancia.basica.referencia = data.basica.referencia
+        sustancia.basica.fdsCompleta = data.basica.fdsCompleta
+        sustancia.basica.fechaActualizacion = data.basica.fechaActualizacion
+        sustancia.basica.estadoFisico = data.basica.estadoFisico
+
+
     else:
         sustancia.basica = models.InfoBasica(
+            sustancia_id=sustancia.id,
             familia=data.basica.familia,
-            sinonimo=data.basica.sinonimo
+            grupo=data.basica.grupo,
+            sinonimo=data.basica.sinonimo,
+            cas=data.basica.cas,
+            marca=data.basica.marca,
+            referencia=data.basica.referencia,
+            fdsCompleta=data.basica.fdsCompleta,
+            fechaActualizacion=data.basica.fechaActualizacion,
+            estadoFisico=data.basica.estadoFisico
+            
         )
 
   
     # INFO GENERAL
    
     if sustancia.general:
+        sustancia.general.codigoFraseH = data.general.codigoFraseH
+        sustancia.general.toxicidadAgudaCat1Cat2 = data.general.toxicidadAgudaCat1Cat2
+        sustancia.general.sustanciaCancerigena = data.general.sustanciaCancerigena
+        sustancia.general.sitioAlmacenamiento = data.general.sitioAlmacenamiento
+        sustancia.general.ubicacionEspecifica = data.general.ubicacionEspecifica
+        sustancia.general.unidadMedida = data.general.unidadMedida
+        sustancia.general.presentacion = data.general.presentacion
+        sustancia.general.numeroRecipientes = data.general.numeroRecipientes
         sustancia.general.cantidad_total = data.general.cantidad_total
         sustancia.general.cantidad_real = data.general.cantidad_real
+
     else:
         sustancia.general = models.InfoGeneral(
+            sustancia_id=sustancia.id,
+            codigoFraseH=data.general.codigoFraseH,
+            toxicidadAgudaCat1Cat2=data.general.toxicidadAgudaCat1Cat2,
+            sustanciaCancerigena=data.general.sustanciaCancerigena,
+            sitioAlmacenamiento=data.general.sitioAlmacenamiento,
+            ubicacionEspecifica=data.general.ubicacionEspecifica,
+            unidadMedida=data.general.unidadMedida,
+            presentacion=data.general.presentacion,
+            numeroRecipientes=data.general.numeroRecipientes,
             cantidad_total=data.general.cantidad_total,
             cantidad_real=data.general.cantidad_real
         )
@@ -365,10 +405,35 @@ def actualizar_sustancia(
     # INFO ESPECIFICA
     
     if sustancia.especifica:
-        sustancia.especifica.palabra_advertencia = data.especifica.palabra_advertencia
+        sustancia.especifica.esControlado = data.especifica.esControlado
+        sustancia.especifica.componente1 = data.especifica.componente1
+        sustancia.especifica.clasificacionAlmacenamiento = data.especifica.clasificacionAlmacenamiento
+        sustancia.especifica.separacionSaftdata = data.especifica.separacionSaftdata
+        sustancia.especifica.fechaIngreso = data.especifica.fechaIngreso
+        sustancia.especifica.fechaVencimiento = data.especifica.fechaVencimiento
+        sustancia.especifica.observaciones = data.especifica.observaciones
+        sustancia.especifica.palabraAdvertencia = data.especifica.palabraAdvertencia
+        sustancia.especifica.preventiva = data.especifica.preventiva
+        sustancia.especifica.respuesta = data.especifica.respuesta
+        sustancia.especifica.razonSocial = data.especifica.razonSocial
+        sustancia.especifica.direccion = data.especifica.direccion
+        sustancia.especifica.contacto = data.especifica.contacto
     else:
         sustancia.especifica = models.InfoEspecifica(
-            palabra_advertencia=data.especifica.palabra_advertencia
+            sustancia_id=sustancia.id,
+            esControlado=data.especifica.esControlado,
+            componente1=data.especifica.componente1,
+            clasificacionAlmacenamiento=data.especifica.clasificacionAlmacenamiento,
+            separacionSaftdata=data.especifica.separacionSaftdata,
+            fechaIngreso=data.especifica.fechaIngreso,
+            fechaVencimiento=data.especifica.fechaVencimiento,
+            observaciones=data.especifica.observaciones,
+            palabraAdvertencia=data.especifica.palabraAdvertencia,
+            preventiva=data.especifica.preventiva,
+            respuesta=data.especifica.respuesta,
+            razonSocial=data.especifica.razonSocial,
+            direccion=data.especifica.direccion,
+            contacto=data.especifica.contacto
         )
 
    
