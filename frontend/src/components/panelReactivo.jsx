@@ -1,5 +1,4 @@
 // import "../styles/tabla.css";
-
 // import { useState } from "react";
 
 // function PanelReactivo({ reactivo, cerrar }) {
@@ -9,23 +8,22 @@
 //     <div className="panel-reactivo">
 //       <h2>{reactivo.nombre}</h2>
 
-//       <p>Cantidad actual: {reactivo.cantidad} ml</p>
-//       <p>Recipientes: {reactivo.recipientes}</p>
-
-//       <h3>Ajustar cantidad</h3>
-
 //       <div className="control-cantidad">
-//         <button onClick={() => setCantidad(cantidad - 10)}>-</button>
-
-//         <span>{cantidad} ml</span>
-
-//         <button onClick={() => setCantidad(cantidad + 10)}>+</button>
+//         <label htmlFor="">cantidad</label>
+//         <input type="text" name="" id="" />
+//         <select name="" id="">
+//           <option value="">hableidy</option>
+//           <option value="">javier</option>
+//           <option value="">dora </option>
+//           <option value="">luci</option>
+//           <option value="">santiago</option>
+//           <option value="">lorena</option>
+//         </select>
 //       </div>
 
-//       <div className="acciones">
-//         <button className="agregar">Agregar</button>
-//         <button className="quitar">Quitar</button>
-//       </div>
+//       <button className="cerrar" onClick={cerrar}>
+//         Enviar
+//       </button>
 
 //       <button className="cerrar" onClick={cerrar}>
 //         Cerrar
@@ -35,37 +33,92 @@
 // }
 
 // export default PanelReactivo;
-/////////////////////////////////////////////////////
 
+// nuevo codigo
 import "../styles/tabla.css";
 import { useState } from "react";
 
 function PanelReactivo({ reactivo, cerrar }) {
-  const [cantidad, setCantidad] = useState(0);
+  const [cantidad, setCantidad] = useState("");
+  const [usuario, setUsuario] = useState("");
+
+  // 🔹 ENVIAR DESCUENTO
+  const descontarCantidad = async () => {
+    const valor = parseFloat(cantidad);
+
+    // validar número
+    if (isNaN(valor) || valor <= 0) {
+      alert("Ingrese una cantidad válida");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/sustancias/${reactivo.id}/descontar`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            cantidad: valor,
+            usuario: usuario,
+          }),
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Error al descontar");
+      }
+
+      const data = await res.json();
+
+      alert("Cantidad actualizada");
+
+      console.log(data);
+
+      cerrar();
+    } catch (error) {
+      console.error(error);
+      alert("Error en servidor");
+    }
+  };
 
   return (
     <div className="panel-reactivo">
       <h2>{reactivo.nombre}</h2>
 
-      <p>Cantidad actual: {reactivo.general?.cantidad_real || 0} ml</p>
-      <p>Cantidad total: {reactivo.general?.cantidad_total || 0} ml</p>
-
-      <h3>Ajustar cantidad</h3>
+      <p>
+        Cantidad actual:
+        {Number(reactivo.general?.cantidad_real).toFixed(3)} ml
+      </p>
 
       <div className="control-cantidad">
-        <button onClick={() => setCantidad(Math.max(0, cantidad - 10))}>
-          -
-        </button>
+        <label>Cantidad</label>
 
-        <span>{cantidad} ml</span>
+        <input
+          type="number"
+          step="0.001"
+          value={cantidad}
+          onChange={(e) => setCantidad(e.target.value)}
+        />
 
-        <button onClick={() => setCantidad(cantidad + 10)}>+</button>
+        <select value={usuario} onChange={(e) => setUsuario(e.target.value)}>
+          <option value="">Seleccione</option>
+
+          <option value="hableidy">hableidy</option>
+          <option value="javier">javier</option>
+          <option value="dora">dora</option>
+          <option value="luci">luci</option>
+          <option value="santiago">santiago</option>
+          <option value="lorena">lorena</option>
+        </select>
       </div>
 
-      <div className="acciones">
-        <button className="agregar">Agregar</button>
-        <button className="quitar">Quitar</button>
-      </div>
+      <button className="quitar" onClick={descontarCantidad}>
+        Descontar
+      </button>
 
       <button className="cerrar" onClick={cerrar}>
         Cerrar

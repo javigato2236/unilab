@@ -1006,10 +1006,17 @@ function TablaReactivos({ seleccionarReactivo }) {
       </div>
 
       {reactivoSeleccionado && (
-        <PanelReactivo
-          reactivo={reactivoSeleccionado}
-          cerrar={() => setReactivoSeleccionado(null)}
-        />
+        <>
+          <div
+            className="overlay"
+            onClick={() => setReactivoSeleccionado(null)}
+          ></div>
+
+          <PanelReactivo
+            reactivo={reactivoSeleccionado}
+            cerrar={() => setReactivoSeleccionado(null)}
+          />
+        </>
       )}
     </div>
   );
