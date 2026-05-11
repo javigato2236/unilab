@@ -1,3 +1,50 @@
+/* estilos tabla */
+.contenedor-tabla {
+  margin-top: 50px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.tabla-reactivos {
+  width: 100%;
+  border-collapse: collapse; /* Une las líneas */
+}
+
+.tabla-reactivos th,
+.tabla-reactivos td {
+  border: 1px solid black; /* Líneas */
+  padding: 10px;
+  text-align: center; /* Centra horizontal */
+  vertical-align: middle; /* Centra vertical */
+}
+
+.tabla-reactivos th {
+  background-color: #f2f2f2;
+}
+
+.col-angosta {
+  width: 30px;
+}
+
+estilos semaforo stok .circulo {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.verde {
+  background-color: green;
+}
+
+.amarillo {
+  background-color: yellow;
+}
+
+.rojo {
+  background-color: red;
+}
+
+/* estilos panel reactivos */
 .panel-reactivo {
   position: fixed;
   right: 0;

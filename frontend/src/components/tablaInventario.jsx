@@ -358,6 +358,27 @@ function TablaReactivos({ seleccionarReactivo }) {
     }
   };
 
+  function obtenerEstadoCantidad(cantidadTotal, cantidadReal) {
+    if (!cantidadTotal || cantidadTotal <= 0) {
+      return "gris";
+    }
+
+    const porcentaje = cantidadReal / cantidadTotal;
+
+    // rojo 25% o menos
+    if (porcentaje <= 0) {
+      return "rojo";
+    }
+
+    // amarillo 50% o menos
+    if (porcentaje <= 0.5) {
+      return "amarillo";
+    }
+
+    // verde más de 50%
+    return "verde";
+  }
+
   return (
     <div>
       <div
@@ -924,35 +945,47 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       {/* probando nueva tabla */}
       <h2>Tabla de Reactivos</h2>
+      <div className="contenedor-tabla">
+        <table className="tabla-reactivos">
+          <thead>
+            <tr>
+              <th className="col-angosta">Nombre</th>
+              <th className="col-angosta">Familia</th>
+              <th>Sinonimo</th>
+              <th className="col-angosta">Numero de recipientes</th>
+              <th className="col-angosta">Cantidad Total</th>
+              <th className="col-angosta">Cantidad Real</th>
+              <th>Ubicacion especifica</th>
+              <th className="col-angosta">Stock</th>
+              <th className="col-angosta">Acciones</th>
+            </tr>
+          </thead>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Familia</th>
-            <th>Sinonimo</th>
-            <th>Cantidad Total</th>
-            <th>Cantidad Real</th>
-            <th>Advertencia</th>
-            <th>Pictogramas</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+          <tbody>
+            {reactivos.map((r) => (
+              <tr key={r.id}>
+                <td>{r.nombre}</td>
+                <td>{r.basica?.familia}</td>
+                <td>{r.basica?.sinonimo}</td>
+                <td>{r.general?.numeroRecipientes}</td>
+                <td>{Number(r.general?.cantidad_total).toFixed(3)}</td>
+                <td>{Number(r.general?.cantidad_real).toFixed(3)}</td>
+                <td>{r.general?.ubicacionEspecifica}</td>
+                <td>
+                  <div
+                    className={`circulo ${obtenerEstadoCantidad(
+                      r.general?.cantidad_total,
+                      r.general?.cantidad_real,
+                    )}`}
+                  ></div>
+                </td>
+                <td>
+                  <button>ver</button>
+                  <button onClick={() => editar(r)}>Editar</button>
+                  <button onClick={() => eliminar(r.id)}>Eliminar</button>
+                </td>
 
-        <tbody>
-          {reactivos.map((r) => (
-            <tr key={r.id}>
-              <td>{r.nombre}</td>
-
-              <td>{r.basica?.familia}</td>
-              <td>{r.basica?.sinonimo}</td>
-
-              <td>{r.general?.cantidad_total}</td>
-              <td>{r.general?.cantidad_real}</td>
-
-              <td>{r.especifica?.palabra_advertencia}</td>
-
-              <td>
+                {/* <td>
                 {r.pictogramas?.map((p) => (
                   <img
                     key={p.pictograma.id}
@@ -960,32 +993,12 @@ function TablaReactivos({ seleccionarReactivo }) {
                     width="30"
                   />
                 ))}
-              </td>
-
-              <td>
-                <button onClick={() => editar(r)}>Editar</button>
-                <button onClick={() => eliminar(r.id)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* probando nueva tabla */}
-
-      {/* <table>
-        <tbody>
-          {reactivos.map((r) => (
-            <tr key={r.id}>
-              <td>{r.nombre}</td>
-              <td>
-                <button onClick={() => setReactivoSeleccionado(r)}>Ver</button>
-                <button onClick={() => editar(r)}>Editar</button>
-                <button onClick={() => eliminar(r.id)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+              </td> */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {reactivoSeleccionado && (
         <PanelReactivo
