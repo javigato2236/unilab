@@ -25,7 +25,8 @@
   width: 30px;
 }
 
-estilos semaforo stok .circulo {
+/* estilos semaforo stok  */
+.circulo {
   width: 15px;
   height: 15px;
   border-radius: 50%;

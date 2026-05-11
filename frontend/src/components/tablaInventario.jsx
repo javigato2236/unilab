@@ -39,7 +39,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [isPictogramasModalOpen, setIsPictogramasModalOpen] = useState(false);
 
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
-  const [pictogramasOriginales, setPictogramasOriginales] = useState([]); ////////////////////
+  const [pictogramasOriginales, setPictogramasOriginales] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
   const convertirMayusculas = (obj) => {
@@ -951,8 +951,10 @@ function TablaReactivos({ seleccionarReactivo }) {
             <tr>
               <th className="col-angosta">Nombre</th>
               <th className="col-angosta">Familia</th>
-              <th>Sinonimo</th>
+              <th className="col-angosta">presentacion</th>
+              <th className="col-angosta">Unidad de medida</th>
               <th className="col-angosta">Numero de recipientes</th>
+
               <th className="col-angosta">Cantidad Total</th>
               <th className="col-angosta">Cantidad Real</th>
               <th>Ubicacion especifica</th>
@@ -966,7 +968,8 @@ function TablaReactivos({ seleccionarReactivo }) {
               <tr key={r.id}>
                 <td>{r.nombre}</td>
                 <td>{r.basica?.familia}</td>
-                <td>{r.basica?.sinonimo}</td>
+                <td>{r.general?.presentacion}</td>
+                <td>{r.general?.unidadMedida}</td>
                 <td>{r.general?.numeroRecipientes}</td>
                 <td>{Number(r.general?.cantidad_total).toFixed(3)}</td>
                 <td>{Number(r.general?.cantidad_real).toFixed(3)}</td>
@@ -980,7 +983,9 @@ function TablaReactivos({ seleccionarReactivo }) {
                   ></div>
                 </td>
                 <td>
-                  <button>ver</button>
+                  <button onClick={() => setReactivoSeleccionado(r)}>
+                    ver
+                  </button>
                   <button onClick={() => editar(r)}>Editar</button>
                   <button onClick={() => eliminar(r.id)}>Eliminar</button>
                 </td>
