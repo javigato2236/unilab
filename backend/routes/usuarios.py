@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from typing import List
+from decimal import Decimal
 
 from sqlalchemy.orm import Session, joinedload
 from datetime import timedelta
@@ -464,3 +465,86 @@ def actualizar_sustancia(
     db.commit()
 
     return {"msg": "Sustancia actualizada correctamente"}
+
+
+
+# @router.put("/sustancias/{id}/descontar")
+# def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):
+
+#     sustancia = db.query(models.Sustancia).filter(
+#         models.Sustancia.id == id
+#     ).first()
+
+#     if not sustancia:
+#         raise HTTPException(
+#             status_code=404,
+#             detail="No encontrada"
+#         )
+
+#     info_general = sustancia.general
+
+#     cantidad_descontar = Decimal(str(data["cantidad"]))
+
+#     # validar negativos
+#     if info_general.cantidad_total - cantidad_descontar < 0:
+#         raise HTTPException(
+#             status_code=400,
+#             detail="Cantidad insuficiente"
+#         )
+
+#     # descontar
+#     info_general.cantidad_total = (
+#         info_general.cantidad_total - cantidad_descontar
+#     )
+
+#     db.commit()
+#     db.refresh(info_general)
+
+#     return {
+#         "mensaje": "Cantidad actualizada",
+#         "cantidad_total": float(info_general.cantidad_total)
+#     }
+
+@router.put("/sustancias/{id}/descontar")
+def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):
+
+    sustancia = db.query(models.Sustancia).filter(
+        models.Sustancia.id == id
+    ).first()
+
+    if not sustancia:
+        raise HTTPException(
+            status_code=404,
+            detail="No encontrada"
+        )
+
+    info_general = sustancia.general
+
+    cantidad_descontar = Decimal(
+        str(data["cantidad"])
+    )
+
+    print("ANTES:", info_general.cantidad_real)
+
+    # 🚨 VALIDAR STOCK
+    if cantidad_descontar > info_general.cantidad_real:
+        raise HTTPException(
+            status_code=400,
+            detail="No hay suficiente cantidad disponible"
+        )
+
+    # descontar
+    info_general.cantidad_real = (
+        info_general.cantidad_real - cantidad_descontar
+    )
+
+    print("DESPUES:", info_general.cantidad_real)
+
+    db.commit()
+
+    db.refresh(info_general)
+
+    return {
+        "mensaje": "Cantidad actualizada",
+        "cantidad_real": float(info_general.cantidad_real)
+    }

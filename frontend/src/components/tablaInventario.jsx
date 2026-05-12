@@ -358,24 +358,26 @@ function TablaReactivos({ seleccionarReactivo }) {
     }
   };
 
-  function obtenerEstadoCantidad(cantidadTotal, cantidadReal) {
+  function obtenerEstadoCantidad(cantidadReal, cantidadTotal) {
+    // evitar división por cero
     if (!cantidadTotal || cantidadTotal <= 0) {
-      return "gris";
+      return "rojo";
     }
 
-    const porcentaje = cantidadReal / cantidadTotal;
+    // porcentaje restante
+    const porcentaje = (cantidadReal / cantidadTotal) * 100;
 
-    // rojo 25% o menos
+    // SIN STOCK
     if (porcentaje <= 0) {
       return "rojo";
     }
 
-    // amarillo 50% o menos
-    if (porcentaje <= 0.5) {
+    // STOCK BAJO
+    if (porcentaje <= 50) {
       return "amarillo";
     }
 
-    // verde más de 50%
+    // STOCK NORMAL
     return "verde";
   }
 
@@ -944,7 +946,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       {/* TABLA */}
 
       {/* probando nueva tabla */}
-      <h2>Tabla de Reactivos</h2>
+      <h2>Inventario de reactivos quimicos</h2>
       <div className="contenedor-tabla">
         <table className="tabla-reactivos">
           <thead>
@@ -976,9 +978,9 @@ function TablaReactivos({ seleccionarReactivo }) {
                 <td>{r.general?.ubicacionEspecifica}</td>
                 <td>
                   <div
-                    className={`circulo ${obtenerEstadoCantidad(
-                      r.general?.cantidad_total,
+                    className={`circulo-stock ${obtenerEstadoCantidad(
                       r.general?.cantidad_real,
+                      r.general?.cantidad_total,
                     )}`}
                   ></div>
                 </td>
@@ -1015,6 +1017,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           <PanelReactivo
             reactivo={reactivoSeleccionado}
             cerrar={() => setReactivoSeleccionado(null)}
+            recargar={fetchReactivos}
           />
         </>
       )}

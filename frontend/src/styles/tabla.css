@@ -26,7 +26,7 @@
 }
 
 /* estilos semaforo stok  */
-.circulo {
+/* .circulo {
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -43,6 +43,24 @@
 
 .rojo {
   background-color: red;
+} */
+.circulo-stock {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.verde {
+  background: #2ecc71;
+}
+
+.amarillo {
+  background: #f1c40f;
+}
+
+.rojo {
+  background: #e74c3c;
 }
 
 /* estilos panel reactivos */

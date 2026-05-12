@@ -38,7 +38,7 @@
 import "../styles/tabla.css";
 import { useState } from "react";
 
-function PanelReactivo({ reactivo, cerrar }) {
+function PanelReactivo({ reactivo, cerrar, recargar }) {
   const [cantidad, setCantidad] = useState("");
   const [usuario, setUsuario] = useState("");
 
@@ -51,6 +51,9 @@ function PanelReactivo({ reactivo, cerrar }) {
       alert("Ingrese una cantidad válida");
       return;
     }
+
+    console.log(valor);
+    console.log(reactivo.id);
 
     try {
       const res = await fetch(
@@ -69,8 +72,15 @@ function PanelReactivo({ reactivo, cerrar }) {
       );
 
       if (!res.ok) {
-        throw new Error("Error al descontar");
+        const error = await res.json();
+
+        alert(error.detail);
+
+        return;
       }
+      await recargar();
+
+      cerrar();
 
       const data = await res.json();
 
