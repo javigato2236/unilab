@@ -1,40 +1,3 @@
-// import "../styles/tabla.css";
-// import { useState } from "react";
-
-// function PanelReactivo({ reactivo, cerrar }) {
-//   const [cantidad, setCantidad] = useState(0);
-
-//   return (
-//     <div className="panel-reactivo">
-//       <h2>{reactivo.nombre}</h2>
-
-//       <div className="control-cantidad">
-//         <label htmlFor="">cantidad</label>
-//         <input type="text" name="" id="" />
-//         <select name="" id="">
-//           <option value="">hableidy</option>
-//           <option value="">javier</option>
-//           <option value="">dora </option>
-//           <option value="">luci</option>
-//           <option value="">santiago</option>
-//           <option value="">lorena</option>
-//         </select>
-//       </div>
-
-//       <button className="cerrar" onClick={cerrar}>
-//         Enviar
-//       </button>
-
-//       <button className="cerrar" onClick={cerrar}>
-//         Cerrar
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default PanelReactivo;
-
-// nuevo codigo
 import "../styles/tabla.css";
 import { useState } from "react";
 
@@ -51,9 +14,6 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       alert("Ingrese una cantidad válida");
       return;
     }
-
-    console.log(valor);
-    console.log(reactivo.id);
 
     try {
       const res = await fetch(
@@ -136,5 +96,4 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
     </div>
   );
 }
-
 export default PanelReactivo;

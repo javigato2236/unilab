@@ -24,7 +24,7 @@ body {
 }
 
 .contenedor-cierreSesion {
-  left: 1150px;
+  left: 1450px;
   position: absolute;
   transition: transform 0.2s;
 }
