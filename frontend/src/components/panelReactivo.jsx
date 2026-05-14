@@ -1,7 +1,10 @@
 import "../styles/tabla.css";
 import { useState } from "react";
+import Modal from "../hoosk/modalReutilizable";
 
 function PanelReactivo({ reactivo, cerrar, recargar }) {
+  const [isObservacionesConsumoModalOpen, setIsObservacionesConsumoModalOpen] =
+    useState(false);
   const [cantidad, setCantidad] = useState("");
   const [usuario, setUsuario] = useState("");
 
@@ -65,10 +68,9 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       </p>
 
       <div className="control-cantidad">
-        <label>Cantidad</label>
+        <label>Consumo</label>
 
         <input
-          type="number"
           step="0.001"
           value={cantidad}
           onChange={(e) => setCantidad(e.target.value)}
@@ -85,6 +87,10 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           <option value="lorena">lorena</option>
         </select>
       </div>
+      <div>
+        <label class="campo-observaciones">Observaciones</label>
+        <textarea name="" id=""></textarea>
+      </div>
 
       <button className="quitar" onClick={descontarCantidad}>
         Descontar
@@ -93,6 +99,26 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       <button className="cerrar" onClick={cerrar}>
         Cerrar
       </button>
+      <button
+        onClick={() => {
+          setIsObservacionesConsumoModalOpen(true);
+        }}
+      >
+        Historial de consumo
+      </button>
+
+      <Modal isOpen={isObservacionesConsumoModalOpen}>
+        <div>
+          <h1>modal historial de consumo</h1>
+          <button
+            onClick={() => {
+              setIsObservacionesConsumoModalOpen(false);
+            }}
+          >
+            Cerrar
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

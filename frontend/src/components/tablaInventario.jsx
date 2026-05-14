@@ -985,11 +985,21 @@ function TablaReactivos({ seleccionarReactivo }) {
                   ></div>
                 </td>
                 <td>
-                  <button onClick={() => setReactivoSeleccionado(r)}>
+                  <button
+                    className="boton-ver"
+                    onClick={() => setReactivoSeleccionado(r)}
+                  >
                     ver
                   </button>
-                  <button onClick={() => editar(r)}>Editar</button>
-                  <button onClick={() => eliminar(r.id)}>Eliminar</button>
+                  <button className="boton-editar" onClick={() => editar(r)}>
+                    Editar
+                  </button>
+                  <button
+                    className="boton-eliminar"
+                    onClick={() => eliminar(r.id)}
+                  >
+                    Eliminar
+                  </button>
                 </td>
 
                 {/* <td>

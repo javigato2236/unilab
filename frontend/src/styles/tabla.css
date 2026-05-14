@@ -25,25 +25,6 @@
   width: 30px;
 }
 
-/* estilos semaforo stok  */
-/* .circulo {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  margin: auto;
-}
-
-.verde {
-  background-color: green;
-}
-
-.amarillo {
-  background-color: yellow;
-}
-
-.rojo {
-  background-color: red;
-} */
 .circulo-stock {
   width: 18px;
   height: 18px;
@@ -78,6 +59,20 @@
   padding: 20px;
 
   animation: deslizar 0.3s ease;
+}
+
+.panel-reactivo label input {
+  margin-right: 10px;
+}
+.panel-reactivo input {
+  width: 60px;
+  text-align: center;
+}
+
+.panel-reactivo select {
+  text-align: center;
+  width: 90px;
+  height: 21.5px;
 }
 
 @keyframes deslizar {
@@ -120,4 +115,30 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
+}
+
+/* estilos botones ver, cerrer edita de tabla */
+.boton-ver,
+.boton-editar,
+.boton-eliminar {
+  color: rgb(0, 110, 255);
+
+  margin-bottom: 5px;
+  border-color: rgb(237, 222, 222);
+  border-color: rgb(235, 231, 231);
+
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.campo-observaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* espacio entre label y textarea */
+}
+
+.campo-observaciones textarea {
+  width: 100%;
+  min-height: 100px;
 }
