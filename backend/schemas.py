@@ -24,9 +24,9 @@ class ValidateToken(BaseModel):
     token: str
 
 
+# Schesmas modales ingreso de datos
 
-
-#################################################
+# INFO BASICA
 class InfoBasicaSchema(BaseModel):
     nombre: str
     familia: str
@@ -35,17 +35,11 @@ class InfoBasicaSchema(BaseModel):
     cas: str
     marca: str
     referencia: str
-
     fdsCompleta: str  # SI / NO
     fechaActualizacion: Optional[date] = None
-
     estadoFisico: str  # SOLIDO / LIQUIDO
 
-
-# =========================
-# 🧪 MODAL 2: INFO GENERAL
-# =========================
-
+# INFO GENERAL
 class InfoGeneralSchema(BaseModel):
     codigoFraseH: str
     toxicidadAgudaCat1Cat2: str
@@ -58,13 +52,7 @@ class InfoGeneralSchema(BaseModel):
     cantidad_total: float
     cantidad_real: float
 
-   
-
-
-
-# MODAL 3: INFO ESPECÍFICA
-
-
+# INFO ESPECÍFICA
 class InfoEspecificaSchema(BaseModel):
     esControlado: str  # SI / NO
     componente1: str
@@ -82,22 +70,28 @@ class InfoEspecificaSchema(BaseModel):
 
 
 
-#PICTOGRAMAS
-
-
+# PICTOGRAMAS
 class PictogramaSchema(BaseModel):
     id: int
 
-
+# OBSERVACIONES CONSUMO ############################
+class ObservacionConsumoSchema(BaseModel):
+    fechaObservacion:Optional[date] = None
+    responsable:Optional[str] = None
+    observacion:Optional[str] = None
+#####################################################
 
 #  SUSTANCIA COMPLETA
-
-
 class SustanciaCreate(BaseModel):
     basica: InfoBasicaSchema
     general: InfoGeneralSchema
     especifica: InfoEspecificaSchema
     pictogramas: List[int]  
+
+    ob_consumo: Optional[ObservacionConsumoSchema] = None   ################
+
+
+
 
 # /////////////////////////////////////
 
@@ -117,6 +111,11 @@ class SustanciaPictogramaOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+
+
+
 
 
 # 🔹 BASICA

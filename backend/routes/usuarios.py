@@ -209,8 +209,7 @@ def obtener_sustancias(db: Session = Depends(get_db)):
 
     return sustancias
 
-
-
+################nuevo codigo post
 @router.post("/sustancias")
 def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
     try:
@@ -278,6 +277,21 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         db.add_all([basica, general, especifica])
 
+        # ---------------- OBSERVACION CONSUMO ----------------
+
+        if data.ob_consumo:
+
+            observacion_consumo = models.ObservacionConsumo(
+                sustancia_id=sustancia.id,
+                fechaObservacion=data.ob_consumo.fechaObservacion,
+                responsable=data.ob_consumo.responsable,
+                observacion=data.ob_consumo.observacion
+            )
+
+            db.add(observacion_consumo)
+
+            print("OBSERVACION CONSUMO OK")
+
         print("ADD ALL OK")
 
         for pictograma_id in data.pictogramas:
@@ -305,6 +319,103 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         return {"error": str(e)}
 
+################nuevo codigo post
+
+#####codigo post funcional
+# @router.post("/sustancias")
+# def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
+#     try:
+
+#         print("DATA RECIBIDA:", data.dict())
+
+#         sustancia = models.Sustancia(
+#             nombre=data.basica.nombre
+#         )
+
+#         db.add(sustancia)
+#         db.flush()
+
+#         print("SUSTANCIA OK")
+
+#         basica = models.InfoBasica(
+#             sustancia_id=sustancia.id,
+#             familia=data.basica.familia,
+#             grupo=data.basica.grupo,
+#             sinonimo=data.basica.sinonimo,
+#             cas=data.basica.cas,
+#             marca=data.basica.marca,
+#             referencia=data.basica.referencia,
+#             fdsCompleta=data.basica.fdsCompleta,
+#             fechaActualizacion=data.basica.fechaActualizacion,
+#             estadoFisico=data.basica.estadoFisico
+#         )
+
+#         print("BASICA OK")
+
+#         general = models.InfoGeneral(
+#             sustancia_id=sustancia.id,
+#             codigoFraseH=data.general.codigoFraseH,
+#             toxicidadAgudaCat1Cat2=data.general.toxicidadAgudaCat1Cat2,
+#             sustanciaCancerigena=data.general.sustanciaCancerigena,
+#             sitioAlmacenamiento=data.general.sitioAlmacenamiento,
+#             ubicacionEspecifica=data.general.ubicacionEspecifica,
+#             unidadMedida=data.general.unidadMedida,
+#             presentacion=data.general.presentacion,
+#             numeroRecipientes=data.general.numeroRecipientes,
+#             cantidad_total=data.general.cantidad_total,
+#             cantidad_real=data.general.cantidad_real
+#         )
+
+#         print("GENERAL OK")
+
+#         especifica = models.InfoEspecifica(
+#             sustancia_id=sustancia.id,
+#             esControlado=data.especifica.esControlado,
+#             componente1=data.especifica.componente1,
+#             clasificacionAlmacenamiento=data.especifica.clasificacionAlmacenamiento,
+#             separacionSaftdata=data.especifica.separacionSaftdata,
+#             fechaIngreso=data.especifica.fechaIngreso,
+#             fechaVencimiento=data.especifica.fechaVencimiento,
+#             observaciones=data.especifica.observaciones,
+#             palabraAdvertencia=data.especifica.palabraAdvertencia,
+#             preventiva=data.especifica.preventiva,
+#             respuesta=data.especifica.respuesta,
+#             razonSocial=data.especifica.razonSocial,
+#             direccion=data.especifica.direccion,
+#             contacto=data.especifica.contacto
+#         )
+
+#         print("ESPECIFICA OK")
+
+#         db.add_all([basica, general, especifica])
+
+#         print("ADD ALL OK")
+
+#         for pictograma_id in data.pictogramas:
+
+#             pictograma = models.SustanciaPictograma(
+#                 sustancia_id=sustancia.id,
+#                 pictograma_id=pictograma_id
+#             )
+
+#             db.add(pictograma)
+
+#         print("PICTOGRAMAS OK")
+
+#         db.commit()
+
+#         print("COMMIT OK")
+
+#         return {"msg": "ok"}
+
+#     except Exception as e:
+
+#         db.rollback()
+
+#         print("ERROR REAL:", str(e))
+
+#         return {"error": str(e)}
+##########codigo post funcional
 
 
 
@@ -468,42 +579,7 @@ def actualizar_sustancia(
 
 
 
-# @router.put("/sustancias/{id}/descontar")
-# def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):
 
-#     sustancia = db.query(models.Sustancia).filter(
-#         models.Sustancia.id == id
-#     ).first()
-
-#     if not sustancia:
-#         raise HTTPException(
-#             status_code=404,
-#             detail="No encontrada"
-#         )
-
-#     info_general = sustancia.general
-
-#     cantidad_descontar = Decimal(str(data["cantidad"]))
-
-#     # validar negativos
-#     if info_general.cantidad_total - cantidad_descontar < 0:
-#         raise HTTPException(
-#             status_code=400,
-#             detail="Cantidad insuficiente"
-#         )
-
-#     # descontar
-#     info_general.cantidad_total = (
-#         info_general.cantidad_total - cantidad_descontar
-#     )
-
-#     db.commit()
-#     db.refresh(info_general)
-
-#     return {
-#         "mensaje": "Cantidad actualizada",
-#         "cantidad_total": float(info_general.cantidad_total)
-#     }
 
 @router.put("/sustancias/{id}/descontar")
 def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):

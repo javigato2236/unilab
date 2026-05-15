@@ -7,14 +7,21 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
     useState(false);
   const [cantidad, setCantidad] = useState("");
   const [usuario, setUsuario] = useState("");
+  const [observacion, setObservacion] = useState("");
 
   // 🔹 ENVIAR DESCUENTO
   const descontarCantidad = async () => {
+    const fechaActual = new Date().toISOString().split("T")[0]; //////////////////////////////7
     const valor = parseFloat(cantidad);
 
     // validar número
     if (isNaN(valor) || valor <= 0) {
       alert("Ingrese una cantidad válida");
+      return;
+    }
+
+    if (!usuario) {
+      alert("Seleccione un usuario");
       return;
     }
 
@@ -30,6 +37,8 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           body: JSON.stringify({
             cantidad: valor,
             usuario: usuario,
+            fechaObservacion: fechaActual,
+            observacion: observacion,
           }),
         },
       );
@@ -41,11 +50,10 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
 
         return;
       }
-      await recargar();
-
-      cerrar();
 
       const data = await res.json();
+
+      await recargar();
 
       alert("Cantidad actualizada");
 
@@ -88,7 +96,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
         </select>
       </div>
       <div>
-        <label class="campo-observaciones">Observaciones</label>
+        <label className="campo-observaciones">Observaciones</label>
         <textarea name="" id=""></textarea>
       </div>
 
