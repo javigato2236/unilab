@@ -97,7 +97,10 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       </div>
       <div>
         <label className="campo-observaciones">Observaciones</label>
-        <textarea name="" id=""></textarea>
+        <textarea
+          value={observacion}
+          onChange={(e) => setObservacion(e.target.value)}
+        ></textarea>
       </div>
 
       <button className="quitar" onClick={descontarCantidad}>

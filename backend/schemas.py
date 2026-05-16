@@ -79,6 +79,7 @@ class ObservacionConsumoSchema(BaseModel):
     fechaObservacion:Optional[date] = None
     responsable:Optional[str] = None
     observacion:Optional[str] = None
+    cantidadConsumo:Optional[float] = None#######################33
 #####################################################
 
 #  SUSTANCIA COMPLETA

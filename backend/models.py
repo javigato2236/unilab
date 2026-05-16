@@ -21,7 +21,7 @@ class Sustancia(Base):
     basica = relationship("InfoBasica", back_populates="sustancia", uselist=False, cascade="all, delete")
     general = relationship("InfoGeneral", back_populates="sustancia", uselist=False, cascade="all, delete")
     especifica = relationship("InfoEspecifica", back_populates="sustancia", uselist=False, cascade="all, delete")
-    ob_consumo = relationship("ObservacionConsumo", back_populates="sustancia", uselist=False, cascade="all, delete") #####################
+    ob_consumo = relationship("ObservacionConsumo", back_populates="sustancia",  cascade="all, delete") #####################
 
     pictogramas = relationship("SustanciaPictograma", back_populates="sustancia", cascade="all, delete")
 
@@ -110,6 +110,7 @@ class ObservacionConsumo(Base):
     fechaObservacion = Column(Date)
     responsable = Column(String(50))
     observacion = Column(String(300))
+    cantidadConsumo = Column(Numeric(12,3))##################
 
     sustancia = relationship("Sustancia", back_populates ="ob_consumo" )
 ###################################################

@@ -580,9 +580,12 @@ def actualizar_sustancia(
 
 
 
-
 @router.put("/sustancias/{id}/descontar")
-def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):
+def descontar_cantidad(
+    id: int,
+    data: dict,
+    db: Session = Depends(get_db)
+):
 
     sustancia = db.query(models.Sustancia).filter(
         models.Sustancia.id == id
@@ -609,13 +612,28 @@ def descontar_cantidad(id: int, data: dict, db: Session = Depends(get_db)):
             detail="No hay suficiente cantidad disponible"
         )
 
-    # descontar
+    # descontar cantidad
     info_general.cantidad_real = (
         info_general.cantidad_real - cantidad_descontar
     )
 
     print("DESPUES:", info_general.cantidad_real)
 
+   
+    # GUARDAR OBSERVACION CONSUMO
+    
+
+    observacion_consumo = models.ObservacionConsumo(
+        fechaObservacion=data["fechaObservacion"],
+        responsable=data["usuario"],
+        observacion=data["observacion"],
+        cantidadConsumo=data["cantidad"],#################3
+        sustancia_id=sustancia.id
+    )
+
+    db.add(observacion_consumo)
+
+    # guardar cambios
     db.commit()
 
     db.refresh(info_general)
