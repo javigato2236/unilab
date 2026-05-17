@@ -68,6 +68,16 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
 
   return (
     <div className="panel-reactivo">
+      <div className="contenedor-pictogramas-panel">
+        {reactivo.pictogramas?.map((p) => (
+          <img
+            key={p.pictograma.id}
+            src={`http://localhost:8000${p.pictograma.url}`}
+            width="30"
+          />
+        ))}
+      </div>
+
       <h2>{reactivo.nombre}</h2>
 
       <p>

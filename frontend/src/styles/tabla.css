@@ -142,3 +142,19 @@
   width: 100%;
   min-height: 100px;
 }
+
+/* estilos contenedor de pictogramas en panelReactivos */
+.contenedor-pictogramas-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+
+  align-items: center;
+  position: absolute;
+  right: 20px;
+}
+
+.contenedor-pictogramas-panel img {
+  height: 30px;
+  width: 30px;
+}
