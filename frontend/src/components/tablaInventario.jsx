@@ -42,6 +42,19 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [pictogramasOriginales, setPictogramasOriginales] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
+  // seleccion de colores para SEPARACION METODO SAF-T-DATA
+  const obtenerColor = (valor) => {
+    const colores = {
+      T: "#3498db",
+      I: "#e74c3c",
+      O: "#f1c40f",
+      PMA: "#7f8c8d",
+      RM: "#27ae60",
+    };
+
+    return colores[valor] || "white";
+  };
+
   const convertirMayusculas = (obj) => {
     const excluir = ["unidadMedida"];
 
@@ -781,7 +794,14 @@ function TablaReactivos({ seleccionarReactivo }) {
           <label>Separacion metodo SAF-T-DATA</label>
           <select
             value={tempEspecifica.separacionSaftdata}
-            onChange={handleTempChange(setTempEspecifica, "separacionSaftdata")}
+            onChange={(e) => {
+              const valor = e.target.value;
+
+              setTempEspecifica((prev) => ({
+                ...prev,
+                separacionSaftdata: valor,
+              }));
+            }}
           >
             <option value="T">T</option>
             <option value="C">C</option>
@@ -956,10 +976,10 @@ function TablaReactivos({ seleccionarReactivo }) {
               <th className="col-angosta">presentacion</th>
               <th className="col-angosta">Unidad de medida</th>
               <th className="col-angosta">Numero de recipientes</th>
-
               <th className="col-angosta">Cantidad Total</th>
               <th className="col-angosta">Cantidad Real</th>
               <th>Ubicacion especifica</th>
+              <th className="col-angosta">Separacion metodo SAF-T-DATA</th>
               <th className="col-angosta">Stock</th>
               <th className="col-angosta">Acciones</th>
             </tr>
@@ -969,6 +989,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             {reactivos.map((r) => (
               <tr key={r.id}>
                 <td>{r.nombre}</td>
+
                 <td>{r.basica?.familia}</td>
                 <td>{r.general?.presentacion}</td>
                 <td>{r.general?.unidadMedida}</td>
@@ -976,6 +997,18 @@ function TablaReactivos({ seleccionarReactivo }) {
                 <td>{Number(r.general?.cantidad_total).toFixed(3)}</td>
                 <td>{Number(r.general?.cantidad_real).toFixed(3)}</td>
                 <td>{r.general?.ubicacionEspecifica}</td>
+                <td
+                  style={{
+                    backgroundColor: obtenerColor(
+                      r.especifica?.separacionSaftdata,
+                    ),
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {r.especifica?.separacionSaftdata}
+                </td>
+
                 <td>
                   <div
                     className={`circulo-stock ${obtenerEstadoCantidad(
