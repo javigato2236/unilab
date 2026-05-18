@@ -283,7 +283,17 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
 
       <Modal isOpen={isObservacionesModalOpen}>
         <div className="contenedor-modal-observaciones">
-          {reactivo.especifica?.observaciones}
+          <table className="tablaPanelReactivos">
+            <thead>
+              <tr>
+                <th>Observacion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>{reactivo.especifica?.observaciones}</td>
+            </tbody>
+          </table>
+          {/* {reactivo.especifica?.observaciones} */}
           <button
             onClick={() => {
               setIsObservacionesModalOpen(false);
