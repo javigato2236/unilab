@@ -59,7 +59,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
 
       alert("Cantidad actualizada");
 
-      console.log(data);
+      // console.log(data);
 
       cerrar();
     } catch (error) {
@@ -67,6 +67,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       alert("Error en servidor");
     }
   };
+  console.log(reactivo);
 
   return (
     <div className="panel-reactivo">
@@ -242,9 +243,32 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
         Cerrar
       </button>
 
-      <Modal isOpen={isObservacionesConsumoModalOpen}>
+      <Modal
+        className="modalObservacionesConsumo"
+        isOpen={isObservacionesConsumoModalOpen}
+      >
         <div>
-          <h1>modal historial de consumo</h1>
+          <table className="tablaPanelReactivos">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Usuario</th>
+                <th>Observacion</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {reactivo.ob_consumo?.map((o, index) => (
+                <tr key={index}>
+                  <td>{o.fechaObservacion}</td>
+                  <td>{Number(o.cantidadConsumo).toFixed(3)}</td>
+                  <td>{o.responsable}</td>
+                  <td>{o.observacion}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           <button
             onClick={() => {
               setIsObservacionesConsumoModalOpen(false);
@@ -256,8 +280,8 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       </Modal>
 
       <Modal isOpen={isObservacionesModalOpen}>
-        <div>
-          <h1>modal observaciones</h1>
+        <div className="contenedor-modal-observaciones">
+          {reactivo.especifica?.observaciones}
           <button
             onClick={() => {
               setIsObservacionesModalOpen(false);

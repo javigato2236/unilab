@@ -170,6 +170,17 @@ class InfoEspecificaOut(BaseModel):
     class Config:
         from_attributes = True
 
+#########################################################3
+class ObservacionConsumoOut(BaseModel):
+    fechaObservacion: Optional[date] = None
+    responsable: Optional[str] = None
+    observacion: Optional[str] = None
+    cantidadConsumo: Optional[float] = None
+
+    class Config:
+        from_attributes = True
+#######################################333
+
 
 # 🔹 SUSTANCIA FINAL
 class SustanciaOut(BaseModel):
@@ -180,6 +191,7 @@ class SustanciaOut(BaseModel):
     general: InfoGeneralOut | None
     especifica: InfoEspecificaOut | None
     pictogramas: List[SustanciaPictogramaOut]
+    ob_consumo: List[ObservacionConsumoOut] = []
 
     class Config:
         from_attributes = True
