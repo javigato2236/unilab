@@ -5,6 +5,8 @@ import Modal from "../hoosk/modalReutilizable";
 function PanelReactivo({ reactivo, cerrar, recargar }) {
   const [isObservacionesConsumoModalOpen, setIsObservacionesConsumoModalOpen] =
     useState(false);
+  const [isObservacionesModalOpen, setIsObservacionesModalOpen] =
+    useState(false);
   const [cantidad, setCantidad] = useState("");
   const [usuario, setUsuario] = useState("");
   const [observacion, setObservacion] = useState("");
@@ -77,17 +79,13 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           />
         ))}
       </div>
-
       <h2>{reactivo.nombre}</h2>
-
       <p>
         Cantidad actual:
         {Number(reactivo.general?.cantidad_real).toFixed(3)} ml
       </p>
-
       <div className="control-cantidad">
         <label>Consumo</label>
-
         <input
           step="0.001"
           value={cantidad}
@@ -112,20 +110,136 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           onChange={(e) => setObservacion(e.target.value)}
         ></textarea>
       </div>
-
       <button className="quitar" onClick={descontarCantidad}>
         Descontar
       </button>
 
-      <button className="cerrar" onClick={cerrar}>
-        Cerrar
-      </button>
       <button
         onClick={() => {
           setIsObservacionesConsumoModalOpen(true);
         }}
       >
         Historial de consumo
+      </button>
+      <div className="contenedor-datos-reactivo">
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Sinonimo:</span>{" "}
+          {reactivo.basica?.sinonimo}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Marca:</span>{" "}
+          {reactivo.basica?.marca}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Referencia:</span>{" "}
+          {reactivo.basica?.referencia}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Cas:</span>{" "}
+          {reactivo.basica?.cas}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            FDS completa:
+          </span>{" "}
+          {reactivo.basica?.fdsCompleta}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Fecha actualizacion/creacion de fds:
+          </span>{" "}
+          {reactivo.basica?.fechaActualizacion}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Estado fisico:
+          </span>{" "}
+          {reactivo.basica?.estadoFisico}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Sustancia cancerigena:
+          </span>{" "}
+          {reactivo.general?.sustanciaCancerigena}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Codigo frase H:
+          </span>{" "}
+          {reactivo.general?.codigoFraseH}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Toxicidad aguda CAT 1 CAT 2:
+          </span>{" "}
+          {reactivo.general?.toxicidadAgudaCat1Cat2}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Sitio de almacenamiento:
+          </span>{" "}
+          {reactivo.general?.sitioAlmacenamiento}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Es controlado:
+          </span>{" "}
+          {reactivo.especifica?.esControlado}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Componente 1:
+          </span>{" "}
+          {reactivo.especifica?.componente1}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Clasificacion almacenamiento:
+          </span>{" "}
+          {reactivo.especifica?.clasificacionAlmacenamiento}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Fecha de ingreso:
+          </span>{" "}
+          {reactivo.especifica?.fechaIngreso}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Fecha de vencimiento proyectado:
+          </span>{" "}
+          {reactivo.especifica?.fechaVencimiento}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Palabra de advertencia:
+          </span>{" "}
+          {reactivo.especifica?.palabraAdvertencia}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">
+            Razon social:
+          </span>{" "}
+          {reactivo.especifica?.razonSocial}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Direccion:</span>{" "}
+          {reactivo.especifica?.direccion}
+        </span>
+        <span>
+          <span className="titulo-contenedor-info-reactivos">Contacto:</span>{" "}
+          {reactivo.especifica?.contacto}
+        </span>
+      </div>
+      <button
+        onClick={() => {
+          setIsObservacionesModalOpen(true);
+        }}
+      >
+        Observaciones
+      </button>
+      <button className="cerrar" onClick={cerrar}>
+        Cerrar
       </button>
 
       <Modal isOpen={isObservacionesConsumoModalOpen}>
@@ -134,6 +248,19 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           <button
             onClick={() => {
               setIsObservacionesConsumoModalOpen(false);
+            }}
+          >
+            Cerrar
+          </button>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isObservacionesModalOpen}>
+        <div>
+          <h1>modal observaciones</h1>
+          <button
+            onClick={() => {
+              setIsObservacionesModalOpen(false);
             }}
           >
             Cerrar

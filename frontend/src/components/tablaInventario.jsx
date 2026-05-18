@@ -973,6 +973,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             <tr>
               <th className="col-angosta">Nombre</th>
               <th className="col-angosta">Familia</th>
+              <th className="col-angosta">Grupo</th>
               <th className="col-angosta">presentacion</th>
               <th className="col-angosta">Unidad de medida</th>
               <th className="col-angosta">Numero de recipientes</th>
@@ -991,6 +992,7 @@ function TablaReactivos({ seleccionarReactivo }) {
                 <td>{r.nombre}</td>
 
                 <td>{r.basica?.familia}</td>
+                <td>{r.basica?.grupo}</td>
                 <td>{r.general?.presentacion}</td>
                 <td>{r.general?.unidadMedida}</td>
                 <td>{r.general?.numeroRecipientes}</td>

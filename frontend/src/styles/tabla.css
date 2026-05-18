@@ -50,8 +50,8 @@
   right: 0;
   top: 0;
 
-  width: 320px;
-  height: 100%;
+  width: 400px;
+  height: 100vh;
 
   background: white;
   box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
@@ -59,6 +59,10 @@
   padding: 20px;
 
   animation: deslizar 0.3s ease;
+
+  overflow-y: auto;
+
+  box-sizing: border-box; /* 👈 importante */
 }
 
 .panel-reactivo label input {
@@ -73,6 +77,19 @@
   text-align: center;
   width: 90px;
   height: 21.5px;
+}
+
+.panel-reactivo button {
+  color: rgb(0, 110, 255);
+  padding: 10px 20px;
+  margin: 10px 20px;
+  border-color: rgb(237, 222, 222);
+  border-color: rgb(235, 231, 231);
+  width: 130px;
+
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 @keyframes deslizar {
@@ -107,10 +124,6 @@
   background: #2ecc71;
 }
 
-.quitar {
-  background: #e74c3c;
-}
-
 .overlay {
   position: fixed;
   inset: 0;
@@ -141,6 +154,15 @@
 .campo-observaciones textarea {
   width: 100%;
   min-height: 100px;
+}
+
+.contenedor-datos-reactivo {
+  display: flex;
+  gap: 2.5px;
+  flex-direction: column;
+}
+.titulo-contenedor-info-reactivos {
+  color: rgb(0, 110, 255);
 }
 
 /* estilos contenedor de pictogramas en panelReactivos */
