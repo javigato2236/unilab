@@ -32,15 +32,15 @@
   margin: auto;
 }
 
-.verde {
-  background: #2ecc71;
+td.verde {
+  background: #27ae60;
 }
 
-.amarillo {
+td.amarillo {
   background: #f1c40f;
 }
 
-.rojo {
+td.rojo {
   background: #e74c3c;
 }
 

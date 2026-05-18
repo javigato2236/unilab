@@ -1011,14 +1011,12 @@ function TablaReactivos({ seleccionarReactivo }) {
                   {r.especifica?.separacionSaftdata}
                 </td>
 
-                <td>
-                  <div
-                    className={`circulo-stock ${obtenerEstadoCantidad(
-                      r.general?.cantidad_real,
-                      r.general?.cantidad_total,
-                    )}`}
-                  ></div>
-                </td>
+                <td
+                  className={`${obtenerEstadoCantidad(
+                    r.general?.cantidad_real,
+                    r.general?.cantidad_total,
+                  )}`}
+                ></td>
                 <td>
                   <button
                     className="boton-ver"
