@@ -111,9 +111,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           onChange={(e) => setObservacion(e.target.value)}
         ></textarea>
       </div>
-      <button className="quitar" onClick={descontarCantidad}>
-        Descontar
-      </button>
+      <button onClick={descontarCantidad}>Descontar</button>
 
       <button
         onClick={() => {
@@ -232,6 +230,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
           {reactivo.especifica?.contacto}
         </span>
       </div>
+
       <button
         onClick={() => {
           setIsObservacionesModalOpen(true);
@@ -239,6 +238,7 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
       >
         Observaciones
       </button>
+
       <button className="cerrar" onClick={cerrar}>
         Cerrar
       </button>
@@ -269,13 +269,15 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
               ))}
             </tbody>
           </table>
-          <button
-            onClick={() => {
-              setIsObservacionesConsumoModalOpen(false);
-            }}
-          >
-            Cerrar
-          </button>
+          <div className="butoon">
+            <button
+              onClick={() => {
+                setIsObservacionesConsumoModalOpen(false);
+              }}
+            >
+              Cerrar
+            </button>
+          </div>
         </div>
       </Modal>
 

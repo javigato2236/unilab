@@ -39,6 +39,13 @@
 
 .modalObservacionesConsumo {
   width: 650px;
+  align-items: center;
+}
+
+.butoon {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .col-angosta {
