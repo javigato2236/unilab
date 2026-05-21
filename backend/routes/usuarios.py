@@ -385,8 +385,8 @@ def actualizar_sustancia(
     
     id: int,
     data: schemas.SustanciaCreate,
-    db: Session = Depends(get_db)################3agregue la coma
-    # _: dict = Depends(auth.verificar_usuario)#######################
+    db: Session = Depends(get_db),################3agregue la coma
+    _: dict = Depends(auth.verificar_usuario)#######################
 ):
     print(data.dict())
     print("BASICA:", data.basica.dict())

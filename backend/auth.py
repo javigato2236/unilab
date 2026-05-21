@@ -19,15 +19,15 @@ def verify_password(plain, hashed):
     return pwd_context.verify(plain, hashed)
 
 #######################################################
-# def verificar_usuario(
-#     authorization: str = Header(...)
-# ):
+def verificar_usuario(
+    authorization: str = Header(...)
+):
 
-#     token = authorization.split(" ")[1]
+    token = authorization.split(" ")[1]
 
-#     payload = verify_token(token)
+    payload = verify_token(token)
 
-#     return payload
+    return payload
 ########################################################
 
 def create_token(data: dict, expires_delta):

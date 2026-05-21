@@ -128,6 +128,17 @@ function TablaReactivos({ seleccionarReactivo }) {
   /////////funcion para evitar bugs comodatos falsos al enviar un 0 que significaria
   //////////como dato nulo y con esta funcion hacemso real el cero
 
+  const manejarSesionExpirada = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    alert("Sesión expirada");
+
+    navigate("/", {
+      replace: true,
+    });
+  };
+
   useEffect(() => {
     fetchReactivos();
     fetchPictogramas();
@@ -161,27 +172,28 @@ function TablaReactivos({ seleccionarReactivo }) {
   //   console.log("FORM DATA GLOBAL:", formData);
   // }, [formData]);
 
-  /////////////////////////////////////////////////777
-  const fetchReactivos = async () => {
-    try {
-      const res = await fetch("http://localhost:8000/api/sustancias");
+  /////////////////////////////////////////////////original si token
+  // const fetchReactivos = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:8000/api/sustancias");
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("ERROR BACKEND:", errorText);
-        throw new Error("Error en API");
-      }
+  //     if (!res.ok) {
+  //       const errorText = await res.text();
+  //       console.error("ERROR BACKEND:", errorText);
+  //       throw new Error("Error en API");
+  //     }
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log("DATA BACKEND:", data); // 👈 clave para debug
+  //     console.log("DATA BACKEND:", data); // 👈 clave para debug
 
-      setReactivos(data);
-    } catch (error) {
-      console.error("❌ ERROR FETCH:", error);
-    }
-  };
+  //     setReactivos(data);
+  //   } catch (error) {
+  //     console.error("❌ ERROR FETCH:", error);
+  //   }
+  // };
 
+  ////////////////////////////////primer codigo con token probando funciona pero n redirige a login cuando expira token
   // const fetchReactivos = async () => {
   //   const token = localStorage.getItem("access_token");
 
@@ -205,6 +217,9 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   //         localStorage.removeItem("refresh_token");
   //       }
+  //       navigate("/", {
+  //         replace: true,
+  //       });
 
   //       return;
   //     }
@@ -226,7 +241,43 @@ function TablaReactivos({ seleccionarReactivo }) {
   //     console.error("❌ ERROR FETCH:", error);
   //   }
   // };
-  ///////////////////////////////////////7
+  ////////////////////////////////primer codigo con token probando funciona pero n redirige a login cuando expira token
+
+  /////////////////////////////////segundo token probando
+  const fetchReactivos = async () => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8000/api/sustancias", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 401) {
+        manejarSesionExpirada();
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error("Error al obtener reactivos");
+      }
+
+      const data = await res.json();
+
+      setReactivos(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /////////////////////////////////segundo token probando
+
   //////////////////////////////probando nuevo editar
   const editar = (item) => {
     setEditandoId(item.id);
@@ -293,7 +344,6 @@ function TablaReactivos({ seleccionarReactivo }) {
     );
   };
 
-  ///////////////////////////////////nuevo codigo
   const getClasePictograma = (id) => {
     const esOriginal = pictogramasOriginales.includes(id);
     const estaSeleccionado = tempPictogramas.includes(id);
@@ -319,99 +369,7 @@ function TablaReactivos({ seleccionarReactivo }) {
     setIsPictogramasModalOpen(false);
   };
 
-  //////////////////////////nuevo codigo
-  const enviarTodo = async () => {
-    const token = localStorage.getItem("access_token");
-
-    const url = editandoId
-      ? `http://localhost:8000/api/sustancias/${editandoId}`
-      : "http://localhost:8000/api/sustancias";
-
-    const method = editandoId ? "PUT" : "POST";
-
-    // LIMPIAR FECHAS VACÍAS
-    const bodyData = {
-      ...formData,
-
-      basica: {
-        ...formData.basica,
-        fechaActualizacion: formData.basica.fechaActualizacion || null,
-      },
-
-      especifica: {
-        ...formData.especifica,
-
-        fechaIngreso: formData.especifica.fechaIngreso || null,
-
-        fechaVencimiento: formData.especifica.fechaVencimiento || null,
-      },
-    };
-
-    const body = JSON.stringify(bodyData);
-
-    try {
-      const res = await fetch(url, {
-        method,
-
-        headers: {
-          "Content-Type": "application/json",
-
-          // 👇 FALTABA ESTO
-          Authorization: `Bearer ${token}`,
-        },
-
-        body,
-      });
-
-      // 👇 TOKEN EXPIRADO
-      if (res.status === 401) {
-        alert("Sesión expirada");
-
-        localStorage.removeItem("access_token");
-
-        localStorage.removeItem("refresh_token");
-
-        return;
-      }
-
-      const responseText = await res.text();
-
-      let data;
-
-      try {
-        data = JSON.parse(responseText);
-      } catch {}
-
-      if (!res.ok) {
-        throw new Error(responseText);
-      }
-
-      alert(editandoId ? "Actualizado" : "Creado");
-
-      setEditandoId(null);
-
-      setIsModalOpen(false);
-      setIsFirstModalOpen(false);
-      setIsSecondModalOpen(false);
-      setIsThirdModalOpen(false);
-      setIsPictogramasModalOpen(false);
-
-      setTempBasica(resetsEstados.ResetEstados().basica);
-
-      setTempGeneral(resetsEstados.ResetEstados().general);
-
-      setTempEspecifica(resetsEstados.ResetEstados().especifica);
-
-      setTempPictogramas([]);
-
-      fetchReactivos();
-    } catch (error) {
-      console.error("ERROR FRONT:", error);
-
-      alert("Error al guardar datos");
-    }
-  };
-
+  ////////////////////codigo enviar original todo sin token
   // const enviarTodo = async () => {
   //   const url = editandoId
   //     ? `http://localhost:8000/api/sustancias/${editandoId}`
@@ -495,7 +453,103 @@ function TablaReactivos({ seleccionarReactivo }) {
   //     alert("Error al guardar datos");
   //   }
   // };
+  ////////////////////codigo enviar todo sin token
 
+  //////////////////////////primer codigo enviar con token
+  const enviarTodo = async () => {
+    const token = localStorage.getItem("access_token");
+
+    const url = editandoId
+      ? `http://localhost:8000/api/sustancias/${editandoId}`
+      : "http://localhost:8000/api/sustancias";
+
+    const method = editandoId ? "PUT" : "POST";
+
+    // LIMPIAR FECHAS VACÍAS
+    const bodyData = {
+      ...formData,
+
+      basica: {
+        ...formData.basica,
+        fechaActualizacion: formData.basica.fechaActualizacion || null,
+      },
+
+      especifica: {
+        ...formData.especifica,
+
+        fechaIngreso: formData.especifica.fechaIngreso || null,
+
+        fechaVencimiento: formData.especifica.fechaVencimiento || null,
+      },
+    };
+
+    const body = JSON.stringify(bodyData);
+
+    try {
+      const res = await fetch(url, {
+        method,
+
+        headers: {
+          "Content-Type": "application/json",
+
+          // 👇 FALTABA ESTO
+          Authorization: `Bearer ${token}`,
+        },
+
+        body,
+      });
+
+      // 👇 TOKEN EXPIRADO
+      if (res.status === 401) {
+        manejarSesionExpirada();
+
+        return;
+      }
+
+      const responseText = await res.text();
+
+      let data;
+
+      try {
+        data = JSON.parse(responseText);
+      } catch {}
+
+      if (!res.ok) {
+        throw new Error(responseText);
+      }
+
+      alert(editandoId ? "Actualizado" : "Creado");
+
+      setEditandoId(null);
+
+      setIsModalOpen(false);
+      setIsFirstModalOpen(false);
+      setIsSecondModalOpen(false);
+      setIsThirdModalOpen(false);
+      setIsPictogramasModalOpen(false);
+
+      setTempBasica(resetsEstados.ResetEstados().basica);
+
+      setTempGeneral(resetsEstados.ResetEstados().general);
+
+      setTempEspecifica(resetsEstados.ResetEstados().especifica);
+
+      setTempPictogramas([]);
+
+      fetchReactivos();
+    } catch (error) {
+      console.error("ERROR FRONT:", error);
+
+      alert("Error al guardar datos");
+    }
+  };
+  //////////////////////////primer codigo enviar con token
+
+  ////////////////////segundo codigo enviar con token
+
+  ////////////////////segundo codigo enviar con token
+
+  ///////////////////////////codigo eliminar orifginal
   // const eliminar = async (id) => {
   //   if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
 
@@ -516,7 +570,45 @@ function TablaReactivos({ seleccionarReactivo }) {
   //     alert("No se pudo eliminar el reactivo");
   //   }
   // };
-  //////////////////////////////////////////////////////////////
+  ///////////////////////////codigo eliminar orifginal
+
+  ////////////////////primer codigo eliminar con token
+  // const eliminar = async (id) => {
+  //   if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
+
+  //   try {
+  //     const token = localStorage.getItem("access_token");
+
+  //     const res = await fetch(`http://localhost:8000/api/sustancias/${id}`, {
+  //       method: "DELETE",
+
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (!res.ok) {
+  //       if (res.status === 401) {
+  //         alert("Sesión expirada");
+
+  //         return;
+  //       }
+
+  //       throw new Error("Error al eliminar");
+  //     }
+
+  //     alert("Reactivo eliminado correctamente");
+
+  //     fetchReactivos();
+  //   } catch (error) {
+  //     console.error("ERROR:", error);
+
+  //     alert("No se pudo eliminar el reactivo");
+  //   }
+  // };
+  ////////////////////primer codigo eliminar con token
+
+  /////////////segundo codigo eliminar con token
   const eliminar = async (id) => {
     if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
 
@@ -531,26 +623,26 @@ function TablaReactivos({ seleccionarReactivo }) {
         },
       });
 
+      if (res.status === 401) {
+        manejarSesionExpirada();
+        return;
+      }
+
       if (!res.ok) {
-        if (res.status === 401) {
-          alert("Sesión expirada");
-
-          return;
-        }
-
         throw new Error("Error al eliminar");
       }
 
       alert("Reactivo eliminado correctamente");
 
-      fetchReactivos();
+      // REFRESCAR TABLA
+      await fetchReactivos();
     } catch (error) {
-      console.error("ERROR:", error);
+      console.error(error);
 
       alert("No se pudo eliminar el reactivo");
     }
   };
-  /////////////////////////////////////////////////////////////
+  ///////////////segundo codigo eliminar con token
 
   function obtenerEstadoCantidad(cantidadReal, cantidadTotal) {
     // evitar división por cero
