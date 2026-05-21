@@ -582,3 +582,80 @@ def descontar_cantidad(
         "mensaje": "Cantidad actualizada",
         "cantidad_real": float(info_general.cantidad_real)
     }
+
+
+
+# @router.post("/refresh")
+# def refresh(data: schemas.RefreshToken):
+
+#     payload = auth.verify_token(data.refresh_token)
+
+#     if payload.get("type") != "refresh":
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Token inválido"
+#         )
+
+#     new_access = auth.create_token(
+#         {"sub": payload["sub"]},
+#         timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES),
+#         "access"
+#     )
+
+#     return {
+#         "access_token": new_access
+#     }
+
+# @router.post("/login")
+# def login(
+#     data: schemas.Login,
+#     db: Session = Depends(get_db)
+# ):
+
+#     # BUSCAR USUARIO
+#     usuario = db.query(models.Usuario).filter(
+#         models.Usuario.correo == data.correo
+#     ).first()
+
+#     # VALIDAR USUARIO
+#     if not usuario:
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Usuario incorrecto"
+#         )
+
+#     # VALIDAR PASSWORD
+#     if not auth.verify_password(
+#         data.password,
+#         usuario.password
+#     ):
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Contraseña incorrecta"
+#         )
+
+#     # ACCESS TOKEN
+#     access_token = auth.create_token(
+#         {"sub": usuario.correo},
+#         timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES),
+#         "access"
+#     )
+
+#     # REFRESH TOKEN
+#     refresh_token = auth.create_token(
+#         {"sub": usuario.correo},
+#         timedelta(days=7),
+#         "refresh"
+#     )
+
+#     # RESPUESTA
+#     return {
+#         "access_token": access_token,
+#         "refresh_token": refresh_token,
+#         "token_type": "bearer"
+#     }
+
+###########importante######################
+# access token solo sirve para rutas protegidas
+# refresh token solo sirve para renovar sesión
+# no puedes usar un access token en /refresh

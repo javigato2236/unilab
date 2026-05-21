@@ -21,6 +21,10 @@
   background-color: #f2f2f2;
 }
 
+.tabla-reactivos td {
+  font-size: 13px;
+}
+
 .tablaPanelReactivos {
   width: 100%;
   border-collapse: collapse;
