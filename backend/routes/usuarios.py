@@ -333,18 +333,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
 
 
-# @router.delete("/sustancias/{id}")
-# def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
 
-#     sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
-
-#     if not sustancia:
-#         raise HTTPException(status_code=404, detail="No encontrado")
-
-#     db.delete(sustancia)
-#     db.commit()
-
-#     return {"msg": "Eliminado"}
 
 
 @router.delete("/sustancias/{id}")
