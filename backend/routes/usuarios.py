@@ -74,6 +74,10 @@ def login(user: schemas.UsuarioLogin, db: Session = Depends(get_db)):
 
     return {"access_token": access_token, "refresh_token": refresh_token}
 
+
+
+
+
 @router.post("/refresh")
 def refresh(data: schemas.RefreshToken):
     payload = auth.verify_token(data.refresh_token)
@@ -197,7 +201,10 @@ def obtener_pictogramas(db: Session = Depends(get_db)):
 
 
 @router.get("/sustancias", response_model=list[schemas.SustanciaOut])
-def obtener_sustancias(db: Session = Depends(get_db)):
+def obtener_sustancias(db: Session = Depends(get_db)#########se agrego la coma
+                    #    _: dict = Depends(auth.verificar_usuario)#######################
+                       
+                       ):
 
     sustancias = db.query(models.Sustancia).options(
         joinedload(models.Sustancia.basica),
@@ -211,7 +218,10 @@ def obtener_sustancias(db: Session = Depends(get_db)):
 
 ################nuevo codigo post
 @router.post("/sustancias")
-def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
+def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)#########se agrego la coma
+                    # _: dict = Depends(auth.verificar_usuario)#######################
+                    
+                    ):
     try:
 
         print("DATA RECIBIDA:", data.dict())
@@ -319,125 +329,64 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         return {"error": str(e)}
 
-################nuevo codigo post
 
-#####codigo post funcional
-# @router.post("/sustancias")
-# def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)):
-#     try:
 
-#         print("DATA RECIBIDA:", data.dict())
 
-#         sustancia = models.Sustancia(
-#             nombre=data.basica.nombre
-#         )
 
-#         db.add(sustancia)
-#         db.flush()
+# @router.delete("/sustancias/{id}")
+# def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
 
-#         print("SUSTANCIA OK")
+#     sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
 
-#         basica = models.InfoBasica(
-#             sustancia_id=sustancia.id,
-#             familia=data.basica.familia,
-#             grupo=data.basica.grupo,
-#             sinonimo=data.basica.sinonimo,
-#             cas=data.basica.cas,
-#             marca=data.basica.marca,
-#             referencia=data.basica.referencia,
-#             fdsCompleta=data.basica.fdsCompleta,
-#             fechaActualizacion=data.basica.fechaActualizacion,
-#             estadoFisico=data.basica.estadoFisico
-#         )
+#     if not sustancia:
+#         raise HTTPException(status_code=404, detail="No encontrado")
 
-#         print("BASICA OK")
+#     db.delete(sustancia)
+#     db.commit()
 
-#         general = models.InfoGeneral(
-#             sustancia_id=sustancia.id,
-#             codigoFraseH=data.general.codigoFraseH,
-#             toxicidadAgudaCat1Cat2=data.general.toxicidadAgudaCat1Cat2,
-#             sustanciaCancerigena=data.general.sustanciaCancerigena,
-#             sitioAlmacenamiento=data.general.sitioAlmacenamiento,
-#             ubicacionEspecifica=data.general.ubicacionEspecifica,
-#             unidadMedida=data.general.unidadMedida,
-#             presentacion=data.general.presentacion,
-#             numeroRecipientes=data.general.numeroRecipientes,
-#             cantidad_total=data.general.cantidad_total,
-#             cantidad_real=data.general.cantidad_real
-#         )
-
-#         print("GENERAL OK")
-
-#         especifica = models.InfoEspecifica(
-#             sustancia_id=sustancia.id,
-#             esControlado=data.especifica.esControlado,
-#             componente1=data.especifica.componente1,
-#             clasificacionAlmacenamiento=data.especifica.clasificacionAlmacenamiento,
-#             separacionSaftdata=data.especifica.separacionSaftdata,
-#             fechaIngreso=data.especifica.fechaIngreso,
-#             fechaVencimiento=data.especifica.fechaVencimiento,
-#             observaciones=data.especifica.observaciones,
-#             palabraAdvertencia=data.especifica.palabraAdvertencia,
-#             preventiva=data.especifica.preventiva,
-#             respuesta=data.especifica.respuesta,
-#             razonSocial=data.especifica.razonSocial,
-#             direccion=data.especifica.direccion,
-#             contacto=data.especifica.contacto
-#         )
-
-#         print("ESPECIFICA OK")
-
-#         db.add_all([basica, general, especifica])
-
-#         print("ADD ALL OK")
-
-#         for pictograma_id in data.pictogramas:
-
-#             pictograma = models.SustanciaPictograma(
-#                 sustancia_id=sustancia.id,
-#                 pictograma_id=pictograma_id
-#             )
-
-#             db.add(pictograma)
-
-#         print("PICTOGRAMAS OK")
-
-#         db.commit()
-
-#         print("COMMIT OK")
-
-#         return {"msg": "ok"}
-
-#     except Exception as e:
-
-#         db.rollback()
-
-#         print("ERROR REAL:", str(e))
-
-#         return {"error": str(e)}
-##########codigo post funcional
-
+#     return {"msg": "Eliminado"}
 
 
 @router.delete("/sustancias/{id}")
-def eliminar_sustancia(id: int, db: Session = Depends(get_db)):
+def eliminar_sustancia(
+    id: int,
+    db: Session = Depends(get_db)
+    # _: dict = Depends(auth.verificar_usuario)
+):
 
-    sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
+    sustancia = db.query(models.Sustancia)\
+        .filter(models.Sustancia.id == id)\
+        .first()
 
     if not sustancia:
-        raise HTTPException(status_code=404, detail="No encontrado")
+        raise HTTPException(
+            status_code=404,
+            detail="Reactivo no encontrado"
+        )
 
     db.delete(sustancia)
+
     db.commit()
 
-    return {"msg": "Eliminado"}
+    return {
+        "msg": "Reactivo eliminado"
+    }
+
+
+
+
+
+
+
+
 
 @router.put("/sustancias/{id}")
 def actualizar_sustancia(
     
     id: int,
     data: schemas.SustanciaCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db)################3agregue la coma
+    # _: dict = Depends(auth.verificar_usuario)#######################
 ):
     print(data.dict())
     print("BASICA:", data.basica.dict())
@@ -585,6 +534,8 @@ def descontar_cantidad(
     id: int,
     data: dict,
     db: Session = Depends(get_db)
+    #  _: dict = Depends(auth.verificar_usuario)
+
 ):
 
     sustancia = db.query(models.Sustancia).filter(

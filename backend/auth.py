@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from jose import jwt, JWTError, ExpiredSignatureError
 from passlib.context import CryptContext
-from fastapi import HTTPException
+from fastapi import HTTPException, Header
 from config import SECRET_KEY, ALGORITHM
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -17,6 +17,18 @@ def hash_password(password: str):
 def verify_password(plain, hashed):
     plain = plain[:72]
     return pwd_context.verify(plain, hashed)
+
+#######################################################
+# def verificar_usuario(
+#     authorization: str = Header(...)
+# ):
+
+#     token = authorization.split(" ")[1]
+
+#     payload = verify_token(token)
+
+#     return payload
+########################################################
 
 def create_token(data: dict, expires_delta):
     to_encode = data.copy()

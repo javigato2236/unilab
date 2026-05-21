@@ -3,6 +3,7 @@ import "../styles/paginaPrincipal.css";
 import "../styles/pictogramas.css";
 import "../styles/tabla.css";
 import "../styles/inputsModales.css";
+import { useNavigate } from "react-router-dom";
 
 import Modal from "../hoosk/modalReutilizable";
 import PanelReactivo from "./PanelReactivo";
@@ -41,6 +42,9 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
   const [pictogramasOriginales, setPictogramasOriginales] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
+
+  const navigate = useNavigate();
+  const [sesionExpirada, setSesionExpirada] = useState(false);
 
   // seleccion de colores para SEPARACION METODO SAF-T-DATA
   const obtenerColor = (valor) => {
@@ -129,6 +133,10 @@ function TablaReactivos({ seleccionarReactivo }) {
     fetchPictogramas();
   }, []);
 
+  // navigate("/", {
+  //   replace: true,
+  // });
+
   useEffect(() => {
     fetchReactivos();
   }, []);
@@ -153,6 +161,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   //   console.log("FORM DATA GLOBAL:", formData);
   // }, [formData]);
 
+  /////////////////////////////////////////////////777
   const fetchReactivos = async () => {
     try {
       const res = await fetch("http://localhost:8000/api/sustancias");
@@ -172,6 +181,52 @@ function TablaReactivos({ seleccionarReactivo }) {
       console.error("❌ ERROR FETCH:", error);
     }
   };
+
+  // const fetchReactivos = async () => {
+  //   const token = localStorage.getItem("access_token");
+
+  //   if (!token) {
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await fetch("http://localhost:8000/api/sustancias", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     // 👇 TOKEN EXPIRADO
+  //     if (res.status === 401) {
+  //       if (!sesionExpiradaMostrada) {
+  //         sesionExpiradaMostrada = true;
+
+  //         localStorage.removeItem("access_token");
+
+  //         localStorage.removeItem("refresh_token");
+  //       }
+
+  //       return;
+  //     }
+
+  //     if (!res.ok) {
+  //       const errorText = await res.text();
+
+  //       console.error("ERROR BACKEND:", errorText);
+
+  //       throw new Error("Error en API");
+  //     }
+
+  //     const data = await res.json();
+
+  //     console.log("DATA:", data);
+
+  //     setReactivos(data);
+  //   } catch (error) {
+  //     console.error("❌ ERROR FETCH:", error);
+  //   }
+  // };
+  ///////////////////////////////////////7
   //////////////////////////////probando nuevo editar
   const editar = (item) => {
     setEditandoId(item.id);
@@ -265,21 +320,21 @@ function TablaReactivos({ seleccionarReactivo }) {
   };
 
   //////////////////////////nuevo codigo
-
   const enviarTodo = async () => {
+    const token = localStorage.getItem("access_token");
+
     const url = editandoId
       ? `http://localhost:8000/api/sustancias/${editandoId}`
       : "http://localhost:8000/api/sustancias";
 
     const method = editandoId ? "PUT" : "POST";
 
-    //LIMPIAR FECHAS VACÍAS
+    // LIMPIAR FECHAS VACÍAS
     const bodyData = {
       ...formData,
 
       basica: {
         ...formData.basica,
-
         fechaActualizacion: formData.basica.fechaActualizacion || null,
       },
 
@@ -294,32 +349,38 @@ function TablaReactivos({ seleccionarReactivo }) {
 
     const body = JSON.stringify(bodyData);
 
-    console.log(" FORM DATA:", formData);
-    console.log(" BODY LIMPIO:", bodyData);
-    console.log(" URL:", url);
-    console.log(" METHOD:", method);
-    console.log(" BODY JSON:", body);
-
     try {
       const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+
+        headers: {
+          "Content-Type": "application/json",
+
+          // 👇 FALTABA ESTO
+          Authorization: `Bearer ${token}`,
+        },
+
         body,
       });
 
-      console.log(" STATUS:", res.status);
+      // 👇 TOKEN EXPIRADO
+      if (res.status === 401) {
+        alert("Sesión expirada");
+
+        localStorage.removeItem("access_token");
+
+        localStorage.removeItem("refresh_token");
+
+        return;
+      }
 
       const responseText = await res.text();
-      console.log(" RESPONSE RAW:", responseText);
 
       let data;
 
       try {
         data = JSON.parse(responseText);
-        console.log(" RESPONSE JSON:", data);
-      } catch {
-        console.warn(" La respuesta no es JSON");
-      }
+      } catch {}
 
       if (!res.ok) {
         throw new Error(responseText);
@@ -329,47 +390,167 @@ function TablaReactivos({ seleccionarReactivo }) {
 
       setEditandoId(null);
 
-      // 🔴 cerrar TODOS los modales
       setIsModalOpen(false);
       setIsFirstModalOpen(false);
       setIsSecondModalOpen(false);
       setIsThirdModalOpen(false);
       setIsPictogramasModalOpen(false);
 
-      // 🔴 limpiar temporales
       setTempBasica(resetsEstados.ResetEstados().basica);
+
       setTempGeneral(resetsEstados.ResetEstados().general);
+
       setTempEspecifica(resetsEstados.ResetEstados().especifica);
+
       setTempPictogramas([]);
 
       fetchReactivos();
     } catch (error) {
-      console.error(" ERROR FRONT:", error);
+      console.error("ERROR FRONT:", error);
 
       alert("Error al guardar datos");
     }
   };
 
+  // const enviarTodo = async () => {
+  //   const url = editandoId
+  //     ? `http://localhost:8000/api/sustancias/${editandoId}`
+  //     : "http://localhost:8000/api/sustancias";
+
+  //   const method = editandoId ? "PUT" : "POST";
+
+  //   //LIMPIAR FECHAS VACÍAS
+  //   const bodyData = {
+  //     ...formData,
+
+  //     basica: {
+  //       ...formData.basica,
+
+  //       fechaActualizacion: formData.basica.fechaActualizacion || null,
+  //     },
+
+  //     especifica: {
+  //       ...formData.especifica,
+
+  //       fechaIngreso: formData.especifica.fechaIngreso || null,
+
+  //       fechaVencimiento: formData.especifica.fechaVencimiento || null,
+  //     },
+  //   };
+
+  //   const body = JSON.stringify(bodyData);
+
+  //   console.log(" FORM DATA:", formData);
+  //   console.log(" BODY LIMPIO:", bodyData);
+  //   console.log(" URL:", url);
+  //   console.log(" METHOD:", method);
+  //   console.log(" BODY JSON:", body);
+
+  //   try {
+  //     const res = await fetch(url, {
+  //       method,
+  //       headers: { "Content-Type": "application/json" },
+  //       body,
+  //     });
+
+  //     console.log(" STATUS:", res.status);
+
+  //     const responseText = await res.text();
+  //     console.log(" RESPONSE RAW:", responseText);
+
+  //     let data;
+
+  //     try {
+  //       data = JSON.parse(responseText);
+  //       console.log(" RESPONSE JSON:", data);
+  //     } catch {
+  //       console.warn(" La respuesta no es JSON");
+  //     }
+
+  //     if (!res.ok) {
+  //       throw new Error(responseText);
+  //     }
+
+  //     alert(editandoId ? "Actualizado" : "Creado");
+
+  //     setEditandoId(null);
+
+  //     // 🔴 cerrar TODOS los modales
+  //     setIsModalOpen(false);
+  //     setIsFirstModalOpen(false);
+  //     setIsSecondModalOpen(false);
+  //     setIsThirdModalOpen(false);
+  //     setIsPictogramasModalOpen(false);
+
+  //     // 🔴 limpiar temporales
+  //     setTempBasica(resetsEstados.ResetEstados().basica);
+  //     setTempGeneral(resetsEstados.ResetEstados().general);
+  //     setTempEspecifica(resetsEstados.ResetEstados().especifica);
+  //     setTempPictogramas([]);
+
+  //     fetchReactivos();
+  //   } catch (error) {
+  //     console.error(" ERROR FRONT:", error);
+
+  //     alert("Error al guardar datos");
+  //   }
+  // };
+
+  // const eliminar = async (id) => {
+  //   if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
+
+  //   try {
+  //     const res = await fetch(`http://localhost:8000/api/sustancias/${id}`, {
+  //       method: "DELETE",
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("Error al eliminar");
+  //     }
+
+  //     alert("Reactivo eliminado correctamente");
+
+  //     fetchReactivos(); // 🔄 recargar tabla
+  //   } catch (error) {
+  //     console.error("ERROR:", error);
+  //     alert("No se pudo eliminar el reactivo");
+  //   }
+  // };
+  //////////////////////////////////////////////////////////////
   const eliminar = async (id) => {
     if (!confirm("¿Seguro que deseas eliminar este reactivo?")) return;
 
     try {
+      const token = localStorage.getItem("access_token");
+
       const res = await fetch(`http://localhost:8000/api/sustancias/${id}`, {
         method: "DELETE",
+
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!res.ok) {
+        if (res.status === 401) {
+          alert("Sesión expirada");
+
+          return;
+        }
+
         throw new Error("Error al eliminar");
       }
 
       alert("Reactivo eliminado correctamente");
 
-      fetchReactivos(); // 🔄 recargar tabla
+      fetchReactivos();
     } catch (error) {
       console.error("ERROR:", error);
+
       alert("No se pudo eliminar el reactivo");
     }
   };
+  /////////////////////////////////////////////////////////////
 
   function obtenerEstadoCantidad(cantidadReal, cantidadTotal) {
     // evitar división por cero

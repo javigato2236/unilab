@@ -191,7 +191,7 @@ class SustanciaOut(BaseModel):
     general: InfoGeneralOut | None
     especifica: InfoEspecificaOut | None
     pictogramas: List[SustanciaPictogramaOut]
-    ob_consumo: List[ObservacionConsumoOut] = []
+    ob_consumo: List[ObservacionConsumoOut] = [] #########################3
 
     class Config:
         from_attributes = True
