@@ -1095,6 +1095,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             reactivo={reactivoSeleccionado}
             cerrar={() => setReactivoSeleccionado(null)}
             recargar={fetchReactivos}
+            manejarSesionExpirada={manejarSesionExpirada}
           />
         </>
       )}

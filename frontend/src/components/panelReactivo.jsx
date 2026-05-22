@@ -2,7 +2,7 @@ import "../styles/tabla.css";
 import { useState } from "react";
 import Modal from "../hoosk/modalReutilizable";
 
-function PanelReactivo({ reactivo, cerrar, recargar }) {
+function PanelReactivo({ reactivo, cerrar, recargar, manejarSesionExpirada }) {
   const [isObservacionesConsumoModalOpen, setIsObservacionesConsumoModalOpen] =
     useState(false);
   const [isObservacionesModalOpen, setIsObservacionesModalOpen] =
@@ -11,29 +11,91 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
   const [usuario, setUsuario] = useState("");
   const [observacion, setObservacion] = useState("");
 
-  // 🔹 ENVIAR DESCUENTO
+  // 🔹 ENVIAR DESCUENTO ANTIGUO
+  // const descontarCantidad = async () => {
+  //   const fechaActual = new Date().toISOString().split("T")[0]; //////////////////////////////7
+  //   const valor = parseFloat(cantidad);
+
+  //   // validar número
+  //   if (isNaN(valor) || valor <= 0) {
+  //     alert("Ingrese una cantidad válida");
+  //     return;
+  //   }
+
+  //   if (!usuario) {
+  //     alert("Seleccione un usuario");
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await fetch(
+  //       `http://localhost:8000/api/sustancias/${reactivo.id}/descontar`,
+  //       {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+
+  //         body: JSON.stringify({
+  //           cantidad: valor,
+  //           usuario: usuario,
+  //           fechaObservacion: fechaActual,
+  //           observacion: observacion,
+  //         }),
+  //       },
+  //     );
+
+  //     if (!res.ok) {
+  //       const error = await res.json();
+
+  //       alert(error.detail);
+
+  //       return;
+  //     }
+
+  //     const data = await res.json();
+
+  //     await recargar();
+
+  //     alert("Cantidad actualizada");
+
+  //     // console.log(data);
+
+  //     cerrar();
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Error en servidor");
+  //   }
+  // };
+  //ENVIAR DESCUENTO ANTIGUO
   const descontarCantidad = async () => {
-    const fechaActual = new Date().toISOString().split("T")[0]; //////////////////////////////7
+    const fechaActual = new Date().toISOString().split("T")[0];
+
     const valor = parseFloat(cantidad);
 
-    // validar número
+    // VALIDAR CANTIDAD
     if (isNaN(valor) || valor <= 0) {
       alert("Ingrese una cantidad válida");
       return;
     }
 
+    // VALIDAR USUARIO
     if (!usuario) {
       alert("Seleccione un usuario");
       return;
     }
 
     try {
+      const token = localStorage.getItem("access_token");
+
       const res = await fetch(
         `http://localhost:8000/api/sustancias/${reactivo.id}/descontar`,
         {
           method: "PUT",
+
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
 
           body: JSON.stringify({
@@ -45,28 +107,39 @@ function PanelReactivo({ reactivo, cerrar, recargar }) {
         },
       );
 
-      if (!res.ok) {
-        const error = await res.json();
-
-        alert(error.detail);
+      // TOKEN EXPIRADO
+      if (res.status === 401) {
+        manejarSesionExpirada();
 
         return;
       }
 
+      // OTROS ERRORES
+      if (!res.ok) {
+        const error = await res.json();
+
+        alert(error.detail || "Error al descontar");
+
+        return;
+      }
+
+      // RESPUESTA OK
       const data = await res.json();
+
+      console.log("RESPUESTA:", data);
 
       await recargar();
 
       alert("Cantidad actualizada");
 
-      // console.log(data);
-
       cerrar();
     } catch (error) {
       console.error(error);
+
       alert("Error en servidor");
     }
   };
+
   console.log(reactivo);
 
   return (

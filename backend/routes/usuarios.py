@@ -218,8 +218,8 @@ def obtener_sustancias(db: Session = Depends(get_db)#########se agrego la coma
 
 ################nuevo codigo post
 @router.post("/sustancias")
-def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db),#########se agrego la coma
-                    _: dict = Depends(auth.verificar_usuario)#######################
+def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)#########se agrego la coma
+                    # _: dict = Depends(auth.verificar_usuario)#######################
                     
                     ):
     try:
@@ -339,8 +339,8 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 @router.delete("/sustancias/{id}")
 def eliminar_sustancia(
     id: int,
-    db: Session = Depends(get_db),#######va una coma,
-    _: dict = Depends(auth.verificar_usuario)
+    db: Session = Depends(get_db)#######va una coma,
+    # _: dict = Depends(auth.verificar_usuario)
 ):
 
     sustancia = db.query(models.Sustancia)\
@@ -374,8 +374,8 @@ def actualizar_sustancia(
     
     id: int,
     data: schemas.SustanciaCreate,
-    db: Session = Depends(get_db),################3agregue la coma
-    _: dict = Depends(auth.verificar_usuario)#######################
+    db: Session = Depends(get_db)################3agregue la coma
+    # _: dict = Depends(auth.verificar_usuario)#######################
 ):
     print(data.dict())
     print("BASICA:", data.basica.dict())
@@ -522,8 +522,8 @@ def actualizar_sustancia(
 def descontar_cantidad(
     id: int,
     data: dict,
-    db: Session = Depends(get_db)
-    #  _: dict = Depends(auth.verificar_usuario)
+    db: Session = Depends(get_db),
+     _: dict = Depends(auth.verificar_usuario)
 
 ):
 
