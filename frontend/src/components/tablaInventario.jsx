@@ -17,6 +17,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [formData, setFormData] = useState(resetsEstados.ResetEstados());
 
   //ESTADOS TEMPORALES
+
   const [tempBasica, setTempBasica] = useState(
     resetsEstados.ResetEstados().basica,
   );
@@ -41,7 +42,12 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [tempPictogramas, setTempPictogramas] = useState([]);
 
   const navigate = useNavigate();
-  const [sesionExpirada, setSesionExpirada] = useState(false);
+  // const [sesionExpirada, setSesionExpirada] = useState(false);
+
+  //estados para filtro en la tabla de inventarios
+  const [tipoFiltro, setTipoFiltro] = useState("");
+  const [textoBusqueda, setTextoBusqueda] = useState("");
+  //estados para filtro en la tabla de inventarios
 
   // seleccion de colores para SEPARACION METODO SAF-T-DATA
   const obtenerColor = (valor) => {
@@ -427,6 +433,40 @@ function TablaReactivos({ seleccionarReactivo }) {
     // STOCK NORMAL
     return "verde";
   }
+
+  const reactivosFiltrados = reactivos.filter((r) => {
+    // FILTRO POR NOMBRE
+    if (tipoFiltro === "nombre") {
+      return r.nombre?.toLowerCase().includes(textoBusqueda.toLowerCase());
+    }
+
+    // FILTRO POR FAMILIA
+    if (tipoFiltro === "familia") {
+      return r.basica?.familia
+        ?.toLowerCase()
+        .includes(textoBusqueda.toLowerCase());
+    }
+
+    // EN STOCK
+    if (tipoFiltro === "en_stock") {
+      return r.general?.cantidad_real > r.general?.cantidad_total * 0.5;
+    }
+
+    // POR ACABAR
+    if (tipoFiltro === "por_acabar") {
+      return (
+        r.general?.cantidad_real > 0 &&
+        r.general?.cantidad_real <= r.general?.cantidad_total * 0.5
+      );
+    }
+
+    // SIN STOCK
+    if (tipoFiltro === "sin_stock") {
+      return r.general?.cantidad_real <= 0;
+    }
+
+    return true;
+  });
 
   return (
     <div>
@@ -1000,8 +1040,32 @@ function TablaReactivos({ seleccionarReactivo }) {
       {/* TABLA */}
 
       {/* probando nueva tabla */}
-      <h2>Inventario de reactivos quimicos</h2>
+      {/* <h2>Inventario de reactivos quimicos</h2> */}
       <div className="contenedor-tabla">
+        <h2>Inventario de reactivos quimicos</h2>
+        <div className="contenedor-filtro-reactivos">
+          <label htmlFor="">filtrar por:</label>
+          <select
+            name=""
+            id=""
+            value={tipoFiltro}
+            onChange={(e) => setTipoFiltro(e.target.value)}
+          >
+            <option value="">Todos los reactivos</option>
+            <option value="nombre">Nombre</option>
+            <option value="familia">Familia</option>
+            <option value="en_stock">En stock</option>
+            <option value="por_acabar">Por acabar</option>
+            <option value="sin_stock">Sin stok</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={textoBusqueda}
+            onChange={(e) => setTextoBusqueda(e.target.value)}
+          />
+        </div>
+
         <table className="tabla-reactivos">
           <thead>
             <tr>
@@ -1021,7 +1085,7 @@ function TablaReactivos({ seleccionarReactivo }) {
           </thead>
 
           <tbody>
-            {reactivos.map((r) => (
+            {reactivosFiltrados.map((r) => (
               <tr key={r.id}>
                 <td>{r.nombre}</td>
 

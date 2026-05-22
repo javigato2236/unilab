@@ -1,4 +1,8 @@
 /* estilos tabla */
+
+.tituloP {
+  align-items: center;
+}
 .contenedor-tabla {
   margin-top: 50px;
   margin-left: 40px;
@@ -216,4 +220,17 @@ td.rojo {
 .contenedor-pictogramas-panel img {
   height: 30px;
   width: 30px;
+}
+
+/* estilos contenedor filtro tabla reactivos */
+.contenedor-filtro-reactivos {
+  margin-bottom: 20px;
+}
+
+.contenedor-filtro-reactivos label {
+  margin-right: 5px;
+}
+
+.contenedor-filtro-reactivos select {
+  margin-right: 5px;
 }
