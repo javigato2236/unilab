@@ -224,7 +224,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
                     ):
     try:
 
-        print("DATA RECIBIDA:", data.dict())
+        
 
         sustancia = models.Sustancia(
             nombre=data.basica.nombre
@@ -233,7 +233,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
         db.add(sustancia)
         db.flush()
 
-        print("SUSTANCIA OK")
+       
 
         basica = models.InfoBasica(
             sustancia_id=sustancia.id,
@@ -248,7 +248,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
             estadoFisico=data.basica.estadoFisico
         )
 
-        print("BASICA OK")
+        
 
         general = models.InfoGeneral(
             sustancia_id=sustancia.id,
@@ -264,7 +264,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
             cantidad_real=data.general.cantidad_real
         )
 
-        print("GENERAL OK")
+        
 
         especifica = models.InfoEspecifica(
             sustancia_id=sustancia.id,
@@ -283,7 +283,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
             contacto=data.especifica.contacto
         )
 
-        print("ESPECIFICA OK")
+        
 
         db.add_all([basica, general, especifica])
 
@@ -300,9 +300,9 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
             db.add(observacion_consumo)
 
-            print("OBSERVACION CONSUMO OK")
+            
 
-        print("ADD ALL OK")
+        
 
         for pictograma_id in data.pictogramas:
 
@@ -313,11 +313,11 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
             db.add(pictograma)
 
-        print("PICTOGRAMAS OK")
+        
 
         db.commit()
 
-        print("COMMIT OK")
+       
 
         return {"msg": "ok"}
 
@@ -325,7 +325,7 @@ def crear_sustancia(data: schemas.SustanciaCreate, db: Session = Depends(get_db)
 
         db.rollback()
 
-        print("ERROR REAL:", str(e))
+        
 
         return {"error": str(e)}
 
@@ -542,7 +542,7 @@ def descontar_cantidad(
         str(data["cantidad"])
     )
 
-    print("ANTES:", info_general.cantidad_real)
+    
 
     # 🚨 VALIDAR STOCK
     if cantidad_descontar > info_general.cantidad_real:
@@ -556,7 +556,7 @@ def descontar_cantidad(
         info_general.cantidad_real - cantidad_descontar
     )
 
-    print("DESPUES:", info_general.cantidad_real)
+    
 
    
     # GUARDAR OBSERVACION CONSUMO
