@@ -377,9 +377,7 @@ def actualizar_sustancia(
     db: Session = Depends(get_db)################3agregue la coma
     # _: dict = Depends(auth.verificar_usuario)#######################
 ):
-    print(data.dict())
-    print("BASICA:", data.basica.dict())
-    print("ESPECIFICA:", data.especifica.dict())
+   
     # Buscar sustancia
     sustancia = db.query(models.Sustancia).filter(models.Sustancia.id == id).first()
 
@@ -522,8 +520,9 @@ def actualizar_sustancia(
 def descontar_cantidad(
     id: int,
     data: dict,
-    db: Session = Depends(get_db),
-     _: dict = Depends(auth.verificar_usuario)
+    db: Session = Depends(get_db)
+    #  _: dict = Depends(auth.verificar_usuario)
+
 
 ):
 

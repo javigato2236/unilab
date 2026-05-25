@@ -1,8 +1,5 @@
 /* estilos tabla */
 
-.tituloP {
-  align-items: center;
-}
 .contenedor-tabla {
   margin-top: 50px;
   margin-left: 40px;
@@ -214,7 +211,8 @@ td.rojo {
 
   align-items: center;
   position: absolute;
-  right: 20px;
+  right: 40px;
+  top: 60px;
 }
 
 .contenedor-pictogramas-panel img {
