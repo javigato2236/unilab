@@ -46,11 +46,11 @@ def verify_token(token: str):
         return payload
 
     except ExpiredSignatureError:
-        print("TOKEN EXPIRADO")
+        
         raise HTTPException(status_code=401, detail="Token expirado")
 
     except JWTError:
-        print("TOKEN INVÁLIDO")
+        
         raise HTTPException(status_code=401, detail="Token inválido")
     
 

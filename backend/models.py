@@ -68,8 +68,8 @@ class InfoGeneral(Base):
 
     id = Column(Integer, primary_key=True)
     sustancia_id = Column(Integer, ForeignKey("sustancias.id"))
-    codigoFraseH = Column(String(600))
-    toxicidadAgudaCat1Cat2 = Column(String(600))
+    codigoFraseH = Column(String(1000))
+    toxicidadAgudaCat1Cat2 = Column(String(1000))
     sustanciaCancerigena = Column(String(10))
     sitioAlmacenamiento = Column(String(150))
     ubicacionEspecifica = Column(String(150))
