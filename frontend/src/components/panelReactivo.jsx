@@ -155,8 +155,7 @@ function PanelReactivo({ reactivo, cerrar, recargar, manejarSesionExpirada }) {
       </div>
       <h5>{reactivo.nombre}</h5>
       <p>
-        Cantidad actual:
-        {Number(reactivo.general?.cantidad_real).toFixed(3)} ml
+        Cantidad actual: {Number(reactivo.general?.cantidad_real).toFixed(3)}
       </p>
       <div className="control-cantidad">
         <label>Consumo</label>
