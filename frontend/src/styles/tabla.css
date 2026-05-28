@@ -139,6 +139,7 @@ td.rojo {
   gap: 15px;
   align-items: center;
   margin: 20px 0;
+  margin-top: 60px;
 }
 
 .control-cantidad button {
@@ -206,13 +207,12 @@ td.rojo {
 /* estilos contenedor de pictogramas en panelReactivos */
 .contenedor-pictogramas-panel {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 5px;
-
   align-items: center;
   position: absolute;
-  right: 40px;
-  top: 60px;
+  right: 15px;
+  top: 85px;
 }
 
 .contenedor-pictogramas-panel img {

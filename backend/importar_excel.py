@@ -1,4 +1,148 @@
 import pandas as pd
+
+# df = pd.read_excel("inventario.xlsx",sheet_name="INV_REACTIVOS_ALDEHIDOS (al)")
+# with pd.ExcelWriter('extraccion.xlsx', engine='openpyxl') as writer:
+#     # 'startrow' y 'startcol' indican dónde comenzar (índice basado en 0)
+#     df.to_excel(writer, sheet_name='HojaNueva', startrow=10, startcol=1, index=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from decimal import Decimal
 from database import SessionLocal
 import models
@@ -9,7 +153,6 @@ db = SessionLocal()
 
 # =========================================
 # FUNCIONES PARA EVITAR ERRORES NAN AL ENVIAR DATOS VACIOS
-
 
 #TEXTOS
 def limpiar_texto(valor):
@@ -56,18 +199,33 @@ def limpiar_fecha(valor):
 # =========================================
 # LEER EXCEL
 # =========================================
+# df = pd.read_excel(
+#     "INV_REACTIVOS_ALUMINIO_LIMPIO.xlsx"
+# )
 df = pd.read_excel(
-    "INV_REACTIVOS_ALUMINIO_LIMPIO.xlsx"
+    "arreglo_datos.xlsx",
+    header=None
 )
+
+# tomar fila 0 como headers reales
+new_columns = df.iloc[0]
+
+df = df[1:]
+
+df.columns = new_columns
+
+print(df.columns)
+
+
 
 # =========================================
 # LIMPIAR NOMBRES DE COLUMNAS
 # =========================================
-# df.columns = (
-#     df.columns
-#     .str.strip()
-#     .str.lower()
-# )
+df.columns = (
+    df.columns
+    .str.strip()
+    .str.lower()
+)
 
 # =========================================
 # CREAR SESION MYSQL
@@ -80,6 +238,8 @@ db = SessionLocal()
 pictogramas = db.query(
     models.CatalogoPictograma
 ).all()
+
+
 
 # =========================================
 # CREAR MAPA DE PICTOGRAMAS
@@ -97,6 +257,9 @@ for pictograma in pictogramas:
         pictograma.nombre.lower()
     ] = pictograma.id
 
+   
+
+
 # =========================================
 # RECORRER EXCEL
 # =========================================
@@ -112,7 +275,7 @@ for index, fila in df.iterrows():###############
     # =====================================
     # CANTIDAD TOTAL
     # =====================================
-    cantidad_total = fila["CANTIDAD TOTAL"]
+    cantidad_total = fila["cantidad total"]
 
     if pd.isna(cantidad_total):
 
@@ -127,7 +290,7 @@ for index, fila in df.iterrows():###############
     # =====================================
     # CANTIDAD REAL
     # =====================================
-    cantidad_real = fila["CANTIDAD REAL"]
+    cantidad_real = fila["cantidad real"]
 
     if pd.isna(cantidad_real):
 
@@ -143,7 +306,7 @@ for index, fila in df.iterrows():###############
     # NUMERO DE RECIPIENTES
     # =====================================
 
-    numero_recipientes = fila["NUMERO RECIPIENTES"]
+    numero_recipientes = fila["numero recipientes"]
 
     if pd.isna(numero_recipientes):
 
@@ -157,7 +320,7 @@ for index, fila in df.iterrows():###############
     # FECHA ACTUAIZACION
     # =====================================
 
-    fecha_actualizacion = fila["ÚLTIMA FECHA ACTUALIZACION O CREACIÓN DE FDS"]
+    fecha_actualizacion = fila["ultima actualizacion"]
 
     if pd.isna(fecha_actualizacion):
 
@@ -173,7 +336,7 @@ for index, fila in df.iterrows():###############
     # FECHA INGRESO
     # =====================================
 
-    fecha_ingreso = fila["FECHA DE INGRESO DE LA SUSTANCIA QUIMICA AL LABORATORIO"]
+    fecha_ingreso = fila["fecha ingreso de la sustancia"]
 
     if pd.isna(fecha_ingreso):
 
@@ -189,7 +352,7 @@ for index, fila in df.iterrows():###############
     # FECHA VENCIMIENTO
     # ===================================== 
         
-    fecha_vencimiento = fila["FECHA VENCIMIENTO PROYECTADO"]
+    fecha_vencimiento = fila["fecha vencimiento"]
 
     if pd.isna(fecha_vencimiento):
 
@@ -212,7 +375,7 @@ for index, fila in df.iterrows():###############
     sustancia = models.Sustancia(
 
         nombre=str(
-            fila["NOMBRE DE LA SUSTANCIA"]
+            fila["nombre"]
         ).strip()
     )
 
@@ -229,15 +392,15 @@ for index, fila in df.iterrows():###############
     info_basica = models.InfoBasica(
 
         sustancia_id=sustancia.id,
-        familia=limpiar_texto(fila["FAMILIA"]),
-        grupo=limpiar_texto(fila["GRUPO"]),
-        sinonimo=limpiar_texto(fila["SINÓNIMO"]),
-        cas=limpiar_texto(fila["CAS"]),
-        marca=limpiar_texto(fila["MARCA"]),
-        referencia=limpiar_texto(fila["REFERENCIA"]),
-        fdsCompleta=limpiar_texto(fila["FDS COMPLETA"]),
+        familia=limpiar_texto(fila["familia"]),
+        grupo=limpiar_texto(fila["grupo"]),
+        sinonimo=limpiar_texto(fila["sinonimo"]),
+        cas=limpiar_texto(fila["cas"]),
+        marca=limpiar_texto(fila["marca"]),
+        referencia=limpiar_texto(fila["referencia"]),
+        fdsCompleta=limpiar_texto(fila["fdscompleta"]),
         fechaActualizacion=limpiar_fecha(fecha_actualizacion),
-        estadoFisico=limpiar_texto(fila["ESTADO FÍSICO"])
+        estadoFisico=limpiar_texto(fila["estado fisico"])
 
     )
 
@@ -251,13 +414,13 @@ for index, fila in df.iterrows():###############
     info_general = models.InfoGeneral(
 
         sustancia_id=sustancia.id,
-        codigoFraseH=limpiar_texto(fila["CODIGO FRASE H"]),
-        toxicidadAgudaCat1Cat2=limpiar_texto(fila["TOXICIDAD AGUDA CAT 1 CAT 2"]),
-        sustanciaCancerigena=limpiar_texto(fila["SUSTANCIA CANCERÍGENA"]),
-        sitioAlmacenamiento=limpiar_texto(fila["SITIO DE ALMACENAMIENTO"]),
-        ubicacionEspecifica=limpiar_texto(fila["UBICACIÓN ESPECIFICA"]),
-        unidadMedida=limpiar_texto(fila["UNIDAD DE MEDIDA"]),
-        presentacion=limpiar_texto(fila["PRESENTACION"]),
+        codigoFraseH=limpiar_texto(fila["codigo frase h"]),
+        toxicidadAgudaCat1Cat2=limpiar_texto(fila["toxicidad aguda"]),
+        sustanciaCancerigena=limpiar_texto(fila["sustancia cancerigena"]),
+        sitioAlmacenamiento=limpiar_texto(fila["sitio almacenamiento"]),
+        ubicacionEspecifica=limpiar_texto(fila["ubicación especifica"]),
+        unidadMedida=limpiar_texto(fila["unidad de medida"]),
+        presentacion=limpiar_texto(fila["presentacion"]),
         numeroRecipientes=limpiar_entero(numero_recipientes),
         cantidad_total=limpiar_decimal(cantidad_total),
         cantidad_real=limpiar_decimal(cantidad_real)
@@ -275,35 +438,41 @@ for index, fila in df.iterrows():###############
     info_especifica = models.InfoEspecifica(
 
         sustancia_id=sustancia.id,
-        esControlado=limpiar_texto(fila["ES CONTROLADO"]),
-        componente1=limpiar_texto(fila["COMPONENTE 1"]),
-        clasificacionAlmacenamiento=limpiar_texto(fila["CLASIFICACION ALMACENAMIENTO"]),
-        separacionSaftdata=limpiar_texto(fila["SEPARACION METODO SAF-T-DATA"]),
+        esControlado=limpiar_texto(fila["es controlado"]),
+        componente1=limpiar_texto(fila["componente"]),
+        clasificacionAlmacenamiento=limpiar_texto(fila["clacificacion almacenamiento"]),
+        separacionSaftdata=limpiar_texto(fila["separacion metodo"]),
         fechaIngreso=limpiar_fecha(fecha_ingreso),
         fechaVencimiento=limpiar_fecha(fecha_vencimiento),
-        observaciones=limpiar_texto(fila["OBSERVACIONES"]),
-        palabraAdvertencia=limpiar_texto(fila["PALABRA DE ADVERTENCIA"]),
-        preventiva=limpiar_texto(fila["PREVENTIVA CODIGO / DETALLE"]),
-        respuesta=limpiar_texto(fila["RESPUESTA Ó INTERVENCIÓN"]),
-        razonSocial=limpiar_texto(fila["RAZÓN SOCIAL"]),
-        direccion=limpiar_texto(fila["DIRECCIÓN"]),
-        contacto=limpiar_texto(fila["CONTACTO"])
+        observaciones=limpiar_texto(fila["observaciones"]),
+        palabraAdvertencia=limpiar_texto(fila["palabra advertencia"]),
+        preventiva=limpiar_texto(fila["preventiva"]),
+        respuesta=limpiar_texto(fila["respuesta"]),
+        razonSocial=limpiar_texto(fila["razon social"]),
+        direccion=limpiar_texto(fila["direccion"]),
+        contacto=limpiar_texto(fila["contacto"])
     )
 
     db.add(info_especifica)
 
+
+
     # =====================================
     # RECORRER PICTOGRAMAS
     # =====================================
+    
+    
     for columna, pictograma_id in mapa_pictogramas.items():
+
 
         # REVISAR SI EXISTE LA COLUMNA
         if columna in df.columns:
-
             valor = fila[columna]
 
             # SI TIENE X
-            if str(valor).strip().upper() == "X":
+            # if str(valor).strip().upper() == "X":
+            if str(valor).strip().upper() in ["X", "SI", "SÍ", "1", "TRUE"]:
+        
 
                 relacion = models.SustanciaPictograma(
 
@@ -324,7 +493,6 @@ db.commit()
 # =========================================
 db.close()
 
-print("IMPORTACION EXITOSA")
 
 
 
