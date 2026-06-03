@@ -1,4 +1,5 @@
 import iconoAgregarRegistro from "../assets/iconoAgregarRegistro.png";
+import descargar from "../assets/descargar.png";
 import "../styles/paginaPrincipal.css";
 import "../styles/pictogramas.css";
 import "../styles/tabla.css";
@@ -9,12 +10,18 @@ import PanelReactivo from "./PanelReactivo";
 import resetsEstados from "./resetsEstados";
 import { useState, useEffect } from "react";
 
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
+
 function TablaReactivos({ seleccionarReactivo }) {
   const [reactivos, setReactivos] = useState([]);
   const [reactivoSeleccionado, setReactivoSeleccionado] = useState(null);
   const [editandoId, setEditandoId] = useState(null);
 
   const [formData, setFormData] = useState(resetsEstados.ResetEstados());
+
+  const [familiaExcel, setFamiliaExcel] = useState("");
+  const [estadoExcel, setEstadoExcel] = useState("todos");
 
   //ESTADOS TEMPORALES
 
@@ -40,6 +47,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [catalogoPictogramas, setCatalogoPictogramas] = useState([]);
   const [pictogramasOriginales, setPictogramasOriginales] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
+  const [isDescargarModalOpen, setIsDescargarModalOpen] = useState(false);
 
   const navigate = useNavigate();
   // const [sesionExpirada, setSesionExpirada] = useState(false);
@@ -63,7 +71,7 @@ function TablaReactivos({ seleccionarReactivo }) {
   };
 
   const convertirMayusculas = (obj) => {
-    const excluir = ["unidadMedida"];
+    const excluir = ["unidadMedida", "familia"];
 
     const nuevo = {};
 
@@ -468,8 +476,80 @@ function TablaReactivos({ seleccionarReactivo }) {
     return true;
   });
 
+  const familiasExcel = [
+    ...new Set(reactivos.map((r) => r.basica?.familia).filter(Boolean)),
+  ].sort();
+
+  const datosExcel = reactivos.filter((r) => {
+    const cumpleFamilia = !familiaExcel || r.basica?.familia === familiaExcel;
+
+    let cumpleEstado = true;
+
+    if (estadoExcel === "en_stock") {
+      cumpleEstado = r.general?.cantidad_real > r.general?.cantidad_total * 0.5;
+    }
+
+    if (estadoExcel === "por_acabar") {
+      cumpleEstado =
+        r.general?.cantidad_real > 0 &&
+        r.general?.cantidad_real <= r.general?.cantidad_total * 0.5;
+    }
+
+    if (estadoExcel === "sin_stock") {
+      cumpleEstado = r.general?.cantidad_real <= 0;
+    }
+
+    return cumpleFamilia && cumpleEstado;
+  });
+
+  const descargarExcel = async () => {
+    try {
+      const response = await fetch("/plantilla.xlsx");
+
+      const arrayBuffer = await response.arrayBuffer();
+
+      const workbook = new ExcelJS.Workbook();
+
+      await workbook.xlsx.load(arrayBuffer);
+
+      const worksheet = workbook.getWorksheet(1);
+
+      // limpiar datos anteriores
+      let fila = 2;
+
+      while (worksheet.getRow(fila).getCell(1).value) {
+        worksheet.spliceRows(fila, 1);
+      }
+
+      // insertar datos filtrados
+      datosExcel.forEach((r) => {
+        worksheet.addRow([
+          r.nombre,
+          r.basica?.familia,
+          r.general?.cantidad_real,
+        ]);
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      saveAs(new Blob([buffer]), "InventarioReactivos.xlsx");
+    } catch (error) {
+      console.error(error);
+
+      alert("Error al generar el Excel");
+    }
+  };
   return (
     <div>
+      <div
+        className="contenedor-descargar"
+        onClick={() => {
+          setIsDescargarModalOpen(true);
+        }}
+      >
+        {/* descarcar */}
+        <img src={descargar} />
+      </div>
       <div
         className="contenedor-cierreSesion"
         onClick={() => {
@@ -489,9 +569,92 @@ function TablaReactivos({ seleccionarReactivo }) {
           setIsModalOpen(true);
         }}
       >
+        {/* nuevo registro */}
         <img src={iconoAgregarRegistro} />
-        <h3>Nuevo registro</h3>
       </div>
+
+      {/* MODAL DESCARGAR */}
+      <Modal isOpen={isDescargarModalOpen}>
+        <h2>Exportar inventario</h2>
+
+        <div className="contenedor-filtros-excel">
+          <div>
+            <label>Familia</label>
+
+            <select
+              value={familiaExcel}
+              onChange={(e) => setFamiliaExcel(e.target.value)}
+            >
+              <option value="">Todas las familias</option>
+
+              {familiasExcel.map((familia) => (
+                <option key={familia} value={familia}>
+                  {familia}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label>Estado</label>
+
+            <select
+              value={estadoExcel}
+              onChange={(e) => setEstadoExcel(e.target.value)}
+            >
+              <option value="todos">Todos</option>
+              <option value="en_stock">En stock</option>
+              <option value="por_acabar">Por acabar</option>
+              <option value="sin_stock">Sin stock</option>
+            </select>
+          </div>
+        </div>
+
+        <div
+          style={{
+            maxHeight: "300px",
+            overflowY: "auto",
+            marginTop: "15px",
+          }}
+        >
+          <table className="tabla-reactivos">
+            <thead>
+              <tr>
+                <th>Reactivo</th>
+                <th>Familia</th>
+                <th>Cantidad Real</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {datosExcel.map((r) => (
+                <tr key={r.id}>
+                  <td>{r.nombre}</td>
+
+                  <td>{r.basica?.familia}</td>
+
+                  <td>{Number(r.general?.cantidad_real || 0).toFixed(3)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            marginTop: "15px",
+            justifyContent: "center",
+          }}
+        >
+          <button onClick={descargarExcel}>Descargar Excel</button>
+
+          <button onClick={() => setIsDescargarModalOpen(false)}>
+            Cancelar
+          </button>
+        </div>
+      </Modal>
 
       {/* MODAL PRINCIPAL */}
       <Modal isOpen={isModalOpen}>

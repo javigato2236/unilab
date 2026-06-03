@@ -47,3 +47,18 @@ body {
   right: 20px;
   font-size: 15px;
 }
+
+.contenedor-descargar {
+  position: absolute;
+  left: 1070px;
+  transition: transform 0.2s;
+}
+
+.contenedor-descargar:hover {
+  transform: scale(1.05);
+}
+
+.contenedor-descargar img {
+  width: 50px;
+  height: 50px;
+}
