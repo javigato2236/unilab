@@ -1,5 +1,6 @@
 import iconoAgregarRegistro from "../assets/iconoAgregarRegistro.png";
 import descargar from "../assets/descargar.png";
+import consumoInventario from "../assets/consumoInventario.png";
 import "../styles/paginaPrincipal.css";
 import "../styles/pictogramas.css";
 import "../styles/tabla.css";
@@ -22,6 +23,7 @@ function TablaReactivos({ seleccionarReactivo }) {
 
   const [familiaExcel, setFamiliaExcel] = useState("");
   const [estadoExcel, setEstadoExcel] = useState("todos");
+  const [familiaConsumo, setFamiliaConsumo] = useState("");
 
   //ESTADOS TEMPORALES
 
@@ -48,6 +50,8 @@ function TablaReactivos({ seleccionarReactivo }) {
   const [pictogramasOriginales, setPictogramasOriginales] = useState([]);
   const [tempPictogramas, setTempPictogramas] = useState([]);
   const [isDescargarModalOpen, setIsDescargarModalOpen] = useState(false);
+  const [isDescargarConsumoModalOpen, setIsDescargarConsumoModalOpen] =
+    useState(false);
 
   const navigate = useNavigate();
   // const [sesionExpirada, setSesionExpirada] = useState(false);
@@ -502,6 +506,20 @@ function TablaReactivos({ seleccionarReactivo }) {
     return cumpleFamilia && cumpleEstado;
   });
 
+  const familiasConsumo = [
+    ...new Set(reactivos.map((r) => r.basica?.familia).filter(Boolean)),
+  ].sort();
+
+  const datosConsumo = reactivos
+    .filter((r) => !familiaConsumo || r.basica?.familia === familiaConsumo)
+    .flatMap((r) =>
+      (r.ob_consumo || []).map((o) => ({
+        ...o,
+        reactivo: r.nombre,
+        familia: r.basica?.familia,
+      })),
+    );
+
   const descargarExcel = async () => {
     try {
       const response = await fetch("/plantilla.xlsx");
@@ -542,6 +560,19 @@ function TablaReactivos({ seleccionarReactivo }) {
   return (
     <div>
       <div
+        className="contenedor-consumo-inventario"
+        onClick={() => {
+          setIsDescargarConsumoModalOpen(true);
+        }}
+      >
+        {/* descarcar consumo */}
+        <img src={consumoInventario} />
+        <div>
+          <h5>Descarga consumo</h5>
+        </div>
+      </div>
+
+      <div
         className="contenedor-descargar"
         onClick={() => {
           setIsDescargarModalOpen(true);
@@ -549,7 +580,11 @@ function TablaReactivos({ seleccionarReactivo }) {
       >
         {/* descarcar */}
         <img src={descargar} />
+        <div>
+          <h5>Descarga inventario</h5>
+        </div>
       </div>
+
       <div
         className="contenedor-cierreSesion"
         onClick={() => {
@@ -571,11 +606,95 @@ function TablaReactivos({ seleccionarReactivo }) {
       >
         {/* nuevo registro */}
         <img src={iconoAgregarRegistro} />
+        <div>
+          <h5>Nuevo registro</h5>
+        </div>
       </div>
+
+      {/* MODAL DESCARGAR CONSUMO */}
+      <Modal
+        isOpen={isDescargarConsumoModalOpen}
+        className="contenedor-modal-descargar-consumo"
+      >
+        <h2>historial de consumo</h2>
+        <div className="contenedor-filtros-excel">
+          <div>
+            <label>Familia</label>
+
+            <select
+              value={familiaConsumo}
+              onChange={(e) => setFamiliaConsumo(e.target.value)}
+            >
+              <option value="">Todas las familias</option>
+
+              {familiasConsumo.map((familia) => (
+                <option key={familia} value={familia}>
+                  {familia}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div
+          style={{
+            maxHeight: "400px",
+            overflowY: "auto",
+            marginTop: "15px",
+          }}
+        >
+          <table className="tabla-reactivos">
+            <thead>
+              <tr>
+                <th>Reactivo</th>
+                <th>Familia</th>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Usuario</th>
+                <th>Observación</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {datosConsumo.map((o, index) => (
+                <tr key={index}>
+                  <td>{o.reactivo}</td>
+
+                  <td>{o.familia}</td>
+
+                  <td>{o.fechaObservacion}</td>
+
+                  <td>{Number(o.cantidadConsumo || 0).toFixed(3)}</td>
+
+                  <td>{o.responsable}</td>
+
+                  <td>{o.observacion}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "15px",
+          }}
+        >
+          <button
+            className="boton-panel-descarga-cancelar"
+            onClick={() => setIsDescargarConsumoModalOpen(false)}
+          >
+            Cerrar
+          </button>
+        </div>
+      </Modal>
 
       {/* MODAL DESCARGAR */}
       <Modal isOpen={isDescargarModalOpen}>
         <h2>Exportar inventario</h2>
+        <button>descargar inventario formato ...</button>
 
         <div className="contenedor-filtros-excel">
           <div>
@@ -648,9 +767,17 @@ function TablaReactivos({ seleccionarReactivo }) {
             justifyContent: "center",
           }}
         >
-          <button onClick={descargarExcel}>Descargar Excel</button>
+          <button
+            className="boton-panel-descarga-descargar"
+            onClick={descargarExcel}
+          >
+            Descargar Excel
+          </button>
 
-          <button onClick={() => setIsDescargarModalOpen(false)}>
+          <button
+            className="boton-panel-descarga-cancelar"
+            onClick={() => setIsDescargarModalOpen(false)}
+          >
             Cancelar
           </button>
         </div>

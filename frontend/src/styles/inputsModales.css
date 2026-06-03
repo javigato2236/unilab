@@ -4,6 +4,8 @@
 .botonModalBasica button,
 .botonModalPictogramas_2 button,
 .botonModalGeneral button,
+.boton-panel-descarga-descargar,
+.boton-panel-descarga-cancelar,
 .botonModalEspecifica button {
   color: rgb(0, 110, 255);
   padding: 10px 20px;
