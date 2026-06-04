@@ -54,10 +54,35 @@ body {
   bottom: -50px;
 }
 
+.contenedor-nuevo-registro {
+  left: 1149px;
+  position: absolute;
+  transition: transform 0.2s;
+}
+
+.contenedor-nuevo-registro:hover {
+  transform: scale(1.05);
+}
+
+.contenedor-nuevo-registro img {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  padding-bottom: -20px;
+  color: rgb(0, 110, 255);
+}
+
+.contenedor-nuevo-registro div {
+  position: absolute;
+  left: 4px;
+  bottom: -50px;
+}
+
 .contenedor-descargar {
   position: absolute;
   left: 1065.5px;
   transition: transform 0.2s;
+  cursor: pointer;
 }
 
 .contenedor-descargar:hover {
@@ -75,10 +100,21 @@ body {
   bottom: -50px;
 }
 
+.titulo-contenedor-modal-descargar {
+  position: relative;
+  bottom: 30px;
+}
+
+.boton-descargar-formato-modal-descargar {
+  position: relative;
+  bottom: 30px;
+}
+
 .contenedor-consumo-inventario {
   position: absolute;
   left: 970px;
   transition: transform 0.2s;
+  cursor: pointer;
 }
 
 .contenedor-consumo-inventario:hover {

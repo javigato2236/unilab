@@ -586,7 +586,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       </div>
 
       <div
-        className="contenedor-cierreSesion"
+        className="contenedor-nuevo-registro"
         onClick={() => {
           // limpiar modo edición
           setEditandoId(null);
@@ -616,7 +616,7 @@ function TablaReactivos({ seleccionarReactivo }) {
         isOpen={isDescargarConsumoModalOpen}
         className="contenedor-modal-descargar-consumo"
       >
-        <h2>historial de consumo</h2>
+        <h2>Historial de consumo</h2>
         <div className="contenedor-filtros-excel">
           <div>
             <label>Familia</label>
@@ -692,12 +692,20 @@ function TablaReactivos({ seleccionarReactivo }) {
       </Modal>
 
       {/* MODAL DESCARGAR */}
-      <Modal isOpen={isDescargarModalOpen}>
-        <h2>Exportar inventario</h2>
-        <button>descargar inventario formato ...</button>
+      <Modal
+        isOpen={isDescargarModalOpen}
+        className="contenedor-modal-descargar"
+      >
+        <div className="titulo-contenedor-modal-descargar">
+          <h2>Exportar inventario</h2>
+        </div>
+
+        <div className="boton-descargar-formato-modal-descargar">
+          <button>descargar inventario formato FO-GAA-13</button>
+        </div>
 
         <div className="contenedor-filtros-excel">
-          <div>
+          <div className="contenedor-labelSelect-modal-descargar-inventario">
             <label>Familia</label>
 
             <select
@@ -714,7 +722,7 @@ function TablaReactivos({ seleccionarReactivo }) {
             </select>
           </div>
 
-          <div>
+          <div className="contenedor-labelSelect-modal-descargar-inventario-2">
             <label>Estado</label>
 
             <select

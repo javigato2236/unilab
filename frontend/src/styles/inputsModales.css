@@ -6,6 +6,7 @@
 .botonModalGeneral button,
 .boton-panel-descarga-descargar,
 .boton-panel-descarga-cancelar,
+.boton-descargar-formato-modal-descargar button,
 .botonModalEspecifica button {
   color: rgb(0, 110, 255);
   padding: 10px 20px;
@@ -21,7 +22,6 @@
 /* basica*/
 .contenedorModalBasica {
   max-height: 85vh;
-
   margin-top: 80px;
   border-radius: 5%;
 }
@@ -110,4 +110,43 @@
   position: relative;
   bottom: 35px;
   margin-bottom: -50px;
+}
+
+.contenedor-modal-descargar-consumo {
+  display: flex;
+  position: absolute;
+  bottom: 150px;
+  width: 800px;
+}
+
+.contenedor-modal-descargar-consumo label {
+  margin-right: 10px;
+}
+
+.contenedor-modal-descargar {
+  top: 5px;
+}
+.contenedor-labelSelect-modal-descargar-inventario {
+  position: relative;
+  bottom: 20px;
+}
+
+.contenedor-labelSelect-modal-descargar-inventario label {
+  margin-right: 10px;
+}
+.contenedor-labelSelect-modal-descargar-inventario select {
+  width: 230px;
+}
+
+.contenedor-labelSelect-modal-descargar-inventario-2 {
+  position: relative;
+  bottom: 5px;
+}
+
+.contenedor-labelSelect-modal-descargar-inventario-2 label {
+  margin-right: 15px;
+}
+
+.contenedor-labelSelect-modal-descargar-inventario-2 select {
+  width: 95px;
 }
