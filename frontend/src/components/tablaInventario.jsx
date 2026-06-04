@@ -207,6 +207,7 @@ function TablaReactivos({ seleccionarReactivo }) {
       const data = await res.json();
 
       setReactivos(data);
+      console.log(JSON.stringify(data[0].pictogramas[0].pictograma, null, 2));
     } catch (error) {
       console.error(error);
     }
@@ -557,6 +558,154 @@ function TablaReactivos({ seleccionarReactivo }) {
       alert("Error al generar el Excel");
     }
   };
+
+  const descargarFormatoFOGAA13 = async () => {
+    try {
+      const response = await fetch("/plantillaFormato.xlsx");
+
+      const arrayBuffer = await response.arrayBuffer();
+
+      const workbook = new ExcelJS.Workbook();
+
+      await workbook.xlsx.load(arrayBuffer);
+
+      const worksheet = workbook.getWorksheet(1);
+
+      const columnasSGA = {
+        ADVERTENCIA: "Q",
+        CARCINOGENICO: "R",
+        CORROSIVO: "O",
+        EXPLOSIVO: "K",
+        GASES: "N",
+        INFLAMABLE: "L",
+        MEDIOAMBIENTE: "S",
+        OXIDANTE: "M",
+        TOXICO: "P",
+      };
+
+      let fila = 9;
+
+      datosExcel.forEach((reactivo) => {
+        worksheet.getCell(`A${fila}`).value = reactivo.nombre;
+
+        worksheet.getCell(`B${fila}`).value = reactivo.basica?.familia || "";
+
+        worksheet.getCell(`C${fila}`).value = reactivo.basica?.grupo || "";
+
+        worksheet.getCell(`D${fila}`).value = reactivo.basica?.sinonimo || "";
+
+        worksheet.getCell(`E${fila}`).value = reactivo.basica?.cas || "";
+
+        worksheet.getCell(`F${fila}`).value = reactivo.basica?.marca || "";
+
+        worksheet.getCell(`G${fila}`).value = reactivo.basica?.referencia || "";
+
+        worksheet.getCell(`H${fila}`).value =
+          reactivo.basica?.fdsCompleta || "";
+
+        worksheet.getCell(`I${fila}`).value =
+          reactivo.basica?.fechaActualizacion || "";
+
+        worksheet.getCell(`J${fila}`).value =
+          reactivo.basica?.estadoFisico || "";
+
+        worksheet.getCell(`T${fila}`).value =
+          reactivo.general?.codigoFraseH || "";
+
+        worksheet.getCell(`U${fila}`).value =
+          reactivo.general?.toxicidadAgudaCat1Cat2 || "";
+
+        worksheet.getCell(`V${fila}`).value =
+          reactivo.general?.sustanciaCancerigena || "";
+
+        worksheet.getCell(`W${fila}`).value =
+          reactivo.general?.sitioAlmacenamiento || "";
+
+        worksheet.getCell(`X${fila}`).value =
+          reactivo.general?.ubicacionEspecifica || "";
+
+        worksheet.getCell(`Y${fila}`).value =
+          reactivo.general?.unidadMedida || "";
+
+        worksheet.getCell(`Z${fila}`).value =
+          reactivo.general?.presentacion || "";
+
+        worksheet.getCell(`AA${fila}`).value =
+          reactivo.general?.numeroRecipientes || 0;
+
+        worksheet.getCell(`AB${fila}`).value =
+          reactivo.general?.cantidad_total || 0;
+
+        worksheet.getCell(`AC${fila}`).value =
+          reactivo.general?.cantidad_real || 0;
+
+        worksheet.getCell(`AD${fila}`).value =
+          reactivo.especifica?.esControlado || "";
+
+        worksheet.getCell(`AE${fila}`).value =
+          reactivo.especifica?.componente1 || "";
+
+        worksheet.getCell(`AF${fila}`).value =
+          reactivo.especifica?.clasificacionAlmacenamiento || "";
+
+        worksheet.getCell(`AG${fila}`).value =
+          reactivo.especifica?.separacionSaftdata || "";
+
+        worksheet.getCell(`AH${fila}`).value =
+          reactivo.especifica?.fechaIngreso || "";
+
+        worksheet.getCell(`AI${fila}`).value =
+          reactivo.especifica?.fechaVencimiento || "";
+
+        worksheet.getCell(`AJ${fila}`).value =
+          reactivo.especifica?.observaciones || "";
+
+        worksheet.getCell(`AK${fila}`).value =
+          reactivo.especifica?.palabraAdvertencia || "";
+
+        worksheet.getCell(`AL${fila}`).value =
+          reactivo.especifica?.preventiva || "";
+
+        worksheet.getCell(`AM${fila}`).value =
+          reactivo.especifica?.respuesta || "";
+
+        worksheet.getCell(`AN${fila}`).value =
+          reactivo.especifica?.razonSocial || "";
+
+        worksheet.getCell(`AO${fila}`).value =
+          reactivo.especifica?.direccion || "";
+
+        worksheet.getCell(`AP${fila}`).value =
+          reactivo.especifica?.contacto || "";
+
+        // Limpiar columnas SGA
+        ["K", "L", "M", "N", "O", "P", "Q", "R", "S"].forEach((columna) => {
+          worksheet.getCell(`${columna}${fila}`).value = "";
+        });
+
+        // Marcar X según pictogramas
+        reactivo.pictogramas?.forEach((p) => {
+          const nombre = p.pictograma?.nombre;
+
+          const columna = columnasSGA[nombre];
+
+          if (columna) {
+            worksheet.getCell(`${columna}${fila}`).value = "X";
+          }
+        });
+
+        fila++;
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+
+      saveAs(new Blob([buffer]), "FO-GAA-13-Inventario-Reactivos.xlsx");
+    } catch (error) {
+      console.error(error);
+
+      alert("Error al generar el formato FO-GAA-13");
+    }
+  };
   return (
     <div>
       <div
@@ -701,7 +850,9 @@ function TablaReactivos({ seleccionarReactivo }) {
         </div>
 
         <div className="boton-descargar-formato-modal-descargar">
-          <button>descargar inventario formato FO-GAA-13</button>
+          <button onClick={descargarFormatoFOGAA13}>
+            descargar inventario formato FO-GAA-13
+          </button>
         </div>
 
         <div className="contenedor-filtros-excel">

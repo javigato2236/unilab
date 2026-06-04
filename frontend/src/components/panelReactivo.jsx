@@ -140,8 +140,6 @@ function PanelReactivo({ reactivo, cerrar, recargar, manejarSesionExpirada }) {
     }
   };
 
-  console.log(reactivo);
-
   return (
     <div className="panel-reactivo">
       <div className="contenedor-pictogramas-panel">
