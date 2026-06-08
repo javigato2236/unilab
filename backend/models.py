@@ -21,7 +21,8 @@ class Sustancia(Base):
     basica = relationship("InfoBasica", back_populates="sustancia", uselist=False, cascade="all, delete")
     general = relationship("InfoGeneral", back_populates="sustancia", uselist=False, cascade="all, delete")
     especifica = relationship("InfoEspecifica", back_populates="sustancia", uselist=False, cascade="all, delete")
-    ob_consumo = relationship("ObservacionConsumo", back_populates="sustancia",  cascade="all, delete") #####################
+    ob_consumo = relationship("ObservacionConsumo", back_populates="sustancia",  cascade="all, delete") ##################### no colocamos uselist=False
+    #####por que vamos a realizar mas de un registro en este mismo campo en la base de datos
 
     pictogramas = relationship("SustanciaPictograma", back_populates="sustancia", cascade="all, delete")
 

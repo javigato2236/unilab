@@ -25,7 +25,7 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Registro</h2>
+      <h2>Registro de usuario</h2>
 
       <input
         value={correo}

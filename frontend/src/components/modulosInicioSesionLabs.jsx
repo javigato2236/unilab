@@ -144,7 +144,7 @@ function ModulosInicioSessionLabs() {
           </div>
 
           <div className="contenedor-olvido-contraseña">
-            <Link className="olvidar-contraseña" to="">
+            <Link className="olvidar-contraseña" to="/recuperar-password">
               ¿Olvido su contraseña?
             </Link>
           </div>

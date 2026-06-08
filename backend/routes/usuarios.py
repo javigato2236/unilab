@@ -114,11 +114,13 @@ def validate_reset_token(data: schemas.ValidateToken):############333
 
 @router.post("/forgot-password")
 def forgot_password(data: schemas.ForgotPassword, db: Session = Depends(get_db)):
+    print("Correo recibido:", data.correo)
 
     # 🔎 Buscar usuario en base de datos
     user = db.query(models.RegistroUsuarios).filter(
         models.RegistroUsuarios.correo == data.correo
     ).first()
+    print("Usuario encontrado:", user)
 
     # ⚠️ Por seguridad NO decimos si existe o no
     if not user:
@@ -133,15 +135,15 @@ def forgot_password(data: schemas.ForgotPassword, db: Session = Depends(get_db))
         
     )
 
-    # 🔗 Crear link para frontend
+    # Crear link para frontend
     # reset_link = f"http://localhost:5173/reset-password?token={reset_token}"#########
-    reset_link = f"http://localhost:5173/reset-password?token={quote(reset_token)}"
+    reset_link = f"http://localhost:5173/cambiarPassword?token={quote(reset_token)}"
 
 
-    # 📧 Enviar correo con Gmail SMTP
+    # Enviar correo con Gmail SMTP
     subject = "Recuperación de contraseña"
     body = f"""
-    Hola {user.nombre},
+    Hola,
 
     Haz clic en el siguiente enlace para restablecer tu contraseña:
 
@@ -151,6 +153,7 @@ def forgot_password(data: schemas.ForgotPassword, db: Session = Depends(get_db))
     """
 
     email_utils.send_email(user.correo, subject, body)
+    print("Correo enviado")
 
     return {"msg": "Si el correo existe se enviará un enlace"}
     
